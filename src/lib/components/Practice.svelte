@@ -30,7 +30,7 @@
 
     <div class="grid gap-6 md:grid-cols-[1.1fr_0.9fr]">
       <Reveal
-        class="border-line rounded-lg border bg-[rgba(255,255,255,0.32)] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.58)] md:p-8"
+        class="lift border-line rounded-lg border bg-[rgba(255,255,255,0.32)] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.58)] md:p-8"
         delay={120}
       >
         <Compass class="text-moss" size={28} weight="duotone" />

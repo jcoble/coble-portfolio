@@ -67,7 +67,7 @@
       <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">Design highlights</p>
       <ol class="border-line-dark mt-8 grid gap-px border md:grid-cols-2">
         {#each retailready.flexPoints as point, index (point.title)}
-          <li class="bg-charcoal p-6 md:p-8">
+          <li class="lift bg-charcoal p-6 md:p-8">
             <span
               class="font-mono text-xs tracking-[0.18em] text-[rgba(244,242,235,0.5)] uppercase"
             >

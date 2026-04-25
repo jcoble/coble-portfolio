@@ -27,6 +27,7 @@ _legacy-next/
 # Deployment
 .vercel/
 .netlify/
+.wrangler/
 
 # Stale Next.js artifacts
 .next/

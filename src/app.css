@@ -88,29 +88,39 @@ video {
   }
 }
 
-[data-reveal-state="hidden"] {
-  opacity: 0;
-  transform: translateY(24px);
-  filter: blur(8px);
-  transition:
-    opacity 700ms cubic-bezier(0.18, 0.7, 0.22, 1),
-    transform 700ms cubic-bezier(0.18, 0.7, 0.22, 1),
-    filter 700ms cubic-bezier(0.18, 0.7, 0.22, 1);
+.lift {
+  position: relative;
+  transition: transform 240ms ease-out;
 }
 
-[data-reveal-state="shown"] {
+.lift::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: var(--color-copper);
+  opacity: 0;
+  transition: opacity 240ms ease-out;
+  pointer-events: none;
+}
+
+.lift:hover {
+  transform: translateY(-2px);
+}
+
+.lift:hover::after {
   opacity: 1;
-  transform: translateY(0);
-  filter: blur(0);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal-state="hidden"],
-  [data-reveal-state="shown"] {
-    opacity: 1;
-    transform: none;
-    filter: none;
+  .lift,
+  .lift::after {
     transition: none;
+  }
+  .lift:hover {
+    transform: none;
   }
 }
 

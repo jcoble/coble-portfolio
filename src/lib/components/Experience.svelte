@@ -25,7 +25,7 @@
       <ol class="border-line grid gap-px border">
         {#each experience.timeline as entry (entry.years)}
           <li
-            class="grid gap-2 bg-[rgba(255,255,255,0.32)] p-6 md:grid-cols-[10rem_1fr] md:gap-8 md:p-8"
+            class="lift grid gap-2 bg-[rgba(255,255,255,0.32)] p-6 md:grid-cols-[10rem_1fr] md:gap-8 md:p-8"
           >
             <span class="text-copper font-mono text-xs tracking-[0.18em] uppercase">
               {entry.years}
