@@ -108,8 +108,8 @@
   }
 
   // height vs viewBox
-  const viewBox = variant === "full" ? "0 0 940 380" : "0 0 940 320";
-  const heightClass = variant === "full" ? "h-[480px]" : "h-[320px] md:h-[380px]";
+  const viewBox = $derived(variant === "full" ? "0 0 940 380" : "0 0 940 320");
+  const heightClass = $derived(variant === "full" ? "h-[480px]" : "h-[320px] md:h-[380px]");
 </script>
 
 <figure class="relative w-full {heightClass}" aria-hidden="true">
