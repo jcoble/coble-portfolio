@@ -9,9 +9,9 @@
     tone?: "light" | "dark";
   } = $props();
 
-  const numberClass = tone === "light" ? "text-ink" : "text-paper";
-  const labelClass = tone === "light" ? "text-muted" : "text-[rgba(244,242,235,0.62)]";
-  const dividerClass = tone === "light" ? "border-line" : "border-line-dark";
+  const numberClass = $derived(tone === "light" ? "text-ink" : "text-paper");
+  const labelClass = $derived(tone === "light" ? "text-muted" : "text-[rgba(244,242,235,0.62)]");
+  const dividerClass = $derived(tone === "light" ? "border-line" : "border-line-dark");
 </script>
 
 <div class="grid grid-cols-2 gap-px md:grid-cols-4 [&>*]:bg-transparent">

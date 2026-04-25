@@ -9,9 +9,10 @@
     tone?: "light" | "dark";
   } = $props();
 
-  const wrapClass =
-    tone === "dark" ? "border-y border-line-dark text-paper" : "border-y border-line text-ink";
-  const attrClass = tone === "dark" ? "text-[rgba(244,242,235,0.5)]" : "text-muted";
+  const wrapClass = $derived(
+    tone === "dark" ? "border-y border-line-dark text-paper" : "border-y border-line text-ink"
+  );
+  const attrClass = $derived(tone === "dark" ? "text-[rgba(244,242,235,0.5)]" : "text-muted");
 </script>
 
 <figure class="grid gap-6 py-12 md:py-16 {wrapClass}">

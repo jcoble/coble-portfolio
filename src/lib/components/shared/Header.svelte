@@ -16,18 +16,21 @@
     links?: { href: string; label: string }[];
   } = $props();
 
-  const containerClass =
+  const containerClass = $derived(
     tone === "dark"
       ? "border-white/14 bg-[rgba(20,20,16,0.42)] text-paper shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_18px_55px_-45px_rgba(0,0,0,0.6)] backdrop-blur-xl"
-      : "border-line bg-[rgba(244,242,235,0.86)] text-ink backdrop-blur-md";
+      : "border-line bg-[rgba(244,242,235,0.86)] text-ink backdrop-blur-md"
+  );
 
-  const monogramClass =
-    tone === "dark" ? "bg-[rgba(244,242,235,0.92)] text-charcoal" : "bg-ink text-paper";
+  const monogramClass = $derived(
+    tone === "dark" ? "bg-[rgba(244,242,235,0.92)] text-charcoal" : "bg-ink text-paper"
+  );
 
-  const navLinkClass =
+  const navLinkClass = $derived(
     tone === "dark"
       ? "text-[rgba(244,242,235,0.72)] hover:bg-white/10 hover:text-paper"
-      : "text-muted hover:bg-ink/8 hover:text-ink";
+      : "text-muted hover:bg-ink/8 hover:text-ink"
+  );
 </script>
 
 <header

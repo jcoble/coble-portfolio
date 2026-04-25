@@ -9,9 +9,9 @@
     tone?: "light" | "dark";
   } = $props();
 
-  const labelClass = tone === "dark" ? "text-[rgba(244,242,235,0.62)]" : "text-muted";
-  const valueClass = tone === "dark" ? "text-paper" : "text-ink";
-  const lineClass = tone === "dark" ? "border-line-dark" : "border-line";
+  const labelClass = $derived(tone === "dark" ? "text-[rgba(244,242,235,0.62)]" : "text-muted");
+  const valueClass = $derived(tone === "dark" ? "text-paper" : "text-ink");
+  const lineClass = $derived(tone === "dark" ? "border-line-dark" : "border-line");
 </script>
 
 <dl class="border-y {lineClass}">
