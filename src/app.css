@@ -87,3 +87,29 @@ video {
     transition-duration: 0.001ms !important;
   }
 }
+
+[data-reveal-state="hidden"] {
+  opacity: 0;
+  transform: translateY(24px);
+  filter: blur(8px);
+  transition:
+    opacity 700ms cubic-bezier(0.18, 0.7, 0.22, 1),
+    transform 700ms cubic-bezier(0.18, 0.7, 0.22, 1),
+    filter 700ms cubic-bezier(0.18, 0.7, 0.22, 1);
+}
+
+[data-reveal-state="shown"] {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal-state="hidden"],
+  [data-reveal-state="shown"] {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+}
