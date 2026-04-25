@@ -44,7 +44,8 @@ export default [
       "**/RetailReady.svelte",
       "**/AIEngineering.svelte",
       "**/Resume.svelte",
-      "**/retailready/+page.svelte"
+      "**/retailready/+page.svelte",
+      "**/working-with-ai/+page.svelte"
     ],
     rules: {
       "svelte/no-navigation-without-resolve": "off"
