@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# SvelteKit / Vite build artifacts
+.svelte-kit/
+build/
+
+# Local / transient
+output/
+.history/
+_legacy-next/
+.playwright-cli/
+*.log
+.DS_Store
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Editor
+.vscode/
+.idea/
+
+# Deployment
+.vercel/
+.netlify/
