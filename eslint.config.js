@@ -27,6 +27,14 @@ export default [
     }
   },
   {
-    ignores: ["build/", ".svelte-kit/", "package/", "_legacy-next/", "output/", ".history/"]
+    ignores: [
+      "build/",
+      ".svelte-kit/",
+      "package/",
+      "_legacy-next/",
+      "output/",
+      ".history/",
+      ".next/"
+    ]
   }
 ];
