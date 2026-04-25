@@ -42,7 +42,8 @@ export default [
       "**/MagneticAnchor.svelte",
       "**/Header.svelte",
       "**/RetailReady.svelte",
-      "**/AIEngineering.svelte"
+      "**/AIEngineering.svelte",
+      "**/Resume.svelte"
     ],
     rules: {
       "svelte/no-navigation-without-resolve": "off"
