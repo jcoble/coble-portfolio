@@ -38,7 +38,7 @@ export default [
     ]
   },
   {
-    files: ["**/MagneticAnchor.svelte"],
+    files: ["**/MagneticAnchor.svelte", "**/Header.svelte"],
     rules: {
       "svelte/no-navigation-without-resolve": "off"
     }
