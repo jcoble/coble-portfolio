@@ -3,7 +3,9 @@ node_modules/
 
 # SvelteKit / Vite build artifacts
 .svelte-kit/
+.vite/
 build/
+*.tsbuildinfo
 
 # Local / transient
 output/
