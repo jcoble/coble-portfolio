@@ -36,5 +36,11 @@ export default [
       ".history/",
       ".next/"
     ]
+  },
+  {
+    files: ["**/MagneticAnchor.svelte"],
+    rules: {
+      "svelte/no-navigation-without-resolve": "off"
+    }
   }
 ];
