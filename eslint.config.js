@@ -43,7 +43,8 @@ export default [
       "**/Header.svelte",
       "**/RetailReady.svelte",
       "**/AIEngineering.svelte",
-      "**/Resume.svelte"
+      "**/Resume.svelte",
+      "**/retailready/+page.svelte"
     ],
     rules: {
       "svelte/no-navigation-without-resolve": "off"
