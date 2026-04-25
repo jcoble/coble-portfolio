@@ -48,6 +48,7 @@ This plan is intended to be executed via `superpowers:subagent-driven-developmen
 ### Task 0: Initialize git repo, write `.gitignore`, first commit
 
 **Files:**
+
 - Create: `/Users/blackcolours/dev/work/portfolio/.gitignore`
 - Init: `/Users/blackcolours/dev/work/portfolio/.git/`
 
@@ -130,6 +131,7 @@ Expected: one commit on `main` with the conventional-commit message.
 ### Task 1: Archive existing Next.js code
 
 **Files:**
+
 - Create: `/Users/blackcolours/dev/work/portfolio/_legacy-next/` (directory)
 - Move: existing top-level files into the legacy directory, preserving the originals
 
@@ -141,7 +143,7 @@ mkdir -p /Users/blackcolours/dev/work/portfolio/_legacy-next
 
 - [ ] **Step 2: Move Next.js artifacts into legacy**
 
-Move everything *except* `node_modules`, `_legacy-next/`, `docs/`, `output/`, and `.history/` (those last three are unrelated to the rebuild).
+Move everything _except_ `node_modules`, `_legacy-next/`, `docs/`, `output/`, and `.history/` (those last three are unrelated to the rebuild).
 
 ```bash
 cd /Users/blackcolours/dev/work/portfolio
@@ -169,6 +171,7 @@ Expected: `_legacy-next/`, `docs/`, `output/`, `.history/`, `.gitignore`.
 ### Task 2: Scaffold SvelteKit project files
 
 **Files:**
+
 - Create: `package.json`
 - Create: `svelte.config.js`
 - Create: `vite.config.ts`
@@ -218,8 +221,8 @@ Path: `/Users/blackcolours/dev/work/portfolio/package.json`
 Path: `/Users/blackcolours/dev/work/portfolio/svelte.config.js`
 
 ```javascript
-import adapter from '@sveltejs/adapter-node';
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import adapter from "@sveltejs/adapter-node";
+import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 
 const config = {
   preprocess: vitePreprocess(),
@@ -236,9 +239,9 @@ export default config;
 Path: `/Users/blackcolours/dev/work/portfolio/vite.config.ts`
 
 ```typescript
-import { sveltekit } from '@sveltejs/kit/vite';
-import tailwindcss from '@tailwindcss/vite';
-import { defineConfig } from 'vite';
+import { sveltekit } from "@sveltejs/kit/vite";
+import tailwindcss from "@tailwindcss/vite";
+import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [tailwindcss(), sveltekit()]
@@ -351,6 +354,7 @@ EOF
 ### Task 3: Configure ESLint + Prettier
 
 **Files:**
+
 - Modify: `/Users/blackcolours/dev/work/portfolio/package.json` (add scripts + devDependencies via `npm install`)
 - Create: `/Users/blackcolours/dev/work/portfolio/.prettierrc`
 - Create: `/Users/blackcolours/dev/work/portfolio/.prettierignore`
@@ -436,14 +440,7 @@ export default [
     }
   },
   {
-    ignores: [
-      "build/",
-      ".svelte-kit/",
-      "package/",
-      "_legacy-next/",
-      "output/",
-      ".history/"
-    ]
+    ignores: ["build/", ".svelte-kit/", "package/", "_legacy-next/", "output/", ".history/"]
   }
 ];
 ```
@@ -496,6 +493,7 @@ EOF
 ### Task 4: Set up Tailwind v4 with theme tokens and base styles
 
 **Files:**
+
 - Create: `src/app.css`
 - Create: `src/routes/+layout.svelte`
 - Create: `static/favicon.svg` (placeholder; reuse from legacy if available)
@@ -536,7 +534,8 @@ Path: `/Users/blackcolours/dev/work/portfolio/src/app.css`
   --color-moss: #737d5d;
   --color-signal: #7fb1b2;
 
-  --font-display: "Instrument Serif", "Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", serif;
+  --font-display:
+    "Instrument Serif", "Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", serif;
   --font-sans: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
@@ -555,9 +554,11 @@ body {
   margin: 0;
   background:
     linear-gradient(90deg, rgba(14, 14, 11, 0.035) 1px, transparent 1px),
-    linear-gradient(180deg, rgba(14, 14, 11, 0.03) 1px, transparent 1px),
-    var(--color-paper);
-  background-size: 88px 88px, 88px 88px, auto;
+    linear-gradient(180deg, rgba(14, 14, 11, 0.03) 1px, transparent 1px), var(--color-paper);
+  background-size:
+    88px 88px,
+    88px 88px,
+    auto;
   color: var(--color-ink);
   font-family: var(--font-sans);
   letter-spacing: 0;
@@ -590,8 +591,12 @@ video {
 }
 
 @keyframes marquee {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(-50%, 0, 0); }
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -617,7 +622,10 @@ Path: `/Users/blackcolours/dev/work/portfolio/src/routes/+layout.svelte`
   let { children } = $props();
 </script>
 
-<a class="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded focus:bg-ink focus:px-3 focus:py-2 focus:text-paper" href="#main">Skip to content</a>
+<a
+  class="focus:bg-ink focus:text-paper sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded focus:px-3 focus:py-2"
+  href="#main">Skip to content</a
+>
 <div id="top">
   {@render children()}
 </div>
@@ -629,11 +637,11 @@ Path: `/Users/blackcolours/dev/work/portfolio/src/routes/+page.svelte`
 
 ```svelte
 <main id="main" class="min-h-dvh px-8 py-16">
-  <p class="font-mono text-xs uppercase tracking-[0.2em] text-copper">Scaffold check</p>
+  <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">Scaffold check</p>
   <h1 class="mt-4 font-[family-name:var(--font-display)] text-7xl leading-[0.92] tracking-tight">
     Portfolio is alive.
   </h1>
-  <p class="mt-6 max-w-prose text-lg leading-8 text-muted">
+  <p class="text-muted mt-6 max-w-prose text-lg leading-8">
     Tailwind theme tokens, fonts, and SvelteKit routing all wired up. Ready to build sections.
   </p>
 </main>
@@ -664,6 +672,7 @@ Expected: `0 errors and 0 warnings`. If errors, fix before continuing.
 ### Task 5: Build the `reveal` action
 
 **Files:**
+
 - Create: `src/lib/actions/reveal.ts`
 
 The `reveal` action attaches an IntersectionObserver to an element and toggles a CSS class when it enters the viewport. The CSS does the actual animation; the action just triggers the state change.
@@ -679,12 +688,7 @@ type RevealOptions = {
 };
 
 export function reveal(node: HTMLElement, options: RevealOptions = {}) {
-  const {
-    threshold = 0.18,
-    rootMargin = "-10% 0px -22% 0px",
-    delay = 0,
-    once = true
-  } = options;
+  const { threshold = 0.18, rootMargin = "-10% 0px -22% 0px", delay = 0, once = true } = options;
 
   // Initial state
   node.dataset.revealState = "hidden";
@@ -772,6 +776,7 @@ Expected: 0 errors.
 ### Task 6: Build the `magnetic` action
 
 **Files:**
+
 - Create: `src/lib/actions/magnetic.ts`
 
 Mouse-tracking translate via Svelte's `spring` from `svelte/motion`. Used by anchor buttons.
@@ -844,6 +849,7 @@ Expected: 0 errors. If `Spring` has API differences in your installed version, c
 ### Task 7: Build the `scrubVideo` action
 
 **Files:**
+
 - Create: `src/lib/actions/scrubVideo.ts`
 
 Drives `video.currentTime` from a scroll progress value. Computed externally (in the Hero component) and passed in via the `progress` parameter (0-1).
@@ -855,7 +861,10 @@ type ScrubOptions = {
   exitLeadSeconds?: number; // hold these many seconds before end as the "release" zone
 };
 
-export function scrubVideo(video: HTMLVideoElement, initial: { progress: number; options?: ScrubOptions }) {
+export function scrubVideo(
+  video: HTMLVideoElement,
+  initial: { progress: number; options?: ScrubOptions }
+) {
   const opts = { exitLeadSeconds: 2, ...initial.options };
   let current = initial.progress;
 
@@ -865,8 +874,18 @@ export function scrubVideo(video: HTMLVideoElement, initial: { progress: number;
     video.muted = true;
 
     const clamped = Math.min(1, Math.max(0, current));
-    const exitStart = Math.max(0.01, Math.min(0.98, (video.duration - opts.exitLeadSeconds) / video.duration));
-    const target = clamped <= 0.002 ? 0.01 : Math.min(video.duration - 0.02, video.duration * clamped * exitStart + (clamped > exitStart ? (clamped - exitStart) * (1 - exitStart) : 0));
+    const exitStart = Math.max(
+      0.01,
+      Math.min(0.98, (video.duration - opts.exitLeadSeconds) / video.duration)
+    );
+    const target =
+      clamped <= 0.002
+        ? 0.01
+        : Math.min(
+            video.duration - 0.02,
+            video.duration * clamped * exitStart +
+              (clamped > exitStart ? (clamped - exitStart) * (1 - exitStart) : 0)
+          );
 
     if (Math.abs(video.currentTime - target) > 0.015) {
       video.currentTime = target;
@@ -910,6 +929,7 @@ Expected: 0 errors.
 ### Task 8: Build `Reveal.svelte` wrapper component
 
 **Files:**
+
 - Create: `src/lib/components/shared/Reveal.svelte`
 
 A thin wrapper that applies the `reveal` action and supports `as` polymorphism. Most sections render their own elements via `{@render children()}`; this is for cases where we want a quick reveal-styled wrapper with stagger control.
@@ -951,6 +971,7 @@ Expected: 0 errors.
 ### Task 9: Build `StickyPanel.svelte`
 
 **Files:**
+
 - Create: `src/lib/components/shared/StickyPanel.svelte`
 
 Wraps a tall scroll region whose contents stick to the viewport for a configurable height. Used for the section-to-section panel transitions.
@@ -990,6 +1011,7 @@ Expected: 0 errors.
 ### Task 10: Build `MagneticAnchor.svelte`
 
 **Files:**
+
 - Create: `src/lib/components/shared/MagneticAnchor.svelte`
 
 CTA anchor with magnetic mouse-following. Two tones: `dark` (paper-on-charcoal, primary) and `light` (translucent, secondary).
@@ -1020,11 +1042,7 @@ CTA anchor with magnetic mouse-following. Two tones: `dark` (paper-on-charcoal, 
       : "border border-white/16 bg-[rgba(244,242,235,0.1)] text-paper shadow-[inset_0_1px_0_rgba(255,255,255,0.13)] backdrop-blur-lg hover:bg-[rgba(244,242,235,0.18)]";
 </script>
 
-<a
-  class="{baseClass} {toneClass} {className}"
-  {href}
-  use:magnetic={{ travel: 0.16 }}
->
+<a class="{baseClass} {toneClass} {className}" {href} use:magnetic={{ travel: 0.16 }}>
   {@render children()}
 </a>
 ```
@@ -1044,6 +1062,7 @@ Expected: 0 errors.
 ### Task 11: Build `StatsGrid.svelte`
 
 **Files:**
+
 - Create: `src/lib/components/shared/StatsGrid.svelte`
 
 Renders a grid of big mono numbers + small mono labels. Used in RetailReady and AI Engineering sections. Supports light and dark surface variants.
@@ -1062,27 +1081,20 @@ Renders a grid of big mono numbers + small mono labels. Used in RetailReady and 
     tone?: "light" | "dark";
   } = $props();
 
-  const numberClass =
-    tone === "light"
-      ? "text-ink"
-      : "text-paper";
-  const labelClass =
-    tone === "light"
-      ? "text-muted"
-      : "text-[rgba(244,242,235,0.62)]";
-  const dividerClass =
-    tone === "light"
-      ? "border-line"
-      : "border-line-dark";
+  const numberClass = tone === "light" ? "text-ink" : "text-paper";
+  const labelClass = tone === "light" ? "text-muted" : "text-[rgba(244,242,235,0.62)]";
+  const dividerClass = tone === "light" ? "border-line" : "border-line-dark";
 </script>
 
 <div class="grid grid-cols-2 gap-px md:grid-cols-4 [&>*]:bg-transparent">
   {#each stats as stat (stat.label)}
-    <div class="border-b border-r {dividerClass} px-4 py-6 last:border-r-0 md:px-6 md:py-7 odd:border-r [&:nth-child(2n)]:border-r-0 md:[&:nth-child(2n)]:border-r md:[&:nth-child(4n)]:border-r-0 [&:nth-last-child(-n+2)]:border-b-0 md:[&:nth-last-child(-n+4)]:border-b-0">
-      <p class="font-mono text-3xl font-medium leading-none md:text-5xl {numberClass}">
+    <div
+      class="border-r border-b {dividerClass} px-4 py-6 last:border-r-0 odd:border-r md:px-6 md:py-7 [&:nth-child(2n)]:border-r-0 md:[&:nth-child(2n)]:border-r md:[&:nth-child(4n)]:border-r-0 [&:nth-last-child(-n+2)]:border-b-0 md:[&:nth-last-child(-n+4)]:border-b-0"
+    >
+      <p class="font-mono text-3xl leading-none font-medium md:text-5xl {numberClass}">
         {stat.value}
       </p>
-      <p class="mt-3 font-mono text-xs uppercase tracking-[0.16em] {labelClass}">
+      <p class="mt-3 font-mono text-xs tracking-[0.16em] uppercase {labelClass}">
         {stat.label}
       </p>
     </div>
@@ -1103,6 +1115,7 @@ Expected: 0 errors.
 ### Task 12: Build `TechStackGrid.svelte`
 
 **Files:**
+
 - Create: `src/lib/components/shared/TechStackGrid.svelte`
 
 Spec-sheet style grid of stack categories with mono labels.
@@ -1121,16 +1134,17 @@ Spec-sheet style grid of stack categories with mono labels.
     tone?: "light" | "dark";
   } = $props();
 
-  const labelClass =
-    tone === "dark" ? "text-[rgba(244,242,235,0.62)]" : "text-muted";
+  const labelClass = tone === "dark" ? "text-[rgba(244,242,235,0.62)]" : "text-muted";
   const valueClass = tone === "dark" ? "text-paper" : "text-ink";
   const lineClass = tone === "dark" ? "border-line-dark" : "border-line";
 </script>
 
 <dl class="border-y {lineClass}">
   {#each rows as row (row.category)}
-    <div class="grid grid-cols-1 gap-2 border-b {lineClass} py-5 last:border-b-0 md:grid-cols-[12rem_1fr] md:gap-8 md:py-6">
-      <dt class="font-mono text-xs uppercase tracking-[0.18em] {labelClass}">{row.category}</dt>
+    <div
+      class="grid grid-cols-1 gap-2 border-b {lineClass} py-5 last:border-b-0 md:grid-cols-[12rem_1fr] md:gap-8 md:py-6"
+    >
+      <dt class="font-mono text-xs tracking-[0.18em] uppercase {labelClass}">{row.category}</dt>
       <dd class="font-mono text-sm leading-7 {valueClass}">
         {row.items.join(" · ")}
       </dd>
@@ -1152,6 +1166,7 @@ Expected: 0 errors.
 ### Task 13: Build `JourneyRail.svelte`
 
 **Files:**
+
 - Create: `src/lib/components/shared/JourneyRail.svelte`
 
 Horizontal stage rail (Sandbox → Preflight → Certification → Go-Live → Production). Mono labels + connecting dashes. Wraps to vertical on mobile.
@@ -1167,14 +1182,18 @@ Horizontal stage rail (Sandbox → Preflight → Certification → Go-Live → P
 
 <ol class="grid grid-cols-1 gap-3 md:grid-cols-{stages.length} md:gap-0">
   {#each stages as stage, index (stage.name)}
-    <li class="relative grid gap-2 border border-line bg-[rgba(255,255,255,0.32)] p-5 md:border-r-0 md:last:border-r md:rounded-none md:first:rounded-l-lg md:last:rounded-r-lg">
-      <span class="font-mono text-xs uppercase tracking-[0.18em] text-copper">
+    <li
+      class="border-line relative grid gap-2 border bg-[rgba(255,255,255,0.32)] p-5 md:rounded-none md:border-r-0 md:first:rounded-l-lg md:last:rounded-r-lg md:last:border-r"
+    >
+      <span class="text-copper font-mono text-xs tracking-[0.18em] uppercase">
         Stage {String(index + 1).padStart(2, "0")}
       </span>
-      <h3 class="font-[family-name:var(--font-display)] text-3xl leading-none tracking-tight text-ink">
+      <h3
+        class="text-ink font-[family-name:var(--font-display)] text-3xl leading-none tracking-tight"
+      >
         {stage.name}
       </h3>
-      <p class="text-sm leading-6 text-muted">
+      <p class="text-muted text-sm leading-6">
         {stage.description}
       </p>
     </li>
@@ -1203,6 +1222,7 @@ Expected: 0 errors.
 ### Task 14: Build `DocTypesTable.svelte`
 
 **Files:**
+
 - Create: `src/lib/components/shared/DocTypesTable.svelte`
 
 Two-column table of EDI document types: X12 on the left, EDIFACT on the right. Mono throughout.
@@ -1222,8 +1242,8 @@ Two-column table of EDI document types: X12 on the left, EDIFACT on the right. M
 
 <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
   {#each columns as col (col.format)}
-    <div class="border-y border-line py-5">
-      <p class="font-mono text-xs uppercase tracking-[0.2em] text-copper">{col.format}</p>
+    <div class="border-line border-y py-5">
+      <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">{col.format}</p>
       <ul class="mt-4 grid gap-2">
         {#each col.docs as doc (doc.code)}
           <li class="grid grid-cols-[4rem_1fr] gap-3 font-mono text-sm">
@@ -1250,6 +1270,7 @@ Expected: 0 errors.
 ### Task 15: Build `PullQuote.svelte`
 
 **Files:**
+
 - Create: `src/lib/components/shared/PullQuote.svelte`
 
 Editorial pull-quote for the AI Engineering section's "loaded ≠ attended" insight. Display serif, large, italic optional.
@@ -1269,21 +1290,18 @@ Editorial pull-quote for the AI Engineering section's "loaded ≠ attended" insi
   } = $props();
 
   const wrapClass =
-    tone === "dark"
-      ? "border-y border-line-dark text-paper"
-      : "border-y border-line text-ink";
-  const attrClass =
-    tone === "dark"
-      ? "text-[rgba(244,242,235,0.5)]"
-      : "text-muted";
+    tone === "dark" ? "border-y border-line-dark text-paper" : "border-y border-line text-ink";
+  const attrClass = tone === "dark" ? "text-[rgba(244,242,235,0.5)]" : "text-muted";
 </script>
 
 <figure class="grid gap-6 py-12 md:py-16 {wrapClass}">
-  <blockquote class="max-w-[58ch] font-[family-name:var(--font-display)] text-3xl italic leading-snug tracking-tight md:text-5xl">
+  <blockquote
+    class="max-w-[58ch] font-[family-name:var(--font-display)] text-3xl leading-snug tracking-tight italic md:text-5xl"
+  >
     {@render children()}
   </blockquote>
   {#if attribution}
-    <figcaption class="font-mono text-xs uppercase tracking-[0.18em] {attrClass}">
+    <figcaption class="font-mono text-xs tracking-[0.18em] uppercase {attrClass}">
       — {attribution}
     </figcaption>
   {/if}
@@ -1303,6 +1321,7 @@ Expected: 0 errors.
 ### Task 16: Build `Header.svelte` (top nav)
 
 **Files:**
+
 - Create: `src/lib/components/shared/Header.svelte`
 
 Top nav bar: monogram + name on left, links on right. Translucent over hero, solid in the rest of the site. The header is rendered inside the Hero (matching the existing pattern), but extracted for reuse.
@@ -1334,9 +1353,7 @@ Top nav bar: monogram + name on left, links on right. Translucent over hero, sol
       : "border-line bg-[rgba(244,242,235,0.86)] text-ink backdrop-blur-md";
 
   const monogramClass =
-    tone === "dark"
-      ? "bg-[rgba(244,242,235,0.92)] text-charcoal"
-      : "bg-ink text-paper";
+    tone === "dark" ? "bg-[rgba(244,242,235,0.92)] text-charcoal" : "bg-ink text-paper";
 
   const navLinkClass =
     tone === "dark"
@@ -1344,7 +1361,9 @@ Top nav bar: monogram + name on left, links on right. Translucent over hero, sol
       : "text-muted hover:bg-ink/8 hover:text-ink";
 </script>
 
-<header class="absolute left-4 right-4 top-4 z-[2] flex items-center justify-between rounded-lg border px-3 py-2 md:left-8 md:right-8 lg:left-12 lg:right-12 {containerClass}">
+<header
+  class="absolute top-4 right-4 left-4 z-[2] flex items-center justify-between rounded-lg border px-3 py-2 md:right-8 md:left-8 lg:right-12 lg:left-12 {containerClass}"
+>
   <a class="flex items-center gap-3 text-sm font-medium" href="#top">
     <span class="grid size-9 place-items-center rounded-lg font-mono text-xs {monogramClass}">
       {monogram}
@@ -1372,6 +1391,7 @@ Expected: 0 errors.
 ### Task 17: Build `Footer.svelte`
 
 **Files:**
+
 - Create: `src/lib/components/shared/Footer.svelte`
 
 Minimal footer used at the bottom of every page.
@@ -1391,9 +1411,11 @@ Minimal footer used at the bottom of every page.
   const year = new Date().getFullYear();
 </script>
 
-<footer class="mt-16 flex flex-col gap-3 border-t border-line pt-6 text-sm text-muted md:flex-row md:items-center md:justify-between">
-  <span class="font-mono text-xs uppercase tracking-[0.16em]">© {year} {name}</span>
-  <span class="font-mono text-xs uppercase tracking-[0.16em]">{role}</span>
+<footer
+  class="border-line text-muted mt-16 flex flex-col gap-3 border-t pt-6 text-sm md:flex-row md:items-center md:justify-between"
+>
+  <span class="font-mono text-xs tracking-[0.16em] uppercase">© {year} {name}</span>
+  <span class="font-mono text-xs tracking-[0.16em] uppercase">{role}</span>
 </footer>
 ```
 
@@ -1412,6 +1434,7 @@ Expected: 0 errors.
 ### Task 18: Build `ArchitectureDiagram.svelte` (RetailReady doc flow)
 
 **Files:**
+
 - Create: `src/lib/components/shared/ArchitectureDiagram.svelte`
 
 The signature visual for RetailReady. SVG-based architecture diagram with animated dots flowing between nodes. Pauses when off-screen. Static when reduced motion.
@@ -1470,7 +1493,7 @@ The signature visual for RetailReady. SVG-based architecture diagram with animat
       initialDots.push({
         edgeIndex: e,
         doc: docTypes[(e * count + i) % docTypes.length],
-        offset: (i / count) + Math.random() * 0.07,
+        offset: i / count + Math.random() * 0.07,
         speed: 0.18 + Math.random() * 0.06
       });
     }
@@ -1547,11 +1570,7 @@ The signature visual for RetailReady. SVG-based architecture diagram with animat
     <!-- Edges -->
     <g stroke="var(--color-line-dark)" stroke-width="1.2" fill="none">
       {#each edges as edge, i (edge.from + edge.to)}
-        <path
-          bind:this={pathEls[i]}
-          d={pathFor(edge)}
-          stroke-dasharray="4 4"
-        />
+        <path bind:this={pathEls[i]} d={pathFor(edge)} stroke-dasharray="4 4" />
       {/each}
     </g>
 
@@ -1559,14 +1578,7 @@ The signature visual for RetailReady. SVG-based architecture diagram with animat
     <g>
       {#each dots as dot, i (i)}
         {@const pos = dotPosition(dot)}
-        <circle
-          cx={pos.x}
-          cy={pos.y}
-          r="5"
-          fill={dot.doc.color}
-          opacity="0.92"
-        >
-        </circle>
+        <circle cx={pos.x} cy={pos.y} r="5" fill={dot.doc.color} opacity="0.92"> </circle>
       {/each}
     </g>
 
@@ -1574,7 +1586,15 @@ The signature visual for RetailReady. SVG-based architecture diagram with animat
     <g>
       {#each nodes as node (node.id)}
         <g transform="translate({node.x}, {node.y})">
-          <rect x="-44" y="-22" width="88" height="44" rx="6" fill="var(--color-charcoal)" stroke="var(--color-line-dark)" />
+          <rect
+            x="-44"
+            y="-22"
+            width="88"
+            height="44"
+            rx="6"
+            fill="var(--color-charcoal)"
+            stroke="var(--color-line-dark)"
+          />
           <text
             x="0"
             y="6"
@@ -1593,11 +1613,14 @@ The signature visual for RetailReady. SVG-based architecture diagram with animat
 
   <!-- Legend (full variant only) -->
   {#if variant === "full"}
-    <div class="absolute bottom-2 left-1/2 flex -translate-x-1/2 flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-[rgba(244,242,235,0.62)]">
+    <div
+      class="absolute bottom-2 left-1/2 flex -translate-x-1/2 flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-[rgba(244,242,235,0.62)]"
+    >
       {#each docTypes as dt (dt.code)}
-        <span class="flex items-center gap-2 font-mono uppercase tracking-[0.14em]">
+        <span class="flex items-center gap-2 font-mono tracking-[0.14em] uppercase">
           <span class="size-2.5 rounded-full" style="background: {dt.color}"></span>
-          {dt.code} {dt.label}
+          {dt.code}
+          {dt.label}
         </span>
       {/each}
     </div>
@@ -1624,7 +1647,7 @@ Replace the body of `src/routes/+page.svelte` temporarily:
   import ArchitectureDiagram from "$lib/components/shared/ArchitectureDiagram.svelte";
 </script>
 
-<main id="main" class="min-h-dvh bg-charcoal px-8 py-16">
+<main id="main" class="bg-charcoal min-h-dvh px-8 py-16">
   <ArchitectureDiagram variant="full" />
 </main>
 ```
@@ -1636,6 +1659,7 @@ Run dev server. Expected: 6 dark node boxes labeled left-to-right (Retailer, EDI
 ### Task 19: Build `AISystemDiagram.svelte` (fork-and-return pattern)
 
 **Files:**
+
 - Create: `src/lib/components/shared/AISystemDiagram.svelte`
 
 The companion diagram for the AI Engineering section. Shows the fork-and-return: Main Thread dispatches a Sub-agent that reads from Diagram + Memory + CLAUDE.md, then returns a Briefing.
@@ -1685,7 +1709,7 @@ The companion diagram for the AI Engineering section. Shows the fork-and-return:
     for (let i = 0; i < 2; i++) {
       initialDots.push({
         edgeIndex: e,
-        offset: (i / 2) + Math.random() * 0.1,
+        offset: i / 2 + Math.random() * 0.1,
         speed: 0.18 + Math.random() * 0.05,
         color: colors[(e + i) % colors.length]
       });
@@ -1768,7 +1792,15 @@ The companion diagram for the AI Engineering section. Shows the fork-and-return:
     <g>
       {#each nodes as node (node.id)}
         <g transform="translate({node.x}, {node.y})">
-          <rect x="-58" y="-20" width="116" height="40" rx="6" fill="var(--color-charcoal)" stroke="var(--color-line-dark)" />
+          <rect
+            x="-58"
+            y="-20"
+            width="116"
+            height="40"
+            rx="6"
+            fill="var(--color-charcoal)"
+            stroke="var(--color-line-dark)"
+          />
           <text
             x="0"
             y="5"
@@ -1806,6 +1838,7 @@ Quick visual verification in `+page.svelte`, then restore.
 ### Task 20: Write `src/lib/content/profile.ts` — main page content
 
 **Files:**
+
 - Create: `src/lib/content/profile.ts`
 
 This is the single source of truth for main-page copy. Sections import from here.
@@ -1837,8 +1870,7 @@ export const heroSignals = [
 export const practice = {
   eyebrow: "Practice",
   headline: "Founder-led software for operational work.",
-  body:
-    "Jesse builds founder-led software around practical workflows: EDI operations, data movement, customer-facing tools, and the internal systems that make a business easier to run."
+  body: "Jesse builds founder-led software around practical workflows: EDI operations, data movement, customer-facing tools, and the internal systems that make a business easier to run."
 };
 
 export const retailready = {
@@ -1887,16 +1919,37 @@ export const retailready = {
     ]
   },
   journey: [
-    { name: "Sandbox", description: "Practice mode against a retailer simulator. Real generators, no live partners." },
-    { name: "Preflight", description: "8 validation checks. Receiver IDs, protocol config, credentials, connection." },
-    { name: "Certification", description: "Live test docs exchanged with the retailer. Most retailers require it." },
-    { name: "Go-Live", description: "Final verification, all checks green. Promote to production." },
-    { name: "Production", description: "Real documents, real metrics, OTIF + ASN accuracy + chargeback tracking." }
+    {
+      name: "Sandbox",
+      description: "Practice mode against a retailer simulator. Real generators, no live partners."
+    },
+    {
+      name: "Preflight",
+      description: "8 validation checks. Receiver IDs, protocol config, credentials, connection."
+    },
+    {
+      name: "Certification",
+      description: "Live test docs exchanged with the retailer. Most retailers require it."
+    },
+    {
+      name: "Go-Live",
+      description: "Final verification, all checks green. Promote to production."
+    },
+    {
+      name: "Production",
+      description: "Real documents, real metrics, OTIF + ASN accuracy + chargeback tracking."
+    }
   ],
   techStack: [
-    { category: "Frontend", items: ["SvelteKit", "Svelte 5 runes", "Tailwind v4", "Shadcn-Svelte"] },
+    {
+      category: "Frontend",
+      items: ["SvelteKit", "Svelte 5 runes", "Tailwind v4", "Shadcn-Svelte"]
+    },
     { category: "API", items: [".NET 10", "ASP.NET Core", "EF Core", "SignalR"] },
-    { category: "Engine", items: [".NET 10", "8 background workers", "2 watchers", "Advisory-lock singleton"] },
+    {
+      category: "Engine",
+      items: [".NET 10", "8 background workers", "2 watchers", "Advisory-lock singleton"]
+    },
     { category: "Database", items: ["PostgreSQL", "RLS on 40 tables", "ediplatform_api role"] },
     { category: "Messaging", items: ["RabbitMQ (API ↔ Engine)"] },
     { category: "EDI Protocols", items: ["SFTP (SSH.NET)", "AS2 (OpenAS2)"] },
@@ -1907,28 +1960,23 @@ export const retailready = {
   flexPoints: [
     {
       title: "Two-layer monitoring after a real silent outage",
-      body:
-        "An in-app EngineAlertService watches domain logic — stale documents, repeated per-partner failures, worker heartbeat gaps. A host-level edi-monitor systemd service catches container crashes and healthcheck failures. The host-level layer is the only notifier that survives an API startup failure. Both were built after a 2.7-day silent outage in April 2026 proved one layer wasn't enough."
+      body: "An in-app EngineAlertService watches domain logic — stale documents, repeated per-partner failures, worker heartbeat gaps. A host-level edi-monitor systemd service catches container crashes and healthcheck failures. The host-level layer is the only notifier that survives an API startup failure. Both were built after a 2.7-day silent outage in April 2026 proved one layer wasn't enough."
     },
     {
       title: "Per-worker cascading timeouts",
-      body:
-        "Every Engine worker carries its own poll interval and per-step deadline enforced via CancellationTokenSource.CreateLinkedTokenSource. One stalled retailer connection cannot freeze the rest of the pipeline."
+      body: "Every Engine worker carries its own poll interval and per-step deadline enforced via CancellationTokenSource.CreateLinkedTokenSource. One stalled retailer connection cannot freeze the rest of the pipeline."
     },
     {
       title: "Outbound retry with optimistic concurrency",
-      body:
-        "Outbound documents enforce a 45-second per-doc transmit timeout. Postgres RowVersion (xmin) prevents a retry from racing with an inbound 997 acknowledgment that arrived mid-transmission."
+      body: "Outbound documents enforce a 45-second per-doc transmit timeout. Postgres RowVersion (xmin) prevents a retry from racing with an inbound 997 acknowledgment that arrived mid-transmission."
     },
     {
       title: "Advisory-lock singleton with takeover handshake",
-      body:
-        "Engine startup acquires pg_advisory_lock(59483) on a dedicated non-pooled connection. If a stale instance still holds it, pg_terminate_backend() evicts cleanly. A watcher service triggers graceful shutdown on lock loss instead of leaving zombies."
+      body: "Engine startup acquires pg_advisory_lock(59483) on a dedicated non-pooled connection. If a stale instance still holds it, pg_terminate_backend() evicts cleanly. A watcher service triggers graceful shutdown on lock loss instead of leaving zombies."
     },
     {
       title: "Postgres row-level security at the database layer",
-      body:
-        "40 tables enforce row-level security through the ediplatform_api role and per-request GUC variables set by an EF Core interceptor. FORCE ROW LEVEL SECURITY blocks even the table owner from bypassing policies — defense-in-depth alongside the existing application-layer filters."
+      body: "40 tables enforce row-level security through the ediplatform_api role and per-request GUC variables set by an EF Core interceptor. FORCE ROW LEVEL SECURITY blocks even the table owner from bypassing policies — defense-in-depth alongside the existing application-layer filters."
     }
   ],
   wedge:
@@ -1956,19 +2004,25 @@ export const aiEngineering = {
 export const cobleSolutions = {
   eyebrow: "Coble Solutions",
   headline: "Founder-led services.",
-  body:
-    "Hands-on technical strategy and product execution for companies that need software to reflect the way their work actually happens. Engagements stay close to business value and ship in tight loops with the people who will use the tool."
+  body: "Hands-on technical strategy and product execution for companies that need software to reflect the way their work actually happens. Engagements stay close to business value and ship in tight loops with the people who will use the tool."
 };
 
 export const experience = {
   eyebrow: "Experience",
   headline: "A decade-plus of EDI.",
-  body:
-    "10+ years building software, with EDI as the through-line. Started in 2014 building reader/writer engines for steamship lines at DepotSystems (322, EDIFACT CEDEX, 301, Westim, Destim, Codeco, WORDER). Spent four years as the sole developer on ISO management systems for the medical device and aerospace industries at IMSXpress. Currently runs RetailReady — a retail EDI platform for vendors selling into Walmart, Best Buy, Dollar Tree, Meijer, and Dollar General.",
+  body: "10+ years building software, with EDI as the through-line. Started in 2014 building reader/writer engines for steamship lines at DepotSystems (322, EDIFACT CEDEX, 301, Westim, Destim, Codeco, WORDER). Spent four years as the sole developer on ISO management systems for the medical device and aerospace industries at IMSXpress. Currently runs RetailReady — a retail EDI platform for vendors selling into Walmart, Best Buy, Dollar Tree, Meijer, and Dollar General.",
   timeline: [
-    { years: "2022 — Present", role: "Founder, Lead Engineer", company: "Coble Solutions / RetailReady EDI" },
+    {
+      years: "2022 — Present",
+      role: "Founder, Lead Engineer",
+      company: "Coble Solutions / RetailReady EDI"
+    },
     { years: "2018 — 2022", role: "Senior / Sole Developer", company: "AQA Company (IMSXpress)" },
-    { years: "2014 — 2018", role: "Developer → Senior Developer", company: "Edge Networks / DepotSystems" }
+    {
+      years: "2014 — 2018",
+      role: "Developer → Senior Developer",
+      company: "Edge Networks / DepotSystems"
+    }
   ]
 };
 
@@ -2047,11 +2101,31 @@ export const resume = {
   ],
   technical: [
     { category: "Languages", items: ["C# / .NET", "TypeScript", "VB.NET", "T-SQL", "JavaScript"] },
-    { category: "Frameworks (current)", items: ["SvelteKit", "Svelte 5 runes", "ASP.NET Core", ".NET 10", "EF Core", "SignalR", "Tailwind v4"] },
-    { category: "Frameworks (historical)", items: ["WinForms", "ASP.NET WebForms", "DevExpress", "Crystal Reports"] },
+    {
+      category: "Frameworks (current)",
+      items: [
+        "SvelteKit",
+        "Svelte 5 runes",
+        "ASP.NET Core",
+        ".NET 10",
+        "EF Core",
+        "SignalR",
+        "Tailwind v4"
+      ]
+    },
+    {
+      category: "Frameworks (historical)",
+      items: ["WinForms", "ASP.NET WebForms", "DevExpress", "Crystal Reports"]
+    },
     { category: "Data", items: ["PostgreSQL", "MS SQL Server", "SQLite", "FoxPro"] },
-    { category: "Infrastructure", items: ["Docker", "Traefik", "Hetzner", "Hyper-V", "Microsoft Server"] },
-    { category: "Messaging / Protocols", items: ["RabbitMQ", "AS2 (OpenAS2)", "SFTP", "EDI X12 + EDIFACT"] },
+    {
+      category: "Infrastructure",
+      items: ["Docker", "Traefik", "Hetzner", "Hyper-V", "Microsoft Server"]
+    },
+    {
+      category: "Messaging / Protocols",
+      items: ["RabbitMQ", "AS2 (OpenAS2)", "SFTP", "EDI X12 + EDIFACT"]
+    },
     { category: "Methodologies", items: ["OOAD", "TDD", "SDLC ownership", "On-call support"] }
   ],
   education: {
@@ -2085,6 +2159,7 @@ Components are wired into `+page.svelte` in Task 31.
 ### Task 21: Build `Hero.svelte`
 
 **Files:**
+
 - Create: `src/lib/components/Hero.svelte`
 
 This is the largest single component. It owns: scroll-scrubbed video, the navbar, magnetic CTAs, and the live-availability pill. Ports the existing `HeroExperience.tsx` to Svelte 5 runes.
@@ -2148,12 +2223,9 @@ Expected: both files present.
   const sceneY = $derived(progress > 0.78 ? `${(progress - 0.78) * 220 - 18}dvh` : "0dvh");
 </script>
 
-<section
-  bind:this={sectionEl}
-  class="relative min-h-[460dvh] overflow-clip bg-charcoal"
->
+<section bind:this={sectionEl} class="bg-charcoal relative min-h-[460dvh] overflow-clip">
   <div
-    class="sticky top-0 min-h-dvh overflow-hidden bg-charcoal"
+    class="bg-charcoal sticky top-0 min-h-dvh overflow-hidden"
     style="transform: translateY({sceneY})"
   >
     <div
@@ -2163,12 +2235,18 @@ Expected: both files present.
       {#if !videoFailed}
         <video
           bind:this={videoEl}
-          class="h-full w-full object-cover transition-opacity duration-700 {videoReady ? 'opacity-100' : 'opacity-0'}"
+          class="h-full w-full object-cover transition-opacity duration-700 {videoReady
+            ? 'opacity-100'
+            : 'opacity-0'}"
           muted
           playsinline
           preload="auto"
-          oncanplay={() => { videoReady = true; }}
-          onerror={() => { videoFailed = true; }}
+          oncanplay={() => {
+            videoReady = true;
+          }}
+          onerror={() => {
+            videoFailed = true;
+          }}
           use:scrubVideo={{ progress }}
         >
           <source src={profile.videoSrc} type="video/mp4" />
@@ -2176,33 +2254,47 @@ Expected: both files present.
       {/if}
 
       {#if !videoReady || videoFailed}
-        <div class="absolute inset-0 overflow-hidden bg-[radial-gradient(circle_at_62%_32%,rgba(162,107,79,0.28),transparent_28%),linear-gradient(145deg,#25251f_0%,#161612_58%,#2d3025_100%)]"></div>
+        <div
+          class="absolute inset-0 overflow-hidden bg-[radial-gradient(circle_at_62%_32%,rgba(162,107,79,0.28),transparent_28%),linear-gradient(145deg,#25251f_0%,#161612_58%,#2d3025_100%)]"
+        ></div>
       {/if}
     </div>
 
-    <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(14,14,11,0.78)_0%,rgba(14,14,11,0.5)_38%,rgba(14,14,11,0.1)_72%,rgba(14,14,11,0.42)_100%)]"></div>
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_72%_18%,rgba(162,107,79,0.14),transparent_32%),linear-gradient(180deg,rgba(14,14,11,0.1)_0%,rgba(14,14,11,0.03)_52%,rgba(14,14,11,0.82)_100%)]"></div>
+    <div
+      class="absolute inset-0 bg-[linear-gradient(90deg,rgba(14,14,11,0.78)_0%,rgba(14,14,11,0.5)_38%,rgba(14,14,11,0.1)_72%,rgba(14,14,11,0.42)_100%)]"
+    ></div>
+    <div
+      class="absolute inset-0 bg-[radial-gradient(circle_at_72%_18%,rgba(162,107,79,0.14),transparent_32%),linear-gradient(180deg,rgba(14,14,11,0.1)_0%,rgba(14,14,11,0.03)_52%,rgba(14,14,11,0.82)_100%)]"
+    ></div>
 
     <div class="relative mx-auto min-h-dvh w-full max-w-[1500px] px-4 py-5 md:px-8 lg:px-12">
       <Header monogram={profile.monogram} name={profile.name} tone="dark" />
 
       <div
-        class="relative z-[1] flex min-h-dvh items-end pb-16 pt-28 md:items-center md:pb-0"
+        class="relative z-[1] flex min-h-dvh items-end pt-28 pb-16 md:items-center md:pb-0"
         style="transform: translateY({copyY}); opacity: {copyOpacity}"
       >
         <div class="max-w-[820px] md:pl-[4vw]">
-          <div class="mb-8 flex w-fit items-center gap-3 rounded-lg border border-white/14 bg-[rgba(244,242,235,0.12)] px-3 py-2 text-xs uppercase tracking-[0.18em] text-[rgba(244,242,235,0.78)] shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-md">
+          <div
+            class="mb-8 flex w-fit items-center gap-3 rounded-lg border border-white/14 bg-[rgba(244,242,235,0.12)] px-3 py-2 text-xs tracking-[0.18em] text-[rgba(244,242,235,0.78)] uppercase shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-md"
+          >
             <span class="relative flex size-2">
-              <span class="absolute inline-flex size-full animate-ping rounded-full bg-[#a9b38a] opacity-40"></span>
+              <span
+                class="absolute inline-flex size-full animate-ping rounded-full bg-[#a9b38a] opacity-40"
+              ></span>
               <span class="relative inline-flex size-2 rounded-full bg-[#a9b38a]"></span>
             </span>
             {profile.availability}
           </div>
 
-          <p class="mb-5 max-w-[42rem] text-sm font-medium uppercase tracking-[0.2em] text-[#d0ab8e]">
+          <p
+            class="mb-5 max-w-[42rem] text-sm font-medium tracking-[0.2em] text-[#d0ab8e] uppercase"
+          >
             {profile.role}
           </p>
-          <h1 class="font-[family-name:var(--font-display)] text-5xl font-normal leading-[0.92] tracking-tight text-paper md:text-7xl lg:text-8xl">
+          <h1
+            class="text-paper font-[family-name:var(--font-display)] text-5xl leading-[0.92] font-normal tracking-tight md:text-7xl lg:text-8xl"
+          >
             {profile.headline}
           </h1>
           <p class="mt-7 max-w-[62ch] text-base leading-8 text-[rgba(244,242,235,0.78)] md:text-lg">
@@ -2245,6 +2337,7 @@ Expected: 0 errors.
 ### Task 22: Build `Practice.svelte`
 
 **Files:**
+
 - Create: `src/lib/components/Practice.svelte`
 
 - [ ] **Step 1: Write the component**
@@ -2266,34 +2359,43 @@ Expected: 0 errors.
 </script>
 
 <section class="bg-paper">
-  <div class="mx-auto grid max-w-[1500px] grid-cols-1 gap-10 px-4 py-24 md:grid-cols-[0.72fr_1.28fr] md:px-8 md:py-32 lg:px-12">
+  <div
+    class="mx-auto grid max-w-[1500px] grid-cols-1 gap-10 px-4 py-24 md:grid-cols-[0.72fr_1.28fr] md:px-8 md:py-32 lg:px-12"
+  >
     <Reveal>
       {#snippet children()}
-        <p class="font-mono text-xs uppercase tracking-[0.2em] text-copper">
+        <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">
           {practice.eyebrow}
         </p>
-        <h2 class="mt-4 max-w-[12ch] font-[family-name:var(--font-display)] text-4xl leading-none tracking-tight md:text-6xl">
+        <h2
+          class="mt-4 max-w-[12ch] font-[family-name:var(--font-display)] text-4xl leading-none tracking-tight md:text-6xl"
+        >
           {practice.headline}
         </h2>
       {/snippet}
     </Reveal>
 
     <div class="grid gap-6 md:grid-cols-[1.1fr_0.9fr]">
-      <Reveal class="rounded-lg border border-line bg-[rgba(255,255,255,0.32)] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.58)] md:p-8" delay={120}>
+      <Reveal
+        class="border-line rounded-lg border bg-[rgba(255,255,255,0.32)] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.58)] md:p-8"
+        delay={120}
+      >
         {#snippet children()}
           <Compass class="text-moss" size={28} weight="duotone" />
-          <p class="mt-8 max-w-[48ch] text-xl leading-8 text-ink">
+          <p class="text-ink mt-8 max-w-[48ch] text-xl leading-8">
             {practice.body}
           </p>
         {/snippet}
       </Reveal>
 
-      <Reveal class="grid content-end gap-3 border-y border-line py-6" delay={240}>
+      <Reveal class="border-line grid content-end gap-3 border-y py-6" delay={240}>
         {#snippet children()}
           {#each signals as signal (signal.label)}
             <div class="flex items-center justify-between gap-4 py-4">
-              <span class="text-lg font-medium text-ink">{signal.label}</span>
-              <span class="grid size-10 place-items-center rounded-lg bg-[rgba(14,14,11,0.06)] text-moss">
+              <span class="text-ink text-lg font-medium">{signal.label}</span>
+              <span
+                class="text-moss grid size-10 place-items-center rounded-lg bg-[rgba(14,14,11,0.06)]"
+              >
                 <signal.icon aria-hidden="true" size={20} weight="bold" />
               </span>
             </div>
@@ -2318,6 +2420,7 @@ Expected: 0 errors.
 ### Task 23: Build `RetailReady.svelte`
 
 **Files:**
+
 - Create: `src/lib/components/RetailReady.svelte`
 
 The centerpiece. Imports content from `profile.ts`, lays out: header → diagram → stats → doc types → journey → tech stack → flex points → wedge → CTA.
@@ -2340,8 +2443,12 @@ The centerpiece. Imports content from `profile.ts`, lays out: header → diagram
   <div class="mx-auto max-w-[1500px] px-4 py-24 md:px-8 md:py-32 lg:px-12">
     <Reveal>
       {#snippet children()}
-        <p class="font-mono text-xs uppercase tracking-[0.2em] text-copper">{retailready.eyebrow}</p>
-        <h2 class="mt-5 max-w-[14ch] font-[family-name:var(--font-display)] text-5xl leading-[0.95] tracking-tight md:text-8xl">
+        <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">
+          {retailready.eyebrow}
+        </p>
+        <h2
+          class="mt-5 max-w-[14ch] font-[family-name:var(--font-display)] text-5xl leading-[0.95] tracking-tight md:text-8xl"
+        >
           {retailready.headline}
         </h2>
         <div class="mt-8 grid gap-5 md:grid-cols-2 md:gap-8">
@@ -2356,7 +2463,7 @@ The centerpiece. Imports content from `profile.ts`, lays out: header → diagram
 
     <Reveal class="mt-20" delay={120}>
       {#snippet children()}
-        <div class="rounded-lg border border-line-dark bg-[rgba(244,242,235,0.04)] p-6 md:p-10">
+        <div class="border-line-dark rounded-lg border bg-[rgba(244,242,235,0.04)] p-6 md:p-10">
           <ArchitectureDiagram variant="full" />
         </div>
       {/snippet}
@@ -2364,7 +2471,7 @@ The centerpiece. Imports content from `profile.ts`, lays out: header → diagram
 
     <Reveal class="mt-20" delay={120}>
       {#snippet children()}
-        <p class="font-mono text-xs uppercase tracking-[0.2em] text-copper">By the numbers</p>
+        <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">By the numbers</p>
         <div class="mt-6">
           <StatsGrid stats={retailready.stats} tone="dark" />
         </div>
@@ -2373,7 +2480,9 @@ The centerpiece. Imports content from `profile.ts`, lays out: header → diagram
 
     <Reveal class="mt-20" delay={120}>
       {#snippet children()}
-        <p class="font-mono text-xs uppercase tracking-[0.2em] text-copper">Document types supported</p>
+        <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">
+          Document types supported
+        </p>
         <div class="mt-6">
           <DocTypesTable columns={retailready.docTypes.columns} />
         </div>
@@ -2382,7 +2491,7 @@ The centerpiece. Imports content from `profile.ts`, lays out: header → diagram
 
     <Reveal class="mt-20" delay={120}>
       {#snippet children()}
-        <p class="font-mono text-xs uppercase tracking-[0.2em] text-copper">Customer journey</p>
+        <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">Customer journey</p>
         <div class="mt-6">
           <JourneyRail stages={retailready.journey} />
         </div>
@@ -2391,7 +2500,7 @@ The centerpiece. Imports content from `profile.ts`, lays out: header → diagram
 
     <Reveal class="mt-20" delay={120}>
       {#snippet children()}
-        <p class="font-mono text-xs uppercase tracking-[0.2em] text-copper">Stack</p>
+        <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">Stack</p>
         <div class="mt-6">
           <TechStackGrid rows={retailready.techStack} tone="dark" />
         </div>
@@ -2400,14 +2509,18 @@ The centerpiece. Imports content from `profile.ts`, lays out: header → diagram
 
     <Reveal class="mt-20" delay={120}>
       {#snippet children()}
-        <p class="font-mono text-xs uppercase tracking-[0.2em] text-copper">Design highlights</p>
-        <ol class="mt-8 grid gap-px border border-line-dark md:grid-cols-2">
+        <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">Design highlights</p>
+        <ol class="border-line-dark mt-8 grid gap-px border md:grid-cols-2">
           {#each retailready.flexPoints as point, index (point.title)}
             <li class="bg-charcoal p-6 md:p-8">
-              <span class="font-mono text-xs uppercase tracking-[0.18em] text-[rgba(244,242,235,0.5)]">
+              <span
+                class="font-mono text-xs tracking-[0.18em] text-[rgba(244,242,235,0.5)] uppercase"
+              >
                 {String(index + 1).padStart(2, "0")}
               </span>
-              <h3 class="mt-3 text-xl font-semibold leading-tight tracking-tight text-paper md:text-2xl">
+              <h3
+                class="text-paper mt-3 text-xl leading-tight font-semibold tracking-tight md:text-2xl"
+              >
                 {point.title}
               </h3>
               <p class="mt-3 text-sm leading-7 text-[rgba(244,242,235,0.74)]">
@@ -2421,7 +2534,9 @@ The centerpiece. Imports content from `profile.ts`, lays out: header → diagram
 
     <Reveal class="mt-20" delay={120}>
       {#snippet children()}
-        <blockquote class="max-w-[58ch] border-l-2 border-copper pl-6 font-[family-name:var(--font-display)] text-2xl italic leading-snug text-paper md:text-4xl">
+        <blockquote
+          class="border-copper text-paper max-w-[58ch] border-l-2 pl-6 font-[family-name:var(--font-display)] text-2xl leading-snug italic md:text-4xl"
+        >
           {retailready.wedge}
         </blockquote>
       {/snippet}
@@ -2431,10 +2546,15 @@ The centerpiece. Imports content from `profile.ts`, lays out: header → diagram
       {#snippet children()}
         <a
           href="/retailready"
-          class="group inline-flex items-center gap-3 font-mono text-sm uppercase tracking-[0.18em] text-copper transition-colors hover:text-[color-mix(in_oklab,var(--color-copper)_85%,white)]"
+          class="group text-copper inline-flex items-center gap-3 font-mono text-sm tracking-[0.18em] uppercase transition-colors hover:text-[color-mix(in_oklab,var(--color-copper)_85%,white)]"
         >
           View the full system overview
-          <ArrowUpRight aria-hidden="true" size={20} weight="bold" class="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          <ArrowUpRight
+            aria-hidden="true"
+            size={20}
+            weight="bold"
+            class="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+          />
         </a>
       {/snippet}
     </Reveal>
@@ -2455,6 +2575,7 @@ Expected: 0 errors.
 ### Task 24: Build `AIEngineering.svelte`
 
 **Files:**
+
 - Create: `src/lib/components/AIEngineering.svelte`
 
 - [ ] **Step 1: Write the component**
@@ -2473,8 +2594,12 @@ Expected: 0 errors.
   <div class="mx-auto max-w-[1500px] px-4 py-24 md:px-8 md:py-32 lg:px-12">
     <Reveal>
       {#snippet children()}
-        <p class="font-mono text-xs uppercase tracking-[0.2em] text-copper">{aiEngineering.eyebrow}</p>
-        <h2 class="mt-5 max-w-[14ch] font-[family-name:var(--font-display)] text-5xl leading-[0.95] tracking-tight md:text-8xl">
+        <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">
+          {aiEngineering.eyebrow}
+        </p>
+        <h2
+          class="mt-5 max-w-[14ch] font-[family-name:var(--font-display)] text-5xl leading-[0.95] tracking-tight md:text-8xl"
+        >
           {aiEngineering.headline}
         </h2>
         <p class="mt-8 max-w-[68ch] text-lg leading-8 text-[rgba(244,242,235,0.76)]">
@@ -2485,7 +2610,7 @@ Expected: 0 errors.
 
     <Reveal class="mt-16" delay={120}>
       {#snippet children()}
-        <div class="rounded-lg border border-line-dark bg-[rgba(244,242,235,0.03)] p-6 md:p-10">
+        <div class="border-line-dark rounded-lg border bg-[rgba(244,242,235,0.03)] p-6 md:p-10">
           <AISystemDiagram variant="full" />
         </div>
       {/snippet}
@@ -2493,7 +2618,7 @@ Expected: 0 errors.
 
     <Reveal class="mt-20" delay={120}>
       {#snippet children()}
-        <p class="font-mono text-xs uppercase tracking-[0.2em] text-copper">By the numbers</p>
+        <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">By the numbers</p>
         <div class="mt-6">
           <StatsGrid stats={aiEngineering.stats} tone="dark" />
         </div>
@@ -2512,7 +2637,7 @@ Expected: 0 errors.
 
     <Reveal class="mt-12" delay={120}>
       {#snippet children()}
-        <p class="max-w-[44ch] text-2xl font-medium leading-snug text-paper md:text-3xl">
+        <p class="text-paper max-w-[44ch] text-2xl leading-snug font-medium md:text-3xl">
           {aiEngineering.closing}
         </p>
       {/snippet}
@@ -2522,10 +2647,15 @@ Expected: 0 errors.
       {#snippet children()}
         <a
           href="/working-with-ai"
-          class="group inline-flex items-center gap-3 font-mono text-sm uppercase tracking-[0.18em] text-copper transition-colors hover:text-[color-mix(in_oklab,var(--color-copper)_85%,white)]"
+          class="group text-copper inline-flex items-center gap-3 font-mono text-sm tracking-[0.18em] uppercase transition-colors hover:text-[color-mix(in_oklab,var(--color-copper)_85%,white)]"
         >
           Read how I work with Claude
-          <ArrowUpRight aria-hidden="true" size={20} weight="bold" class="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          <ArrowUpRight
+            aria-hidden="true"
+            size={20}
+            weight="bold"
+            class="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+          />
         </a>
       {/snippet}
     </Reveal>
@@ -2546,6 +2676,7 @@ Expected: 0 errors.
 ### Task 25: Build `CobleSolutions.svelte`
 
 **Files:**
+
 - Create: `src/lib/components/CobleSolutions.svelte`
 
 - [ ] **Step 1: Write the component**
@@ -2560,14 +2691,20 @@ Expected: 0 errors.
   <div class="mx-auto max-w-[1500px] px-4 py-24 md:px-8 md:py-32 lg:px-12">
     <Reveal>
       {#snippet children()}
-        <article class="rounded-lg border border-line bg-[rgba(255,255,255,0.32)] p-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.58)] md:grid md:grid-cols-[0.7fr_1.3fr] md:gap-12 md:p-12">
+        <article
+          class="border-line rounded-lg border bg-[rgba(255,255,255,0.32)] p-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.58)] md:grid md:grid-cols-[0.7fr_1.3fr] md:gap-12 md:p-12"
+        >
           <div>
-            <p class="font-mono text-xs uppercase tracking-[0.2em] text-copper">{cobleSolutions.eyebrow}</p>
-            <h2 class="mt-4 font-[family-name:var(--font-display)] text-4xl leading-none tracking-tight md:text-5xl">
+            <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">
+              {cobleSolutions.eyebrow}
+            </p>
+            <h2
+              class="mt-4 font-[family-name:var(--font-display)] text-4xl leading-none tracking-tight md:text-5xl"
+            >
               {cobleSolutions.headline}
             </h2>
           </div>
-          <p class="mt-6 max-w-[58ch] text-lg leading-8 text-muted md:mt-2">
+          <p class="text-muted mt-6 max-w-[58ch] text-lg leading-8 md:mt-2">
             {cobleSolutions.body}
           </p>
         </article>
@@ -2590,6 +2727,7 @@ Expected: 0 errors.
 ### Task 26: Build `Experience.svelte`
 
 **Files:**
+
 - Create: `src/lib/components/Experience.svelte`
 
 - [ ] **Step 1: Write the component**
@@ -2601,15 +2739,21 @@ Expected: 0 errors.
 </script>
 
 <section id="experience" class="bg-paper">
-  <div class="mx-auto grid max-w-[1500px] grid-cols-1 gap-10 px-4 py-24 md:grid-cols-[0.95fr_1.05fr] md:px-8 md:py-32 lg:px-12">
+  <div
+    class="mx-auto grid max-w-[1500px] grid-cols-1 gap-10 px-4 py-24 md:grid-cols-[0.95fr_1.05fr] md:px-8 md:py-32 lg:px-12"
+  >
     <Reveal>
       {#snippet children()}
         <div>
-          <p class="font-mono text-xs uppercase tracking-[0.2em] text-copper">{experience.eyebrow}</p>
-          <h2 class="mt-5 max-w-[12ch] font-[family-name:var(--font-display)] text-5xl leading-[0.95] tracking-tight md:text-7xl">
+          <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">
+            {experience.eyebrow}
+          </p>
+          <h2
+            class="mt-5 max-w-[12ch] font-[family-name:var(--font-display)] text-5xl leading-[0.95] tracking-tight md:text-7xl"
+          >
             {experience.headline}
           </h2>
-          <p class="mt-7 max-w-[58ch] text-lg leading-8 text-muted">
+          <p class="text-muted mt-7 max-w-[58ch] text-lg leading-8">
             {experience.body}
           </p>
         </div>
@@ -2618,15 +2762,19 @@ Expected: 0 errors.
 
     <Reveal delay={140}>
       {#snippet children()}
-        <ol class="grid gap-px border border-line">
+        <ol class="border-line grid gap-px border">
           {#each experience.timeline as entry, i (entry.years)}
-            <li class="grid gap-2 bg-[rgba(255,255,255,0.32)] p-6 md:grid-cols-[10rem_1fr] md:gap-8 md:p-8">
-              <span class="font-mono text-xs uppercase tracking-[0.18em] text-copper">
+            <li
+              class="grid gap-2 bg-[rgba(255,255,255,0.32)] p-6 md:grid-cols-[10rem_1fr] md:gap-8 md:p-8"
+            >
+              <span class="text-copper font-mono text-xs tracking-[0.18em] uppercase">
                 {entry.years}
               </span>
               <div>
-                <h3 class="text-xl font-semibold tracking-tight text-ink md:text-2xl">{entry.role}</h3>
-                <p class="mt-1 text-sm text-muted md:text-base">{entry.company}</p>
+                <h3 class="text-ink text-xl font-semibold tracking-tight md:text-2xl">
+                  {entry.role}
+                </h3>
+                <p class="text-muted mt-1 text-sm md:text-base">{entry.company}</p>
               </div>
             </li>
           {/each}
@@ -2650,6 +2798,7 @@ Expected: 0 errors.
 ### Task 27: Build `Capabilities.svelte`
 
 **Files:**
+
 - Create: `src/lib/components/Capabilities.svelte`
 
 - [ ] **Step 1: Write the component**
@@ -2661,12 +2810,16 @@ Expected: 0 errors.
 </script>
 
 <section id="capabilities" class="bg-paper">
-  <div class="mx-auto grid max-w-[1500px] grid-cols-1 gap-10 px-4 py-24 md:grid-cols-[0.72fr_1.28fr] md:px-8 md:py-32 lg:px-12">
+  <div
+    class="mx-auto grid max-w-[1500px] grid-cols-1 gap-10 px-4 py-24 md:grid-cols-[0.72fr_1.28fr] md:px-8 md:py-32 lg:px-12"
+  >
     <Reveal>
       {#snippet children()}
         <div>
-          <p class="font-mono text-xs uppercase tracking-[0.2em] text-copper">Capabilities</p>
-          <h2 class="mt-5 max-w-[10ch] font-[family-name:var(--font-display)] text-5xl leading-[0.95] tracking-tight md:text-7xl">
+          <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">Capabilities</p>
+          <h2
+            class="mt-5 max-w-[10ch] font-[family-name:var(--font-display)] text-5xl leading-[0.95] tracking-tight md:text-7xl"
+          >
             Useful systems, not theater.
           </h2>
         </div>
@@ -2675,15 +2828,17 @@ Expected: 0 errors.
 
     <Reveal delay={140}>
       {#snippet children()}
-        <div class="grid gap-0 border-y border-line">
+        <div class="border-line grid gap-0 border-y">
           {#each capabilities as capability, i (capability.name)}
-            <article class="grid gap-5 border-b border-line py-7 last:border-b-0 md:grid-cols-[auto_1fr] md:gap-8">
-              <span class="font-mono text-xs uppercase tracking-[0.18em] text-muted">
+            <article
+              class="border-line grid gap-5 border-b py-7 last:border-b-0 md:grid-cols-[auto_1fr] md:gap-8"
+            >
+              <span class="text-muted font-mono text-xs tracking-[0.18em] uppercase">
                 0{i + 1}
               </span>
               <div>
-                <h3 class="text-2xl font-semibold tracking-tight text-ink">{capability.name}</h3>
-                <p class="mt-3 max-w-[65ch] leading-7 text-muted">{capability.description}</p>
+                <h3 class="text-ink text-2xl font-semibold tracking-tight">{capability.name}</h3>
+                <p class="text-muted mt-3 max-w-[65ch] leading-7">{capability.description}</p>
               </div>
             </article>
           {/each}
@@ -2707,6 +2862,7 @@ Expected: 0 errors.
 ### Task 28: Build `Method.svelte`
 
 **Files:**
+
 - Create: `src/lib/components/Method.svelte`
 
 - [ ] **Step 1: Write the component**
@@ -2721,10 +2877,14 @@ Expected: 0 errors.
   <div class="mx-auto max-w-[1500px] px-4 py-16 md:px-8 lg:px-12">
     <Reveal>
       {#snippet children()}
-        <article class="grid grid-cols-1 gap-10 rounded-lg bg-charcoal px-6 py-10 text-paper shadow-[0_34px_90px_-66px_rgba(14,14,11,0.8)] md:grid-cols-[0.8fr_1.2fr] md:px-12 md:py-16">
+        <article
+          class="bg-charcoal text-paper grid grid-cols-1 gap-10 rounded-lg px-6 py-10 shadow-[0_34px_90px_-66px_rgba(14,14,11,0.8)] md:grid-cols-[0.8fr_1.2fr] md:px-12 md:py-16"
+        >
           <div>
-            <p class="font-mono text-xs uppercase tracking-[0.2em] text-[#bca083]">Method</p>
-            <h2 class="mt-4 max-w-[12ch] font-[family-name:var(--font-display)] text-5xl leading-[0.95] tracking-tight md:text-7xl">
+            <p class="font-mono text-xs tracking-[0.2em] text-[#bca083] uppercase">Method</p>
+            <h2
+              class="mt-4 max-w-[12ch] font-[family-name:var(--font-display)] text-5xl leading-[0.95] tracking-tight md:text-7xl"
+            >
               A tighter way to make things.
             </h2>
           </div>
@@ -2756,6 +2916,7 @@ Expected: 0 errors.
 ### Task 29: Build `Resume.svelte`
 
 **Files:**
+
 - Create: `src/lib/components/Resume.svelte`
 - Copy: PDF from `/Users/blackcolours/Downloads/` to `static/`
 
@@ -2781,18 +2942,20 @@ Expected: file present, ~78KB.
   <div class="mx-auto max-w-[940px] px-4 py-24 md:px-8 md:py-32">
     <Reveal>
       {#snippet children()}
-        <header class="border-b border-line pb-8">
-          <p class="font-mono text-xs uppercase tracking-[0.2em] text-copper">Résumé</p>
-          <h2 class="mt-5 font-[family-name:var(--font-display)] text-6xl leading-none tracking-tight md:text-8xl">
+        <header class="border-line border-b pb-8">
+          <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">Résumé</p>
+          <h2
+            class="mt-5 font-[family-name:var(--font-display)] text-6xl leading-none tracking-tight md:text-8xl"
+          >
             {resume.name}
           </h2>
-          <p class="mt-5 font-mono text-sm text-muted">
+          <p class="text-muted mt-5 font-mono text-sm">
             {resume.email} · {resume.location}
           </p>
           <a
             href="/resume.pdf"
             download
-            class="mt-7 inline-flex items-center gap-2 rounded-lg border border-ink bg-ink px-5 py-3 text-sm font-semibold text-paper transition hover:bg-charcoal"
+            class="border-ink bg-ink text-paper hover:bg-charcoal mt-7 inline-flex items-center gap-2 rounded-lg border px-5 py-3 text-sm font-semibold transition"
           >
             <DownloadSimple aria-hidden="true" size={18} weight="bold" />
             Download résumé (PDF)
@@ -2804,8 +2967,8 @@ Expected: file present, ~78KB.
     <Reveal class="mt-12" delay={120}>
       {#snippet children()}
         <section>
-          <h3 class="font-mono text-xs uppercase tracking-[0.2em] text-copper">Summary</h3>
-          <p class="mt-4 max-w-[68ch] text-lg leading-8 text-ink">{resume.summary}</p>
+          <h3 class="text-copper font-mono text-xs tracking-[0.2em] uppercase">Summary</h3>
+          <p class="text-ink mt-4 max-w-[68ch] text-lg leading-8">{resume.summary}</p>
         </section>
       {/snippet}
     </Reveal>
@@ -2813,19 +2976,21 @@ Expected: file present, ~78KB.
     <Reveal class="mt-16" delay={120}>
       {#snippet children()}
         <section>
-          <h3 class="font-mono text-xs uppercase tracking-[0.2em] text-copper">Experience</h3>
+          <h3 class="text-copper font-mono text-xs tracking-[0.2em] uppercase">Experience</h3>
           <ol class="mt-6 grid gap-12">
             {#each resume.experience as job (job.years)}
               <li>
                 <div class="grid gap-2 md:grid-cols-[1fr_auto] md:items-baseline">
-                  <h4 class="text-2xl font-semibold tracking-tight text-ink">{job.role}</h4>
-                  <span class="font-mono text-xs uppercase tracking-[0.16em] text-muted">{job.years}</span>
+                  <h4 class="text-ink text-2xl font-semibold tracking-tight">{job.role}</h4>
+                  <span class="text-muted font-mono text-xs tracking-[0.16em] uppercase"
+                    >{job.years}</span
+                  >
                 </div>
-                <p class="mt-1 text-base text-muted">{job.company} · {job.location}</p>
+                <p class="text-muted mt-1 text-base">{job.company} · {job.location}</p>
                 <ul class="mt-4 grid list-none gap-3 pl-0">
                   {#each job.bullets as bullet (bullet)}
-                    <li class="grid grid-cols-[auto_1fr] gap-3 leading-7 text-ink">
-                      <span class="font-mono text-xs leading-7 text-copper">·</span>
+                    <li class="text-ink grid grid-cols-[auto_1fr] gap-3 leading-7">
+                      <span class="text-copper font-mono text-xs leading-7">·</span>
                       <span>{bullet}</span>
                     </li>
                   {/each}
@@ -2840,12 +3005,16 @@ Expected: file present, ~78KB.
     <Reveal class="mt-16" delay={120}>
       {#snippet children()}
         <section>
-          <h3 class="font-mono text-xs uppercase tracking-[0.2em] text-copper">Technical</h3>
-          <dl class="mt-6 border-y border-line">
+          <h3 class="text-copper font-mono text-xs tracking-[0.2em] uppercase">Technical</h3>
+          <dl class="border-line mt-6 border-y">
             {#each resume.technical as row (row.category)}
-              <div class="grid grid-cols-1 gap-2 border-b border-line py-5 last:border-b-0 md:grid-cols-[14rem_1fr] md:gap-8 md:py-6">
-                <dt class="font-mono text-xs uppercase tracking-[0.18em] text-muted">{row.category}</dt>
-                <dd class="font-mono text-sm leading-7 text-ink">{row.items.join(" · ")}</dd>
+              <div
+                class="border-line grid grid-cols-1 gap-2 border-b py-5 last:border-b-0 md:grid-cols-[14rem_1fr] md:gap-8 md:py-6"
+              >
+                <dt class="text-muted font-mono text-xs tracking-[0.18em] uppercase">
+                  {row.category}
+                </dt>
+                <dd class="text-ink font-mono text-sm leading-7">{row.items.join(" · ")}</dd>
               </div>
             {/each}
           </dl>
@@ -2856,11 +3025,12 @@ Expected: file present, ~78KB.
     <Reveal class="mt-16" delay={120}>
       {#snippet children()}
         <section>
-          <h3 class="font-mono text-xs uppercase tracking-[0.2em] text-copper">Education</h3>
-          <p class="mt-4 text-lg text-ink">
-            <span class="font-semibold">{resume.education.school}</span> · {resume.education.location}
+          <h3 class="text-copper font-mono text-xs tracking-[0.2em] uppercase">Education</h3>
+          <p class="text-ink mt-4 text-lg">
+            <span class="font-semibold">{resume.education.school}</span> · {resume.education
+              .location}
           </p>
-          <p class="mt-1 text-base text-muted">
+          <p class="text-muted mt-1 text-base">
             {resume.education.degree}, {resume.education.year}
           </p>
         </section>
@@ -2883,6 +3053,7 @@ Expected: 0 errors.
 ### Task 30: Build `Contact.svelte`
 
 **Files:**
+
 - Create: `src/lib/components/Contact.svelte`
 
 - [ ] **Step 1: Write the component**
@@ -2896,27 +3067,34 @@ Expected: 0 errors.
 </script>
 
 <section id="contact" class="bg-paper">
-  <div class="mx-auto max-w-[1500px] px-4 pb-12 pt-24 md:px-8 md:py-32 lg:px-12">
+  <div class="mx-auto max-w-[1500px] px-4 pt-24 pb-12 md:px-8 md:py-32 lg:px-12">
     <Reveal>
       {#snippet children()}
-        <article class="grid min-h-[60dvh] grid-cols-1 content-between rounded-lg border border-line bg-[rgba(255,255,255,0.32)] p-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.58)] md:p-12">
+        <article
+          class="border-line grid min-h-[60dvh] grid-cols-1 content-between rounded-lg border bg-[rgba(255,255,255,0.32)] p-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.58)] md:p-12"
+        >
           <div class="grid gap-8 md:grid-cols-[1fr_auto]">
             <div>
-              <p class="font-mono text-xs uppercase tracking-[0.2em] text-copper">Contact</p>
-              <h2 class="mt-5 max-w-[14ch] font-[family-name:var(--font-display)] text-5xl leading-none tracking-tight md:text-7xl">
+              <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">Contact</p>
+              <h2
+                class="mt-5 max-w-[14ch] font-[family-name:var(--font-display)] text-5xl leading-none tracking-tight md:text-7xl"
+              >
                 Bring the hard part early.
               </h2>
             </div>
             <div class="grid gap-3 self-start">
               <a
-                class="inline-flex h-14 items-center justify-center gap-2 rounded-lg bg-ink px-6 text-sm font-semibold text-paper transition active:translate-y-px hover:bg-charcoal"
+                class="bg-ink text-paper hover:bg-charcoal inline-flex h-14 items-center justify-center gap-2 rounded-lg px-6 text-sm font-semibold transition active:translate-y-px"
                 href="mailto:{profile.email}"
               >
                 <EnvelopeSimple aria-hidden="true" size={19} weight="bold" />
                 {profile.email}
               </a>
-              <p class="font-mono text-xs uppercase tracking-[0.16em] text-muted">
-                RetailReady inquiries: <a href="mailto:{profile.retailreadyEmail}" class="text-ink underline-offset-4 hover:underline">{profile.retailreadyEmail}</a>
+              <p class="text-muted font-mono text-xs tracking-[0.16em] uppercase">
+                RetailReady inquiries: <a
+                  href="mailto:{profile.retailreadyEmail}"
+                  class="text-ink underline-offset-4 hover:underline">{profile.retailreadyEmail}</a
+                >
               </p>
             </div>
           </div>
@@ -2944,6 +3122,7 @@ Expected: 0 errors.
 ### Task 31: Wire `+page.svelte`
 
 **Files:**
+
 - Modify: `src/routes/+page.svelte`
 
 - [ ] **Step 1: Replace the temporary scaffold-check with real composition**
@@ -2964,7 +3143,10 @@ Expected: 0 errors.
 
 <svelte:head>
   <title>Jesse Coble — Coble Solutions / RetailReady EDI</title>
-  <meta name="description" content="Jesse Coble — owner of Coble Solutions and RetailReady EDI. Building sharper systems for retail operations." />
+  <meta
+    name="description"
+    content="Jesse Coble — owner of Coble Solutions and RetailReady EDI. Building sharper systems for retail operations."
+  />
 </svelte:head>
 
 <main id="main">
@@ -2989,6 +3171,7 @@ npm run dev
 ```
 
 Open http://localhost:5173. Walk through the page in order:
+
 1. Hero — video plays/scrubs as you scroll, navbar visible, CTAs render
 2. Practice — eyebrow + headline + body + signal items
 3. RetailReady — animated diagram visible (dots flowing), stats grid, doc types, journey, stack, flex points, wedge, CTA
@@ -3018,6 +3201,7 @@ Expected: 0 errors on both. Build output in `build/`.
 ### Task 32: Build `/retailready` deep-dive page
 
 **Files:**
+
 - Create: `src/lib/content/retailready-deep.ts`
 - Create: `src/routes/retailready/+page.svelte`
 
@@ -3026,6 +3210,7 @@ The deep dive is a typeset Svelte page based on a redacted version of `/Users/bl
 - [ ] **Step 1: Write `src/lib/content/retailready-deep.ts`**
 
 This file holds the full deep-dive content. Mirror the structure in spec §5.11. The redaction rules from spec §5.11:
+
 - Remove all VPS IPs (`49.13.236.209`, `46.224.175.20`)
 - Remove all internal cross-references (`Docs/Architecture/diagrams/...`, `CLAUDE.md`, `INDEX.md`, `Docs/Research/...`)
 - Remove the entire "FURTHER READING" pointer table at the top
@@ -3079,60 +3264,207 @@ export const retailreadyDeep = {
       "Engine ↔ external EDI: routed through the platform EDI server VPS. The Engine never speaks AS2/SFTP directly to retailers."
     ],
     projects: [
-      { name: "EdiPlatform.Core", role: "Domain model, enums, interfaces, configuration POCOs, value services" },
-      { name: "EdiPlatform.Data", role: "EF Core DbContext, 48 migrations, seeders, RLS interceptor, audit-trail service" },
-      { name: "EdiPlatform.Parsers", role: "X12 + EDIFACT + SP-API parsers and generators, validators" },
-      { name: "EdiPlatform.Api", role: "ASP.NET Core REST API, 60 controllers (36 customer + 24 admin), SignalR hubs, JWT/API-Key auth, RabbitMQ publisher, Stripe webhook" },
-      { name: "EdiPlatform.Engine", role: "Background-worker host. 7 workers + 2 watchers + advisory-lock singleton guard. Owns SFTP/AS2/SP-API I/O." },
-      { name: "RetailerSimulator", role: "Standalone .NET service simulating 11 retailers' inbound/outbound for sandbox / practice mode. Has its own DB + parsers." }
+      {
+        name: "EdiPlatform.Core",
+        role: "Domain model, enums, interfaces, configuration POCOs, value services"
+      },
+      {
+        name: "EdiPlatform.Data",
+        role: "EF Core DbContext, 48 migrations, seeders, RLS interceptor, audit-trail service"
+      },
+      {
+        name: "EdiPlatform.Parsers",
+        role: "X12 + EDIFACT + SP-API parsers and generators, validators"
+      },
+      {
+        name: "EdiPlatform.Api",
+        role: "ASP.NET Core REST API, 60 controllers (36 customer + 24 admin), SignalR hubs, JWT/API-Key auth, RabbitMQ publisher, Stripe webhook"
+      },
+      {
+        name: "EdiPlatform.Engine",
+        role: "Background-worker host. 7 workers + 2 watchers + advisory-lock singleton guard. Owns SFTP/AS2/SP-API I/O."
+      },
+      {
+        name: "RetailerSimulator",
+        role: "Standalone .NET service simulating 11 retailers' inbound/outbound for sandbox / practice mode. Has its own DB + parsers."
+      }
     ],
     workers: [
-      { name: "FtpMonitorWorker", poll: "15 s", timeout: "2 min", job: "Polls EDI server SFTP inbound folders for each trading partner, downloads new files." },
-      { name: "TransactionProcessorWorker", poll: "5 s", timeout: "30 s", job: "Parses queued inbound EDI into entities, auto-enriches lines from SkuMappings." },
-      { name: "OutboundTransmissionWorker", poll: "10 s", timeout: "3 min", job: "Picks Pending OutboundDocument rows, validates, transmits via SFTP/AS2/SP-API." },
-      { name: "MdnCheckWorker", poll: "5 min", timeout: "30 s", job: "Sweeps AS2 messages waiting for MDN. Marks any past 30 min as MDN-timeout." },
-      { name: "DeadlineCheckWorker", poll: "1 h", timeout: "2 min", job: "Runs DeadlineTrackingService.CheckDeadlinesAsync(), fans alerts." },
-      { name: "SpApiPollerWorker", poll: "60 s", timeout: "5 min", job: "Polls Amazon SP-API for new POs per active integration." },
-      { name: "SpApiStatusPollerWorker", poll: "30 s", timeout: "2 min", job: "Polls SP-API for status of submitted ack/ship/invoice transactions." },
-      { name: "WorkerWatchdogService", poll: "30 s", timeout: "n/a", job: "Reads worker heartbeats from DB; after 3 stuck detections (~90 s), triggers graceful shutdown." },
-      { name: "AdvisoryLockWatcherService", poll: "5 s", timeout: "n/a", job: "Watches the dedicated NPGSQL connection holding pg_advisory_lock(59483); triggers shutdown if evicted." }
+      {
+        name: "FtpMonitorWorker",
+        poll: "15 s",
+        timeout: "2 min",
+        job: "Polls EDI server SFTP inbound folders for each trading partner, downloads new files."
+      },
+      {
+        name: "TransactionProcessorWorker",
+        poll: "5 s",
+        timeout: "30 s",
+        job: "Parses queued inbound EDI into entities, auto-enriches lines from SkuMappings."
+      },
+      {
+        name: "OutboundTransmissionWorker",
+        poll: "10 s",
+        timeout: "3 min",
+        job: "Picks Pending OutboundDocument rows, validates, transmits via SFTP/AS2/SP-API."
+      },
+      {
+        name: "MdnCheckWorker",
+        poll: "5 min",
+        timeout: "30 s",
+        job: "Sweeps AS2 messages waiting for MDN. Marks any past 30 min as MDN-timeout."
+      },
+      {
+        name: "DeadlineCheckWorker",
+        poll: "1 h",
+        timeout: "2 min",
+        job: "Runs DeadlineTrackingService.CheckDeadlinesAsync(), fans alerts."
+      },
+      {
+        name: "SpApiPollerWorker",
+        poll: "60 s",
+        timeout: "5 min",
+        job: "Polls Amazon SP-API for new POs per active integration."
+      },
+      {
+        name: "SpApiStatusPollerWorker",
+        poll: "30 s",
+        timeout: "2 min",
+        job: "Polls SP-API for status of submitted ack/ship/invoice transactions."
+      },
+      {
+        name: "WorkerWatchdogService",
+        poll: "30 s",
+        timeout: "n/a",
+        job: "Reads worker heartbeats from DB; after 3 stuck detections (~90 s), triggers graceful shutdown."
+      },
+      {
+        name: "AdvisoryLockWatcherService",
+        poll: "5 s",
+        timeout: "n/a",
+        job: "Watches the dedicated NPGSQL connection holding pg_advisory_lock(59483); triggers shutdown if evicted."
+      }
     ],
     journeyDeep: [
-      { stage: "Onboarding (5 steps)", body: "Company info, address, plan selection, retailer selection, confirmation. Creates trading partners in Sandbox stage with auto-linked EDI standards." },
-      { stage: "Sandbox (Practice Mode)", body: "Guided 5-step walkthrough: add products, receive test PO, acknowledge order, ship order, invoice. Uses real EDI document generation against the Retailer Simulator — no risk of hitting live retailers." },
-      { stage: "Preflight", body: "8 validation checks (EDI receiver ID, protocol config, credentials, connection test, sandbox success, etc.). 4-step wizard walks users through configuration. Passing all checks unlocks promotion to Certification." },
-      { stage: "Certification", body: "The vendor exchanges live test documents directly with the retailer to prove their EDI implementation is correct. Most retailers require this before allowing a vendor to go live." },
-      { stage: "Go-Live", body: "Final verification that all preflight checks still pass and the connection test is proven. Promotes to Live stage — real production EDI starts flowing." },
-      { stage: "Production Operations", body: "Real purchase orders received and processed automatically. Outbound documents generated, validated against retailer-specific rules, and transmitted. Compliance scoring (OTIF, ASN accuracy, acknowledgment rates) with 30-day rolling metrics. Chargeback tracking with reason codes, dispute workflow, and deadline alerts. Payment matching from 820 remittance documents." }
+      {
+        stage: "Onboarding (5 steps)",
+        body: "Company info, address, plan selection, retailer selection, confirmation. Creates trading partners in Sandbox stage with auto-linked EDI standards."
+      },
+      {
+        stage: "Sandbox (Practice Mode)",
+        body: "Guided 5-step walkthrough: add products, receive test PO, acknowledge order, ship order, invoice. Uses real EDI document generation against the Retailer Simulator — no risk of hitting live retailers."
+      },
+      {
+        stage: "Preflight",
+        body: "8 validation checks (EDI receiver ID, protocol config, credentials, connection test, sandbox success, etc.). 4-step wizard walks users through configuration. Passing all checks unlocks promotion to Certification."
+      },
+      {
+        stage: "Certification",
+        body: "The vendor exchanges live test documents directly with the retailer to prove their EDI implementation is correct. Most retailers require this before allowing a vendor to go live."
+      },
+      {
+        stage: "Go-Live",
+        body: "Final verification that all preflight checks still pass and the connection test is proven. Promotes to Live stage — real production EDI starts flowing."
+      },
+      {
+        stage: "Production Operations",
+        body: "Real purchase orders received and processed automatically. Outbound documents generated, validated against retailer-specific rules, and transmitted. Compliance scoring (OTIF, ASN accuracy, acknowledgment rates) with 30-day rolling metrics. Chargeback tracking with reason codes, dispute workflow, and deadline alerts. Payment matching from 820 remittance documents."
+      }
     ],
     features: [
-      { name: "Products & Inventory", body: "Vendors manage a unified product catalog combining SKU mappings with inventory levels. Each product can have retailer-specific identifiers (UPC, buyer item numbers) mapped per trading partner. Inventory tracks quantity on hand, reserved, and available with a full audit trail. When inbound POs arrive, the platform auto-enriches order line items from the SKU catalog and learns new identifiers back into the catalog." },
-      { name: "Accounting Integration", body: "Two-way sync with QuickBooks Online and NetSuite. Vendors can import orders from their accounting system and invoices sync back with payment status. Supports CSV export as a fallback. OAuth2 for credential management." },
-      { name: "AI Assistant", body: "Built-in chat assistant for questions about EDI concepts, platform usage, and the user's own data. It can look up orders, shipments, invoices, and trading partner status. Streams responses via SSE. Per-customer usage tracking for billing." },
-      { name: "Notifications", body: "Multi-channel coverage of the full document lifecycle — new orders, transmission success/failure, SLA deadline warnings, chargeback alerts, payment receipts, engine health alerts. Users configure per-notification-type preferences. The notification bell shows unread counts in real time via SignalR." },
-      { name: "Reports", body: "Reporting with PDF export for compliance scorecards, order summaries, and financial reconciliation. Per-retailer breakdowns with trend analysis." },
-      { name: "Documentation", body: "Built-in searchable documentation covering EDI concepts, platform workflows, retailer-specific requirements, and an EDI glossary. Rendered from markdown inside the customer portal." }
+      {
+        name: "Products & Inventory",
+        body: "Vendors manage a unified product catalog combining SKU mappings with inventory levels. Each product can have retailer-specific identifiers (UPC, buyer item numbers) mapped per trading partner. Inventory tracks quantity on hand, reserved, and available with a full audit trail. When inbound POs arrive, the platform auto-enriches order line items from the SKU catalog and learns new identifiers back into the catalog."
+      },
+      {
+        name: "Accounting Integration",
+        body: "Two-way sync with QuickBooks Online and NetSuite. Vendors can import orders from their accounting system and invoices sync back with payment status. Supports CSV export as a fallback. OAuth2 for credential management."
+      },
+      {
+        name: "AI Assistant",
+        body: "Built-in chat assistant for questions about EDI concepts, platform usage, and the user's own data. It can look up orders, shipments, invoices, and trading partner status. Streams responses via SSE. Per-customer usage tracking for billing."
+      },
+      {
+        name: "Notifications",
+        body: "Multi-channel coverage of the full document lifecycle — new orders, transmission success/failure, SLA deadline warnings, chargeback alerts, payment receipts, engine health alerts. Users configure per-notification-type preferences. The notification bell shows unread counts in real time via SignalR."
+      },
+      {
+        name: "Reports",
+        body: "Reporting with PDF export for compliance scorecards, order summaries, and financial reconciliation. Per-retailer breakdowns with trend analysis."
+      },
+      {
+        name: "Documentation",
+        body: "Built-in searchable documentation covering EDI concepts, platform workflows, retailer-specific requirements, and an EDI glossary. Rendered from markdown inside the customer portal."
+      }
     ],
     designDecisions: [
-      { title: "Multi-format support", body: "The same order can generate X12 or EDIFACT output depending on the trading partner's configuration. A plugin-based generator resolver loads the correct generator at runtime." },
-      { title: "Retailer-specific configs are HARDCODED", body: "RetailerEdiConfigFactory in EdiPlatform.Engine holds per-retailer envelope quirks (qualifiers, hierarchy codes, identifier preferences) — not in the database. Connection/transport (SFTP creds, AS2 endpoints) lives in the RetailerProfile DB entity." },
-      { title: "Validator scope is OUTBOUND ONLY", body: "RetailerValidator (via PreSendValidationService) validates outbound docs (855/856/810/997-out) before transmit. Inbound docs (850/860/812/820/824/997-in) are PARSER territory — we cannot reject what retailers send." },
-      { title: "Three EDI ack layers — never conflate", body: "997 (protocol/syntax — \"your file arrived\"), 855 (business — \"I'll fulfill 20, backorder 5\"), 824 (semantic-error — \"data parsed fine but business rules say it's wrong\"). Each is required independently." },
-      { title: "Single-instance engine", body: "PostgreSQL advisory lock (key 59483) ensures only one Engine instance runs at a time, with a pg_terminate_backend() takeover handshake for safe failover. Workers use FOR UPDATE SKIP LOCKED for claim-based concurrency on transactions and status-based claiming on outbound documents." },
-      { title: "Real-time updates everywhere", body: "The Engine publishes events via RabbitMQ. The API consumes them and broadcasts to connected browsers via SignalR. Virtually every customer-facing page updates in real time — the Order Details page with its tabbed workspace (Ship, Invoice, Payment, Chargeback, Confirm tabs) live-updates as documents are generated, transmitted, and acknowledged." },
-      { title: "Row-Level Security (RLS)", body: "PostgreSQL RLS policies enforce per-customer data isolation at the database layer. The API connects as ediplatform_api (a restricted role with RLS enforced); the Engine connects as a role with admin bypass for cross-customer routing. An EF Core DbConnectionInterceptor sets app.current_customer_id and app.is_admin GUC variables on every connection open. Defense-in-depth alongside application-layer .Where(CustomerId == x) filtering — even a controller bug that omits a filter cannot leak cross-tenant data." },
-      { title: "Sandbox isolation", body: "All sandbox entities are flagged with IsSandbox = true. Sandbox documents are validated but never transmitted to real retailers. The Retailer Simulator provides realistic responses for end-to-end testing." },
-      { title: "Two-layer monitoring", body: "Layer A: in-app EngineAlertService catches stale documents, repeated per-partner failures, worker-heartbeat gaps. Layer B: host-level edi-monitor systemd service catches container crashes and healthcheck failures. The host-level layer is the only notifier that survives an API startup failure. Built after a real silent outage." },
-      { title: "Per-worker cascading timeouts", body: "Every Engine worker carries its own poll interval and per-step deadline enforced via CancellationTokenSource.CreateLinkedTokenSource. One stalled retailer connection cannot freeze the rest of the pipeline." },
-      { title: "Outbound retry with optimistic concurrency", body: "Outbound documents enforce a 45-second per-doc transmit timeout. Postgres RowVersion (xmin) prevents a retry from racing with an inbound 997 acknowledgment that arrived mid-transmission." },
-      { title: "Multi-environment isolation in the simulator", body: "The simulator's CustomerEnrollment unique key is (RetailerInstanceId, CustomerEdiId, Environment) — Environment was added explicitly because without it, a dev enrollment would silently block staging from creating the same retailer/customer pair. Paired with env-suffixed AS2 sender IDs (SIM_WALMART for dev, SIM_WALMART_STAGING for staging, SIM_WALMART_PROD for prod), each environment's documents route to its own SFTP folder." },
-      { title: "AES-256-GCM per-file certificate encryption", body: "Each AS2 certificate is individually encrypted with AES-256-GCM at the application layer before persisting. Allows per-cert key rotation and enables future migration to HSM/KMS without architectural changes." },
-      { title: "Required-environment-parameter API discipline", body: "SimulatorClient.FindEnrollmentAsync makes the environment parameter required (never optional or defaulted), forcing every cross-env lookup to be explicit and preventing silent mis-routing of documents." }
+      {
+        title: "Multi-format support",
+        body: "The same order can generate X12 or EDIFACT output depending on the trading partner's configuration. A plugin-based generator resolver loads the correct generator at runtime."
+      },
+      {
+        title: "Retailer-specific configs are HARDCODED",
+        body: "RetailerEdiConfigFactory in EdiPlatform.Engine holds per-retailer envelope quirks (qualifiers, hierarchy codes, identifier preferences) — not in the database. Connection/transport (SFTP creds, AS2 endpoints) lives in the RetailerProfile DB entity."
+      },
+      {
+        title: "Validator scope is OUTBOUND ONLY",
+        body: "RetailerValidator (via PreSendValidationService) validates outbound docs (855/856/810/997-out) before transmit. Inbound docs (850/860/812/820/824/997-in) are PARSER territory — we cannot reject what retailers send."
+      },
+      {
+        title: "Three EDI ack layers — never conflate",
+        body: '997 (protocol/syntax — "your file arrived"), 855 (business — "I\'ll fulfill 20, backorder 5"), 824 (semantic-error — "data parsed fine but business rules say it\'s wrong"). Each is required independently.'
+      },
+      {
+        title: "Single-instance engine",
+        body: "PostgreSQL advisory lock (key 59483) ensures only one Engine instance runs at a time, with a pg_terminate_backend() takeover handshake for safe failover. Workers use FOR UPDATE SKIP LOCKED for claim-based concurrency on transactions and status-based claiming on outbound documents."
+      },
+      {
+        title: "Real-time updates everywhere",
+        body: "The Engine publishes events via RabbitMQ. The API consumes them and broadcasts to connected browsers via SignalR. Virtually every customer-facing page updates in real time — the Order Details page with its tabbed workspace (Ship, Invoice, Payment, Chargeback, Confirm tabs) live-updates as documents are generated, transmitted, and acknowledged."
+      },
+      {
+        title: "Row-Level Security (RLS)",
+        body: "PostgreSQL RLS policies enforce per-customer data isolation at the database layer. The API connects as ediplatform_api (a restricted role with RLS enforced); the Engine connects as a role with admin bypass for cross-customer routing. An EF Core DbConnectionInterceptor sets app.current_customer_id and app.is_admin GUC variables on every connection open. Defense-in-depth alongside application-layer .Where(CustomerId == x) filtering — even a controller bug that omits a filter cannot leak cross-tenant data."
+      },
+      {
+        title: "Sandbox isolation",
+        body: "All sandbox entities are flagged with IsSandbox = true. Sandbox documents are validated but never transmitted to real retailers. The Retailer Simulator provides realistic responses for end-to-end testing."
+      },
+      {
+        title: "Two-layer monitoring",
+        body: "Layer A: in-app EngineAlertService catches stale documents, repeated per-partner failures, worker-heartbeat gaps. Layer B: host-level edi-monitor systemd service catches container crashes and healthcheck failures. The host-level layer is the only notifier that survives an API startup failure. Built after a real silent outage."
+      },
+      {
+        title: "Per-worker cascading timeouts",
+        body: "Every Engine worker carries its own poll interval and per-step deadline enforced via CancellationTokenSource.CreateLinkedTokenSource. One stalled retailer connection cannot freeze the rest of the pipeline."
+      },
+      {
+        title: "Outbound retry with optimistic concurrency",
+        body: "Outbound documents enforce a 45-second per-doc transmit timeout. Postgres RowVersion (xmin) prevents a retry from racing with an inbound 997 acknowledgment that arrived mid-transmission."
+      },
+      {
+        title: "Multi-environment isolation in the simulator",
+        body: "The simulator's CustomerEnrollment unique key is (RetailerInstanceId, CustomerEdiId, Environment) — Environment was added explicitly because without it, a dev enrollment would silently block staging from creating the same retailer/customer pair. Paired with env-suffixed AS2 sender IDs (SIM_WALMART for dev, SIM_WALMART_STAGING for staging, SIM_WALMART_PROD for prod), each environment's documents route to its own SFTP folder."
+      },
+      {
+        title: "AES-256-GCM per-file certificate encryption",
+        body: "Each AS2 certificate is individually encrypted with AES-256-GCM at the application layer before persisting. Allows per-cert key rotation and enables future migration to HSM/KMS without architectural changes."
+      },
+      {
+        title: "Required-environment-parameter API discipline",
+        body: "SimulatorClient.FindEnrollmentAsync makes the environment parameter required (never optional or defaulted), forcing every cross-env lookup to be explicit and preventing silent mis-routing of documents."
+      }
     ],
     techStackTable: [
-      { layer: "Frontend", tech: "SvelteKit · Svelte 5 runes · TanStack Query · Tailwind v4 · Shadcn-Svelte" },
+      {
+        layer: "Frontend",
+        tech: "SvelteKit · Svelte 5 runes · TanStack Query · Tailwind v4 · Shadcn-Svelte"
+      },
       { layer: "API", tech: ".NET 10 · ASP.NET Core · EF Core · SignalR" },
-      { layer: "Engine", tech: ".NET 10 · 7 background workers + 2 watchers + advisory-lock singleton guard" },
+      {
+        layer: "Engine",
+        tech: ".NET 10 · 7 background workers + 2 watchers + advisory-lock singleton guard"
+      },
       { layer: "Database", tech: "PostgreSQL · RLS on 40 tables · ediplatform_api role" },
       { layer: "Messaging", tech: "RabbitMQ" },
       { layer: "EDI Protocols", tech: "SFTP (SSH.NET) · AS2 (OpenAS2)" },
@@ -3162,26 +3494,33 @@ export const retailreadyDeep = {
 </svelte:head>
 
 <main id="main" class="bg-paper">
-  <div class="border-b border-line">
+  <div class="border-line border-b">
     <nav class="mx-auto flex max-w-[1200px] items-center justify-between px-4 py-5 md:px-8">
-      <a class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-muted hover:text-ink" href="/">
+      <a
+        class="text-muted hover:text-ink inline-flex items-center gap-2 font-mono text-xs tracking-[0.18em] uppercase"
+        href="/"
+      >
         <ArrowLeft size={14} weight="bold" />
         Back to portfolio
       </a>
-      <span class="font-mono text-xs uppercase tracking-[0.18em] text-muted">
+      <span class="text-muted font-mono text-xs tracking-[0.18em] uppercase">
         Last updated {retailreadyDeep.lastUpdated}
       </span>
     </nav>
   </div>
 
-  <article class="mx-auto grid max-w-[1200px] grid-cols-1 gap-12 px-4 py-16 md:px-8 md:py-24 lg:grid-cols-[1fr_220px]">
+  <article
+    class="mx-auto grid max-w-[1200px] grid-cols-1 gap-12 px-4 py-16 md:px-8 md:py-24 lg:grid-cols-[1fr_220px]"
+  >
     <div>
-      <header class="border-b border-line pb-10">
-        <p class="font-mono text-xs uppercase tracking-[0.2em] text-copper">RetailReady EDI</p>
-        <h1 class="mt-5 font-[family-name:var(--font-display)] text-5xl leading-[0.95] tracking-tight md:text-7xl">
+      <header class="border-line border-b pb-10">
+        <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">RetailReady EDI</p>
+        <h1
+          class="mt-5 font-[family-name:var(--font-display)] text-5xl leading-[0.95] tracking-tight md:text-7xl"
+        >
           {retailreadyDeep.title}
         </h1>
-        <p class="mt-6 max-w-[60ch] text-xl leading-8 text-muted">
+        <p class="text-muted mt-6 max-w-[60ch] text-xl leading-8">
           {retailreadyDeep.subtitle}
         </p>
       </header>
@@ -3189,136 +3528,166 @@ export const retailreadyDeep = {
       <section id="what-it-is" class="mt-16">
         <h2 class="font-[family-name:var(--font-display)] text-3xl tracking-tight">What it is</h2>
         {#each retailreadyDeep.sections.whatItIs as p (p)}
-          <p class="mt-5 max-w-[68ch] text-lg leading-8 text-ink">{p}</p>
+          <p class="text-ink mt-5 max-w-[68ch] text-lg leading-8">{p}</p>
         {/each}
-        <h3 class="mt-10 font-mono text-xs uppercase tracking-[0.18em] text-copper">Who it's for</h3>
+        <h3 class="text-copper mt-10 font-mono text-xs tracking-[0.18em] uppercase">
+          Who it's for
+        </h3>
         {#each retailreadyDeep.sections.whoItsFor as p (p)}
-          <p class="mt-4 max-w-[68ch] text-lg leading-8 text-ink">{p}</p>
+          <p class="text-ink mt-4 max-w-[68ch] text-lg leading-8">{p}</p>
         {/each}
       </section>
 
-      <section id="how-it-works" class="mt-16 border-t border-line pt-12">
+      <section id="how-it-works" class="border-line mt-16 border-t pt-12">
         <h2 class="font-[family-name:var(--font-display)] text-3xl tracking-tight">How it works</h2>
-        <h3 class="mt-6 font-mono text-xs uppercase tracking-[0.18em] text-copper">Core flow</h3>
+        <h3 class="text-copper mt-6 font-mono text-xs tracking-[0.18em] uppercase">Core flow</h3>
         <ol class="mt-4 grid gap-3">
           {#each retailreadyDeep.sections.coreFlow as step, i (step)}
-            <li class="grid grid-cols-[3rem_1fr] gap-4 leading-7 text-ink">
-              <span class="font-mono text-sm text-muted">{String(i + 1).padStart(2, "0")}</span>
+            <li class="text-ink grid grid-cols-[3rem_1fr] gap-4 leading-7">
+              <span class="text-muted font-mono text-sm">{String(i + 1).padStart(2, "0")}</span>
               <span>{step}</span>
             </li>
           {/each}
         </ol>
-        <h3 class="mt-10 font-mono text-xs uppercase tracking-[0.18em] text-copper">Active retailers</h3>
+        <h3 class="text-copper mt-10 font-mono text-xs tracking-[0.18em] uppercase">
+          Active retailers
+        </h3>
         <table class="mt-4 w-full border-collapse text-sm">
           <thead>
-            <tr class="border-b border-line text-left">
-              <th class="py-3 pr-4 font-mono text-xs uppercase tracking-[0.16em] text-muted">Code</th>
-              <th class="py-3 pr-4 font-mono text-xs uppercase tracking-[0.16em] text-muted">Name</th>
-              <th class="py-3 font-mono text-xs uppercase tracking-[0.16em] text-muted">Notes</th>
+            <tr class="border-line border-b text-left">
+              <th class="text-muted py-3 pr-4 font-mono text-xs tracking-[0.16em] uppercase"
+                >Code</th
+              >
+              <th class="text-muted py-3 pr-4 font-mono text-xs tracking-[0.16em] uppercase"
+                >Name</th
+              >
+              <th class="text-muted py-3 font-mono text-xs tracking-[0.16em] uppercase">Notes</th>
             </tr>
           </thead>
           <tbody>
             {#each retailreadyDeep.sections.activeRetailers as r (r.code)}
-              <tr class="border-b border-line">
-                <td class="py-3 pr-4 font-mono text-ink">{r.code}</td>
-                <td class="py-3 pr-4 text-ink">{r.name}</td>
-                <td class="py-3 text-muted">{r.notes}</td>
+              <tr class="border-line border-b">
+                <td class="text-ink py-3 pr-4 font-mono">{r.code}</td>
+                <td class="text-ink py-3 pr-4">{r.name}</td>
+                <td class="text-muted py-3">{r.notes}</td>
               </tr>
             {/each}
           </tbody>
         </table>
       </section>
 
-      <section id="architecture" class="mt-16 border-t border-line pt-12">
+      <section id="architecture" class="border-line mt-16 border-t pt-12">
         <h2 class="font-[family-name:var(--font-display)] text-3xl tracking-tight">Architecture</h2>
-        <div class="mt-6 rounded-lg border border-line-dark bg-charcoal p-4 md:p-8">
+        <div class="border-line-dark bg-charcoal mt-6 rounded-lg border p-4 md:p-8">
           <ArchitectureDiagram variant="full" />
         </div>
-        <h3 class="mt-10 font-mono text-xs uppercase tracking-[0.18em] text-copper">Runtime topology</h3>
+        <h3 class="text-copper mt-10 font-mono text-xs tracking-[0.18em] uppercase">
+          Runtime topology
+        </h3>
         {#each retailreadyDeep.sections.runtime as p (p)}
-          <p class="mt-4 max-w-[72ch] text-lg leading-8 text-ink">{p}</p>
+          <p class="text-ink mt-4 max-w-[72ch] text-lg leading-8">{p}</p>
         {/each}
-        <h3 class="mt-10 font-mono text-xs uppercase tracking-[0.18em] text-copper">.NET projects</h3>
-        <dl class="mt-4 border-y border-line">
+        <h3 class="text-copper mt-10 font-mono text-xs tracking-[0.18em] uppercase">
+          .NET projects
+        </h3>
+        <dl class="border-line mt-4 border-y">
           {#each retailreadyDeep.sections.projects as proj (proj.name)}
-            <div class="grid gap-2 border-b border-line py-4 last:border-b-0 md:grid-cols-[14rem_1fr] md:gap-8">
-              <dt class="font-mono text-sm text-ink">{proj.name}</dt>
-              <dd class="text-sm leading-6 text-muted">{proj.role}</dd>
+            <div
+              class="border-line grid gap-2 border-b py-4 last:border-b-0 md:grid-cols-[14rem_1fr] md:gap-8"
+            >
+              <dt class="text-ink font-mono text-sm">{proj.name}</dt>
+              <dd class="text-muted text-sm leading-6">{proj.role}</dd>
             </div>
           {/each}
         </dl>
-        <h3 class="mt-10 font-mono text-xs uppercase tracking-[0.18em] text-copper">Engine workers</h3>
+        <h3 class="text-copper mt-10 font-mono text-xs tracking-[0.18em] uppercase">
+          Engine workers
+        </h3>
         <table class="mt-4 w-full border-collapse text-sm">
           <thead>
-            <tr class="border-b border-line text-left">
-              <th class="py-3 pr-4 font-mono text-xs uppercase tracking-[0.16em] text-muted">Worker</th>
-              <th class="py-3 pr-4 font-mono text-xs uppercase tracking-[0.16em] text-muted">Poll</th>
-              <th class="py-3 pr-4 font-mono text-xs uppercase tracking-[0.16em] text-muted">Step timeout</th>
-              <th class="py-3 font-mono text-xs uppercase tracking-[0.16em] text-muted">Job</th>
+            <tr class="border-line border-b text-left">
+              <th class="text-muted py-3 pr-4 font-mono text-xs tracking-[0.16em] uppercase"
+                >Worker</th
+              >
+              <th class="text-muted py-3 pr-4 font-mono text-xs tracking-[0.16em] uppercase"
+                >Poll</th
+              >
+              <th class="text-muted py-3 pr-4 font-mono text-xs tracking-[0.16em] uppercase"
+                >Step timeout</th
+              >
+              <th class="text-muted py-3 font-mono text-xs tracking-[0.16em] uppercase">Job</th>
             </tr>
           </thead>
           <tbody>
             {#each retailreadyDeep.sections.workers as w (w.name)}
-              <tr class="border-b border-line">
-                <td class="py-3 pr-4 font-mono text-ink">{w.name}</td>
-                <td class="py-3 pr-4 font-mono text-muted">{w.poll}</td>
-                <td class="py-3 pr-4 font-mono text-muted">{w.timeout}</td>
-                <td class="py-3 leading-6 text-ink">{w.job}</td>
+              <tr class="border-line border-b">
+                <td class="text-ink py-3 pr-4 font-mono">{w.name}</td>
+                <td class="text-muted py-3 pr-4 font-mono">{w.poll}</td>
+                <td class="text-muted py-3 pr-4 font-mono">{w.timeout}</td>
+                <td class="text-ink py-3 leading-6">{w.job}</td>
               </tr>
             {/each}
           </tbody>
         </table>
       </section>
 
-      <section id="customer-journey" class="mt-16 border-t border-line pt-12">
-        <h2 class="font-[family-name:var(--font-display)] text-3xl tracking-tight">Customer journey</h2>
+      <section id="customer-journey" class="border-line mt-16 border-t pt-12">
+        <h2 class="font-[family-name:var(--font-display)] text-3xl tracking-tight">
+          Customer journey
+        </h2>
         <ol class="mt-6 grid gap-6">
           {#each retailreadyDeep.sections.journeyDeep as stage, i (stage.stage)}
             <li class="grid grid-cols-[3rem_1fr] gap-4">
-              <span class="font-mono text-sm text-copper">{String(i + 1).padStart(2, "0")}</span>
+              <span class="text-copper font-mono text-sm">{String(i + 1).padStart(2, "0")}</span>
               <div>
-                <h3 class="text-xl font-semibold text-ink">{stage.stage}</h3>
-                <p class="mt-2 max-w-[68ch] leading-7 text-muted">{stage.body}</p>
+                <h3 class="text-ink text-xl font-semibold">{stage.stage}</h3>
+                <p class="text-muted mt-2 max-w-[68ch] leading-7">{stage.body}</p>
               </div>
             </li>
           {/each}
         </ol>
       </section>
 
-      <section id="platform-features" class="mt-16 border-t border-line pt-12">
-        <h2 class="font-[family-name:var(--font-display)] text-3xl tracking-tight">Platform features</h2>
-        <div class="mt-6 grid gap-px border border-line md:grid-cols-2">
+      <section id="platform-features" class="border-line mt-16 border-t pt-12">
+        <h2 class="font-[family-name:var(--font-display)] text-3xl tracking-tight">
+          Platform features
+        </h2>
+        <div class="border-line mt-6 grid gap-px border md:grid-cols-2">
           {#each retailreadyDeep.sections.features as feat (feat.name)}
             <div class="bg-paper p-6 md:p-8">
-              <h3 class="text-xl font-semibold text-ink">{feat.name}</h3>
-              <p class="mt-3 leading-7 text-muted">{feat.body}</p>
+              <h3 class="text-ink text-xl font-semibold">{feat.name}</h3>
+              <p class="text-muted mt-3 leading-7">{feat.body}</p>
             </div>
           {/each}
         </div>
       </section>
 
-      <section id="design-decisions" class="mt-16 border-t border-line pt-12">
-        <h2 class="font-[family-name:var(--font-display)] text-3xl tracking-tight">Key design decisions</h2>
+      <section id="design-decisions" class="border-line mt-16 border-t pt-12">
+        <h2 class="font-[family-name:var(--font-display)] text-3xl tracking-tight">
+          Key design decisions
+        </h2>
         <ol class="mt-6 grid gap-6">
           {#each retailreadyDeep.sections.designDecisions as d, i (d.title)}
             <li class="grid grid-cols-[3rem_1fr] gap-4">
-              <span class="font-mono text-sm text-copper">{String(i + 1).padStart(2, "0")}</span>
+              <span class="text-copper font-mono text-sm">{String(i + 1).padStart(2, "0")}</span>
               <div>
-                <h3 class="text-xl font-semibold text-ink">{d.title}</h3>
-                <p class="mt-2 max-w-[72ch] leading-7 text-muted">{d.body}</p>
+                <h3 class="text-ink text-xl font-semibold">{d.title}</h3>
+                <p class="text-muted mt-2 max-w-[72ch] leading-7">{d.body}</p>
               </div>
             </li>
           {/each}
         </ol>
       </section>
 
-      <section id="tech-stack" class="mt-16 border-t border-line pt-12">
+      <section id="tech-stack" class="border-line mt-16 border-t pt-12">
         <h2 class="font-[family-name:var(--font-display)] text-3xl tracking-tight">Tech stack</h2>
-        <dl class="mt-6 border-y border-line">
+        <dl class="border-line mt-6 border-y">
           {#each retailreadyDeep.sections.techStackTable as row (row.layer)}
-            <div class="grid gap-2 border-b border-line py-5 last:border-b-0 md:grid-cols-[12rem_1fr] md:gap-8">
-              <dt class="font-mono text-xs uppercase tracking-[0.18em] text-muted">{row.layer}</dt>
-              <dd class="font-mono text-sm text-ink">{row.tech}</dd>
+            <div
+              class="border-line grid gap-2 border-b py-5 last:border-b-0 md:grid-cols-[12rem_1fr] md:gap-8"
+            >
+              <dt class="text-muted font-mono text-xs tracking-[0.18em] uppercase">{row.layer}</dt>
+              <dd class="text-ink font-mono text-sm">{row.tech}</dd>
             </div>
           {/each}
         </dl>
@@ -3328,10 +3697,13 @@ export const retailreadyDeep = {
     </div>
 
     <aside class="hidden lg:block">
-      <nav class="sticky top-8 grid gap-2 border-l border-line pl-6 text-sm">
-        <p class="font-mono text-xs uppercase tracking-[0.18em] text-muted">On this page</p>
+      <nav class="border-line sticky top-8 grid gap-2 border-l pl-6 text-sm">
+        <p class="text-muted font-mono text-xs tracking-[0.18em] uppercase">On this page</p>
         {#each retailreadyDeep.toc as item (item.id)}
-          <a class="font-mono text-xs uppercase tracking-[0.16em] text-ink hover:text-copper" href="#{item.id}">{item.label}</a>
+          <a
+            class="text-ink hover:text-copper font-mono text-xs tracking-[0.16em] uppercase"
+            href="#{item.id}">{item.label}</a
+          >
         {/each}
       </nav>
     </aside>
@@ -3347,6 +3719,7 @@ npm run dev
 ```
 
 Open http://localhost:5173/retailready. Verify:
+
 - Header with last-updated stamp + back link
 - Sections render in order
 - Architecture diagram renders with animated dots
@@ -3361,6 +3734,7 @@ Stop dev server.
 ### Task 33: Build `/working-with-ai` deep-dive page
 
 **Files:**
+
 - Create: `src/lib/content/working-with-ai-deep.ts`
 - Create: `src/routes/working-with-ai/+page.svelte`
 
@@ -3371,7 +3745,8 @@ Mirrors `/retailready` structure but with AI-orchestration content. Reuses `AISy
 ```typescript
 export const workingWithAiDeep = {
   title: "Working with Claude on a large codebase",
-  subtitle: "A context-routing system between Claude and EdiPlatform — CLAUDE.md hierarchy, INDEX.md routing, orient skills, hooks, and memory.",
+  subtitle:
+    "A context-routing system between Claude and EdiPlatform — CLAUDE.md hierarchy, INDEX.md routing, orient skills, hooks, and memory.",
   lastUpdated: "2026-04-25",
   toc: [
     { id: "the-problem", label: "The problem" },
@@ -3393,17 +3768,32 @@ export const workingWithAiDeep = {
     "EdiPlatform is a multi-project .NET 10 + SvelteKit codebase with 16 module-scoped CLAUDE.md files, 40 RLS-protected tables, three production servers, and a ~900-test default suite. The orchestration sits at the project's `.claude/` root and works in five layered pieces.",
     "Layer 1 — Hierarchical CLAUDE.md (16 files, auto-loaded by working dir). The 129-line root CLAUDE.md carries cross-cutting rules. Each .NET project has its own scoped CLAUDE.md.",
     "Layer 2 — INDEX.md as topic router. A 185-line file mapping 13 topics to a primary architecture diagram with a FRESH/STALE label, then deep links into research docs and memory files.",
-    "Layer 3 — 13 orient-* skills (forked-context briefings). Each skill uses context: fork + Explore sub-agent. The skill body lists 4-5 must-read files and demands a structured briefing back with cited file:line references plus a mandatory \"flag drift\" section.",
+    'Layer 3 — 13 orient-* skills (forked-context briefings). Each skill uses context: fork + Explore sub-agent. The skill body lists 4-5 must-read files and demands a structured briefing back with cited file:line references plus a mandatory "flag drift" section.',
     "Layer 4 — File-based typed memory system. 64 typed memory files split into 38 feedback_*, 19 project_*, and 7 reference_*. MEMORY.md groups them with one-line annotations.",
     "Layer 5 — Hooks (12 hook files). SessionStart loads INDEX.md plus current.md. PreToolUse-Bash blocks destructive git (git reset --hard, git clean -f, git restore .). PreToolUse-Edit blocks assertion changes in test files unless the new string strictly extends the old. PostToolUse-Bash prompts the model to fix code-not-tests after dotnet test failures.",
     "Layer 6 — 7 specialist sub-agents in `.claude/agents/`: test-orchestrator coordinates Docker-slot test pipelines with a mandatory user-checkpoint phase before fixing anything."
   ],
   designDecisions: [
-    { title: "Forked-context skills, not auto-injection", body: "The original design auto-dumped INDEX.md on every UserPromptSubmit via route-context.py. That worked until INDEX hit ~19KB and started getting truncated. The auto-injector was retired in favor of context: fork skills that dispatch an Explore sub-agent. The diagram + memory files are read in the forked context; only the briefing returns. Trade-off: the model has to recognize the topic and self-invoke. The win: controller context stays lean across long sessions." },
-    { title: "Loaded ≠ attended", body: "Files dumped into context at SessionStart are bytes, not active memory. Long sessions + compactions evict unused content. Active re-reading via the Read tool is the only behavior that survives compaction. This single insight reshaped the whole orientation pattern away from \"preload everything\" toward \"fork-and-summarize on demand.\"" },
-    { title: "Diagrams as first-class, with executable parity tests", body: "Architecture diagrams under Docs/Architecture/diagrams/ carry FRESH/STALE labels, but parity is enforced by C1 meta-tests in EdiPlatform.IntegrationTests/MetaTests/ — adding a new entity, controller, or retailer without listing it in the matching diagram fails the next dotnet test. A C2 pre-push hook blocks pushes that touch watched directories without diagram updates, with a documented bypass token. Same pattern for test integrity: the commit-msg hook blocks assertion-flip diffs unless the message contains TEST-CHANGE: <TestName>: <reason>." },
-    { title: "Sub-agents start cold — INDEX is paste-required", body: "Hooks don't fire for sub-agents. The dispatcher must paste the matching INDEX.md topic block into every sub-agent prompt. Most people miss this — the auto-load mechanism only protects the main thread; dispatchers must explicitly hand context down." },
-    { title: "Typed memory naming is the index", body: "Memory files use a <type>_<slug>.md convention. MEMORY.md groups by type with one-line annotations marking high-leverage entries. INDEX.md DEEP links point straight at specific memory files. Files marked HIGH-LEVERAGE are the meta-rules that prevent recurring mistake classes. There's no vector DB — just disciplined naming and a hand-curated index." }
+    {
+      title: "Forked-context skills, not auto-injection",
+      body: "The original design auto-dumped INDEX.md on every UserPromptSubmit via route-context.py. That worked until INDEX hit ~19KB and started getting truncated. The auto-injector was retired in favor of context: fork skills that dispatch an Explore sub-agent. The diagram + memory files are read in the forked context; only the briefing returns. Trade-off: the model has to recognize the topic and self-invoke. The win: controller context stays lean across long sessions."
+    },
+    {
+      title: "Loaded ≠ attended",
+      body: 'Files dumped into context at SessionStart are bytes, not active memory. Long sessions + compactions evict unused content. Active re-reading via the Read tool is the only behavior that survives compaction. This single insight reshaped the whole orientation pattern away from "preload everything" toward "fork-and-summarize on demand."'
+    },
+    {
+      title: "Diagrams as first-class, with executable parity tests",
+      body: "Architecture diagrams under Docs/Architecture/diagrams/ carry FRESH/STALE labels, but parity is enforced by C1 meta-tests in EdiPlatform.IntegrationTests/MetaTests/ — adding a new entity, controller, or retailer without listing it in the matching diagram fails the next dotnet test. A C2 pre-push hook blocks pushes that touch watched directories without diagram updates, with a documented bypass token. Same pattern for test integrity: the commit-msg hook blocks assertion-flip diffs unless the message contains TEST-CHANGE: <TestName>: <reason>."
+    },
+    {
+      title: "Sub-agents start cold — INDEX is paste-required",
+      body: "Hooks don't fire for sub-agents. The dispatcher must paste the matching INDEX.md topic block into every sub-agent prompt. Most people miss this — the auto-load mechanism only protects the main thread; dispatchers must explicitly hand context down."
+    },
+    {
+      title: "Typed memory naming is the index",
+      body: "Memory files use a <type>_<slug>.md convention. MEMORY.md groups by type with one-line annotations marking high-leverage entries. INDEX.md DEEP links point straight at specific memory files. Files marked HIGH-LEVERAGE are the meta-rules that prevent recurring mistake classes. There's no vector DB — just disciplined naming and a hand-curated index."
+    }
   ],
   honest: "I'm no master at this — but the system is opinionated, and the opinions are earned."
 };
@@ -3427,26 +3817,33 @@ export const workingWithAiDeep = {
 </svelte:head>
 
 <main id="main" class="bg-paper">
-  <div class="border-b border-line">
+  <div class="border-line border-b">
     <nav class="mx-auto flex max-w-[1200px] items-center justify-between px-4 py-5 md:px-8">
-      <a class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-muted hover:text-ink" href="/">
+      <a
+        class="text-muted hover:text-ink inline-flex items-center gap-2 font-mono text-xs tracking-[0.18em] uppercase"
+        href="/"
+      >
         <ArrowLeft size={14} weight="bold" />
         Back to portfolio
       </a>
-      <span class="font-mono text-xs uppercase tracking-[0.18em] text-muted">
+      <span class="text-muted font-mono text-xs tracking-[0.18em] uppercase">
         Last updated {workingWithAiDeep.lastUpdated}
       </span>
     </nav>
   </div>
 
-  <article class="mx-auto grid max-w-[1200px] grid-cols-1 gap-12 px-4 py-16 md:px-8 md:py-24 lg:grid-cols-[1fr_220px]">
+  <article
+    class="mx-auto grid max-w-[1200px] grid-cols-1 gap-12 px-4 py-16 md:px-8 md:py-24 lg:grid-cols-[1fr_220px]"
+  >
     <div>
-      <header class="border-b border-line pb-10">
-        <p class="font-mono text-xs uppercase tracking-[0.2em] text-copper">Working with AI</p>
-        <h1 class="mt-5 font-[family-name:var(--font-display)] text-5xl leading-[0.95] tracking-tight md:text-7xl">
+      <header class="border-line border-b pb-10">
+        <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">Working with AI</p>
+        <h1
+          class="mt-5 font-[family-name:var(--font-display)] text-5xl leading-[0.95] tracking-tight md:text-7xl"
+        >
           {workingWithAiDeep.title}
         </h1>
-        <p class="mt-6 max-w-[60ch] text-xl leading-8 text-muted">
+        <p class="text-muted mt-6 max-w-[60ch] text-xl leading-8">
           {workingWithAiDeep.subtitle}
         </p>
       </header>
@@ -3454,36 +3851,38 @@ export const workingWithAiDeep = {
       <section id="the-problem" class="mt-16">
         <h2 class="font-[family-name:var(--font-display)] text-3xl tracking-tight">The problem</h2>
         {#each workingWithAiDeep.problem as p (p)}
-          <p class="mt-5 max-w-[68ch] text-lg leading-8 text-ink">{p}</p>
+          <p class="text-ink mt-5 max-w-[68ch] text-lg leading-8">{p}</p>
         {/each}
       </section>
 
-      <section id="the-system" class="mt-16 border-t border-line pt-12">
+      <section id="the-system" class="border-line mt-16 border-t pt-12">
         <h2 class="font-[family-name:var(--font-display)] text-3xl tracking-tight">The system</h2>
-        <div class="mt-6 rounded-lg border border-line-dark bg-charcoal p-4 md:p-8">
+        <div class="border-line-dark bg-charcoal mt-6 rounded-lg border p-4 md:p-8">
           <AISystemDiagram variant="full" />
         </div>
         {#each workingWithAiDeep.system as p (p)}
-          <p class="mt-5 max-w-[72ch] text-lg leading-8 text-ink">{p}</p>
+          <p class="text-ink mt-5 max-w-[72ch] text-lg leading-8">{p}</p>
         {/each}
       </section>
 
-      <section id="design-decisions" class="mt-16 border-t border-line pt-12">
-        <h2 class="font-[family-name:var(--font-display)] text-3xl tracking-tight">Design decisions</h2>
+      <section id="design-decisions" class="border-line mt-16 border-t pt-12">
+        <h2 class="font-[family-name:var(--font-display)] text-3xl tracking-tight">
+          Design decisions
+        </h2>
         <ol class="mt-6 grid gap-6">
           {#each workingWithAiDeep.designDecisions as d, i (d.title)}
             <li class="grid grid-cols-[3rem_1fr] gap-4">
-              <span class="font-mono text-sm text-copper">{String(i + 1).padStart(2, "0")}</span>
+              <span class="text-copper font-mono text-sm">{String(i + 1).padStart(2, "0")}</span>
               <div>
-                <h3 class="text-xl font-semibold text-ink">{d.title}</h3>
-                <p class="mt-2 max-w-[72ch] leading-7 text-muted">{d.body}</p>
+                <h3 class="text-ink text-xl font-semibold">{d.title}</h3>
+                <p class="text-muted mt-2 max-w-[72ch] leading-7">{d.body}</p>
               </div>
             </li>
           {/each}
         </ol>
       </section>
 
-      <section id="honest" class="mt-16 border-t border-line pt-12">
+      <section id="honest" class="border-line mt-16 border-t pt-12">
         <PullQuote tone="light">
           {#snippet children()}
             {workingWithAiDeep.honest}
@@ -3495,10 +3894,13 @@ export const workingWithAiDeep = {
     </div>
 
     <aside class="hidden lg:block">
-      <nav class="sticky top-8 grid gap-2 border-l border-line pl-6 text-sm">
-        <p class="font-mono text-xs uppercase tracking-[0.18em] text-muted">On this page</p>
+      <nav class="border-line sticky top-8 grid gap-2 border-l pl-6 text-sm">
+        <p class="text-muted font-mono text-xs tracking-[0.18em] uppercase">On this page</p>
         {#each workingWithAiDeep.toc as item (item.id)}
-          <a class="font-mono text-xs uppercase tracking-[0.16em] text-ink hover:text-copper" href="#{item.id}">{item.label}</a>
+          <a
+            class="text-ink hover:text-copper font-mono text-xs tracking-[0.16em] uppercase"
+            href="#{item.id}">{item.label}</a
+          >
         {/each}
       </nav>
     </aside>
@@ -3522,6 +3924,7 @@ Open http://localhost:5173/working-with-ai. Verify all sections render and the A
 ### Task 34: A11y audit pass
 
 **Files:**
+
 - Modify: any component lacking proper landmarks, aria attributes, or focus styles
 
 - [ ] **Step 1: Run dev server and inspect each page with browser devtools "Accessibility" panel**
@@ -3531,6 +3934,7 @@ npm run dev
 ```
 
 For each page (`/`, `/retailready`, `/working-with-ai`):
+
 1. Tab through the page from top — verify every interactive element gets a visible focus indicator
 2. Inspect heading hierarchy in devtools — should descend in order (h1 → h2 → h3, no skips)
 3. Verify all `<img>` and `<video>` have `alt` or are wrapped in `aria-hidden="true"` if decorative
@@ -3560,6 +3964,7 @@ Reload page, press Tab once. The skip link should appear in the top-left and foc
 ### Task 35: Reduced-motion verification
 
 **Files:**
+
 - (none — verification only)
 
 - [ ] **Step 1: Enable reduced motion in macOS**
@@ -3569,6 +3974,7 @@ System Settings → Accessibility → Display → Reduce motion. Or via devtools
 - [ ] **Step 2: Reload each page and verify**
 
 For `/`, `/retailready`, `/working-with-ai`:
+
 - Hero video does not scrub on scroll (acceptable — it just sits at frame 0)
 - No reveal animations — content appears immediately
 - Magnetic anchors do not follow the cursor
@@ -3581,6 +3987,7 @@ For `/`, `/retailready`, `/working-with-ai`:
 ### Task 36: Cross-browser test
 
 **Files:**
+
 - (none — verification only)
 
 - [ ] **Step 1: Test in Chrome**
@@ -3594,6 +4001,7 @@ Open in Chrome. Walk all three pages. Verify no console errors, animations smoot
 - [ ] **Step 2: Test in Safari**
 
 Open the same URL in Safari. Specific Safari concerns:
+
 - Video autoplay (we use muted + playsinline — should work)
 - `dvh` units
 - `backdrop-filter` (used in header)
@@ -3603,6 +4011,7 @@ If anything breaks, fix it. Most likely culprit: video preload behavior. If the 
 - [ ] **Step 3: Test in Firefox**
 
 Specific Firefox concerns:
+
 - `getPointAtLength()` performance on the diagrams (Firefox is slower than Chrome on heavy SVG)
 
 If diagrams stutter, reduce dot count in `ArchitectureDiagram.svelte` from 3-per-edge to 2-per-edge.
@@ -3610,6 +4019,7 @@ If diagrams stutter, reduce dot count in `ArchitectureDiagram.svelte` from 3-per
 - [ ] **Step 4: Test mobile viewport in Chrome devtools**
 
 Throttle to "Mid-tier mobile" CPU. Verify:
+
 - Hero scroll-scrub still feels responsive (not janky)
 - Diagrams render at smaller viewBox without breaking
 - TOC sidebar hides correctly on narrow screens
@@ -3619,6 +4029,7 @@ Throttle to "Mid-tier mobile" CPU. Verify:
 ### Task 37: Final build verification
 
 **Files:**
+
 - (none — verification only)
 
 - [ ] **Step 1: Clean build**
@@ -3645,6 +4056,7 @@ Open http://localhost:4173. Verify all three pages render identically to dev mod
 In Chrome devtools → Lighthouse. Run for `/`, `/retailready`, `/working-with-ai`. Target: Performance ≥ 90 on all three.
 
 If Performance falls below 90:
+
 - Check LCP (likely the hero video) — verify `preload="auto"` on the `<video>` element only fires after first paint
 - Check unused JS — Vite tree-shaking should handle this; if not, audit imports
 
@@ -3659,6 +4071,7 @@ The user can delete `_legacy-next/` whenever they're confident in the new build.
 - [ ] **Step 5: Final report to owner**
 
 Summarize:
+
 - Build status: ✓ passes check + build
 - Pages: 3 (`/`, `/retailready`, `/working-with-ai`)
 - Lighthouse Performance scores per page
@@ -3672,6 +4085,7 @@ Summarize:
 ### Task 38: Create public repo `coble-portfolio` and push
 
 **Files:**
+
 - (no new files; `gh` CLI creates the remote and pushes)
 
 > **Risky-action gate:** This step creates a public artifact on the user's GitHub account. The owner has explicitly approved: public repo, name `coble-portfolio`. Do not deviate.
@@ -3724,6 +4138,7 @@ to print metadata. Confirm the README/spec/plan are visible. (No README at this 
 - [ ] **Step 5: Final report to owner**
 
 Report:
+
 - Repo URL
 - Latest commit hash on main
 - Lighthouse Performance scores per page from Task 37

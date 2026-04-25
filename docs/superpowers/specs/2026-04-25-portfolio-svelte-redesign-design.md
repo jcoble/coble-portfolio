@@ -14,17 +14,17 @@ The portfolio targets technical employers and prospective customers. The goal is
 
 ## 2. Decisions Locked In
 
-| Decision | Choice | Why |
-|---|---|---|
-| Framework | SvelteKit (latest), Node adapter | Owner ships SvelteKit daily; Next.js liability removed |
-| Component model | Svelte 5 runes (`$props`, `$state`, `$derived`, `$effect`) | Matches EdiPlatform |
-| Styling | Tailwind v4 | Already in current site; matches EdiPlatform |
-| Language | TypeScript | Standard |
-| Icons | `phosphor-svelte` | Same icon family as current site |
-| Animation library | None (Svelte built-in `spring()` / `tweened()` + transitions + custom IntersectionObserver action) | No framer-motion equivalent needed; smaller bundle |
-| Component kit | None (not Shadcn-Svelte) | Overkill for one-page site; we want bespoke |
-| Hero video | Reuse existing `hero-laptop-scrub.mp4` | Already wired; second clip rejected (tonal mismatch + watermark) |
-| Existing Next.js code | Move to `_legacy-next/` (or delete after working build) | Preserve until we're confident |
+| Decision              | Choice                                                                                             | Why                                                              |
+| --------------------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| Framework             | SvelteKit (latest), Node adapter                                                                   | Owner ships SvelteKit daily; Next.js liability removed           |
+| Component model       | Svelte 5 runes (`$props`, `$state`, `$derived`, `$effect`)                                         | Matches EdiPlatform                                              |
+| Styling               | Tailwind v4                                                                                        | Already in current site; matches EdiPlatform                     |
+| Language              | TypeScript                                                                                         | Standard                                                         |
+| Icons                 | `phosphor-svelte`                                                                                  | Same icon family as current site                                 |
+| Animation library     | None (Svelte built-in `spring()` / `tweened()` + transitions + custom IntersectionObserver action) | No framer-motion equivalent needed; smaller bundle               |
+| Component kit         | None (not Shadcn-Svelte)                                                                           | Overkill for one-page site; we want bespoke                      |
+| Hero video            | Reuse existing `hero-laptop-scrub.mp4`                                                             | Already wired; second clip rejected (tonal mismatch + watermark) |
+| Existing Next.js code | Move to `_legacy-next/` (or delete after working build)                                            | Preserve until we're confident                                   |
 
 ## 3. Design Direction — "Technical Editorial"
 
@@ -53,13 +53,14 @@ The single cool accent (`signal`) used sparingly against the warm base is the tr
 
 ### 3.2 Typography
 
-| Role | Family | Source | Notes |
-|---|---|---|---|
-| Display | **Instrument Serif** | Google Fonts (variable) | Big editorial headlines, hero, section openers |
-| Body | **Geist Sans** | Google Fonts | Already in use; modern, neutral |
-| Technical | **Geist Mono** | Google Fonts | Stats, EDI codes, system specs, architecture labels |
+| Role      | Family               | Source                  | Notes                                               |
+| --------- | -------------------- | ----------------------- | --------------------------------------------------- |
+| Display   | **Instrument Serif** | Google Fonts (variable) | Big editorial headlines, hero, section openers      |
+| Body      | **Geist Sans**       | Google Fonts            | Already in use; modern, neutral                     |
+| Technical | **Geist Mono**       | Google Fonts            | Stats, EDI codes, system specs, architecture labels |
 
 Type scale (Tailwind classes — informative, not strict):
+
 - Display 1 (hero, section openers): `text-7xl md:text-9xl` Instrument Serif, leading-[0.92], tracking-tight
 - Display 2 (sub-section openers): `text-5xl md:text-7xl` Instrument Serif, leading-[0.95]
 - Heading 3 (cards): `text-2xl md:text-3xl` Geist Sans semibold
@@ -84,18 +85,18 @@ Type scale (Tailwind classes — informative, not strict):
 
 ### 4.1 Main page `/`
 
-| # | Section | Background | Purpose |
-|---|---|---|---|
-| 1 | Hero | dark (charcoal + video) | Identity, headline, intro, CTAs |
-| 2 | Practice | paper | Short positioning bridge |
-| 3 | RetailReady | paper → dark | The centerpiece — proves "I ship serious systems" |
-| 4 | AI Engineering | dark | The meta-system — proves "I work with AI at system level" |
-| 5 | Coble Solutions | paper | Smaller, deliberately understated |
-| 6 | Programming Experience | paper | Career timeline + bio (real content) |
-| 7 | Capabilities | paper | What kind of work he does |
-| 8 | Method | dark card on paper | Beliefs / principles |
-| 9 | Résumé | paper | Editorial typeset + PDF download |
-| 10 | Contact | paper | Minimal email-forward |
+| #   | Section                | Background              | Purpose                                                   |
+| --- | ---------------------- | ----------------------- | --------------------------------------------------------- |
+| 1   | Hero                   | dark (charcoal + video) | Identity, headline, intro, CTAs                           |
+| 2   | Practice               | paper                   | Short positioning bridge                                  |
+| 3   | RetailReady            | paper → dark            | The centerpiece — proves "I ship serious systems"         |
+| 4   | AI Engineering         | dark                    | The meta-system — proves "I work with AI at system level" |
+| 5   | Coble Solutions        | paper                   | Smaller, deliberately understated                         |
+| 6   | Programming Experience | paper                   | Career timeline + bio (real content)                      |
+| 7   | Capabilities           | paper                   | What kind of work he does                                 |
+| 8   | Method                 | dark card on paper      | Beliefs / principles                                      |
+| 9   | Résumé                 | paper                   | Editorial typeset + PDF download                          |
+| 10  | Contact                | paper                   | Minimal email-forward                                     |
 
 ### 4.2 Deep-dive pages
 
@@ -184,8 +185,8 @@ Keep existing copy; tighten the second sentence. One paragraph block + the three
    - 12 hook scripts
    - 7 specialist sub-agents
    - 64 typed memory files (38 feedback + 19 project + 7 reference)
-5. **Key insight callout** — pull-quote style: *"Loaded ≠ attended. Files dumped into SessionStart context become bytes the model doesn't actively retrieve, and the next compaction evicts them. So orientation is on-demand and forked, not preloaded."*
-6. **Honest framing close** — *"I'm no master at this. But the system is opinionated, and the opinions are earned."*
+5. **Key insight callout** — pull-quote style: _"Loaded ≠ attended. Files dumped into SessionStart context become bytes the model doesn't actively retrieve, and the next compaction evicts them. So orientation is on-demand and forked, not preloaded."_
+6. **Honest framing close** — _"I'm no master at this. But the system is opinionated, and the opinions are earned."_
 7. **CTA** — `Read how I work with Claude →`
 
 ### 5.5 Coble Solutions
@@ -199,6 +200,7 @@ Two-column block, real content from résumé:
 - **Left: Bio block** — Eyebrow `EXPERIENCE`, headline like "A decade-plus of EDI." Body paragraph: "10+ years building software, with EDI as the through-line. Started in 2014 building reader/writer engines for steamship lines at DepotSystems (322, EDIFACT CEDEX, 301, Westim, Destim, Codeco, WORDER), spent four years as the sole developer on ISO management systems for the medical device and aerospace industries at IMSXpress, and currently runs RetailReady — a retail EDI platform for vendors selling into Walmart, Best Buy, Dollar Tree, Meijer, and Dollar General."
 
 - **Right: Timeline rail** — vertical timeline, mono labels, three rows:
+
   ```
   2022 — Present    Coble Solutions / RetailReady EDI
                     Founder, Lead Engineer
@@ -255,6 +257,7 @@ Structure (typeset Svelte, NOT raw markdown render):
 9. Footer — back to portfolio + contact link
 
 **Redactions from `Docs/SYSTEM-OVERVIEW.md`:**
+
 - Remove all VPS IPs (`49.13.236.209`, `46.224.175.20`)
 - Remove all internal cross-references to `Docs/Architecture/diagrams/...`, `CLAUDE.md`, `INDEX.md`, `Docs/Research/...`
 - Remove the entire "FURTHER READING" pointer table at the top
@@ -363,12 +366,14 @@ Both architecture diagrams use the same approach:
 - Reduced-motion: dots become static at evenly-spaced positions along the path
 
 Architecture diagram (RetailReady) — linear pipeline:
+
 - Nodes: `Retailer → EDI Server → Engine → Database → API → Browser` (6 nodes)
 - Edge labels: `850 / 855 / 856 / 810 / 997` (color-coded by document type)
 - The API→Browser edge is annotated `via SignalR` (transport, not a separate node)
 - Outbound docs flow right-to-left on a return path; inbound left-to-right
 
 AI system diagram — fork-and-return pattern:
+
 - Main flow: `User Prompt → Main Thread → Sub-agent → Briefing → Main Thread (resume)` (loop)
 - Sub-agent reads from a cluster: `Diagram + Memory + CLAUDE.md` (rendered as three nodes feeding into the sub-agent)
 - 6 visible nodes total; clearer than the 9-node version on smaller viewports

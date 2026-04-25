@@ -1,0 +1,9 @@
+.svelte-kit
+build
+node_modules
+_legacy-next
+output
+.history
+package-lock.json
+*.pdf
+static/resume.pdf
