@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Motion — Easings</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter+Tight:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  body { margin:0; padding:18px; background:#efece4; color:#0e0f11; font-family:"Inter Tight",sans-serif; }
+  .item { display:grid; grid-template-columns:200px 1fr 80px; gap:12px; align-items:center; padding:10px 0; border-bottom:1px solid #d2cec1; }
+  .item:last-child { border-bottom:0; }
+  .name { font-family:"JetBrains Mono",monospace; font-size:11px; }
+  .desc { font-family:"JetBrains Mono",monospace; font-size:10px; color:#6a6e76; }
+  .track { position:relative; height:6px; background:#d2cec1; border-radius:3px; overflow:hidden; }
+  .dot { position:absolute; top:-5px; width:16px; height:16px; border-radius:50%; background:#c8674a; }
+  .a .dot { animation: m 1.6s var(--e1) infinite alternate; }
+  .b .dot { animation: m 1.6s var(--e2) infinite alternate; }
+  .c .dot { animation: m 1.6s var(--e3) infinite alternate; }
+  body { --e1:cubic-bezier(0.2,0.8,0.2,1); --e2:cubic-bezier(0.16,1,0.3,1); --e3:cubic-bezier(0.83,0,0.17,1); }
+  @keyframes m { from { left:0 } to { left:calc(100% - 16px) } }
+</style>
+</head>
+<body>
+  <div class="item a">
+    <div><div class="name">--ease-out-soft</div><div class="desc">default reveal · 320ms</div></div>
+    <div class="track"><div class="dot"></div></div>
+    <div class="desc">.2,.8,.2,1</div>
+  </div>
+  <div class="item b">
+    <div><div class="name">--ease-out-expo</div><div class="desc">panel hand-off · 1100ms</div></div>
+    <div class="track"><div class="dot"></div></div>
+    <div class="desc">.16,1,.3,1</div>
+  </div>
+  <div class="item c">
+    <div><div class="name">--ease-in-out-quint</div><div class="desc">scrub · bidirectional</div></div>
+    <div class="track"><div class="dot"></div></div>
+    <div class="desc">.83,0,.17,1</div>
+  </div>
+</body>
+</html>

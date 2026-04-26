@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Card</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..500&family=Inter+Tight:wght@400;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+body { margin:0; padding:20px; background:radial-gradient(60% 40% at 14% 18%, rgba(122,61,255,.3), transparent 70%), radial-gradient(48% 36% at 86% 24%, rgba(255,61,166,.26), transparent 70%), #0c0a18; font-family:"Inter Tight",sans-serif; color:#f3eef8; min-height:100vh; }
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.card {
+  border:1px solid #261e3a; border-radius:14px; padding:18px;
+  background:rgba(28,21,48,.42); backdrop-filter:blur(12px);
+  box-shadow: inset 0 1px 0 rgba(255,61,166,.18), 0 30px 80px -50px rgba(0,0,0,.85);
+  position:relative; transition: all .3s cubic-bezier(.2,.8,.2,1);
+}
+.card:hover { transform:translateY(-2px); border-color:#3a2a5a; box-shadow: inset 0 1px 0 rgba(61,225,255,.22), 0 0 24px rgba(255,61,166,.35), 0 30px 80px -50px rgba(0,0,0,.85); }
+.num { font-family:"JetBrains Mono",monospace; font-size:10px; letter-spacing:0.18em; color:#ff3da6; }
+.title { font-family:"Fraunces",serif; font-size:18px; line-height:1.15; margin-top:8px; font-variation-settings:"opsz" 36; color:#f3eef8; }
+.body { color:#b9b0c8; font-size:13px; line-height:1.55; margin-top:6px; }
+</style></head><body>
+<div class="grid">
+  <div class="card">
+    <div class="num">01</div>
+    <div class="title">Two-layer monitoring</div>
+    <div class="body">Domain heartbeat plus host-level systemd. The host layer survives an API startup failure.</div>
+  </div>
+  <div class="card">
+    <div class="num">02</div>
+    <div class="title">Per-worker cascading timeouts</div>
+    <div class="body">CancellationTokenSource.CreateLinkedTokenSource. One stalled retailer cannot freeze the pipeline.</div>
+  </div>
+</div>
+</body></html>

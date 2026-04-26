@@ -1,0 +1,1994 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jesse Coble · Software Engineer · Founder · Systems Builder</title>
+<meta name="description" content="Jesse Coble — software engineer, founder, and systems builder. I turn real-world operational problems into digital solutions: retail EDI, integrations, background workflows.">
+<link rel="icon" href="../../assets/favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,300..500,0..100&family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link href="../../colors_and_type.css" rel="stylesheet">
+
+<!-- GSAP + ScrollTrigger (orchestration layer for the pinned hero only) -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-night);
+    color: var(--fg-moonlight);
+    font-family: var(--font-sans);
+    font-size: var(--type-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; }
+
+  /* ---------- LAYOUT ---------- */
+  .container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--pad-x-md);
+  }
+  @media (min-width: 1024px) {
+    .container { padding: 0 var(--pad-x-lg); }
+  }
+
+  .section {
+    position: relative;
+    padding: clamp(96px, 14vh, 160px) 0;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--cyan);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 28px; height: 1px;
+    background: var(--cyan);
+    box-shadow: var(--glow-cyan-soft);
+  }
+
+  /* ---------- HEADER ---------- */
+  .site-header {
+    position: fixed; top: 16px; left: 0; right: 0;
+    z-index: 60;
+    pointer-events: none;
+  }
+  .site-header .nav {
+    pointer-events: auto;
+    margin: 0 auto;
+    max-width: calc(var(--container-max) - 32px);
+    background: rgba(7, 11, 24, 0.55);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    padding: 10px 14px 10px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: 0 20px 50px -28px rgba(0,0,0,0.7);
+  }
+  .brand {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--fg-moonlight);
+  }
+  .brand .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--ember); box-shadow: var(--glow-ember);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.55; transform: scale(0.85); }
+  }
+  .nav-links {
+    display: none;
+    gap: 28px;
+    font-size: 13px;
+    color: var(--fg-haze);
+  }
+  @media (min-width: 900px) {
+    .nav-links { display: flex; }
+  }
+  .nav-links a {
+    position: relative;
+    transition: color var(--dur-fast) var(--ease-out-soft);
+  }
+  .nav-links a:hover { color: var(--cyan-bright); }
+  .nav-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 14px;
+    border-radius: var(--r-sm);
+    font-size: 13px;
+    color: var(--fg-moonlight);
+    background: rgba(80, 200, 255, 0.08);
+    border: 1px solid rgba(80, 200, 255, 0.28);
+    transition: all var(--dur-fast) var(--ease-out-soft);
+  }
+  .nav-cta:hover {
+    background: rgba(80, 200, 255, 0.14);
+    border-color: rgba(80, 200, 255, 0.5);
+    box-shadow: var(--glow-cyan-soft);
+  }
+
+  /* ============================================================
+     HERO — pinned scroll-scrubbed video
+     The video is the camera move; GSAP just maps scroll → currentTime
+     and fades stage overlays in/out at exact ranges.
+     ============================================================ */
+  .hero {
+    position: relative;
+    height: 600vh; /* total scroll length: ~6 viewports for the cinematic */
+  }
+  .hero-stage {
+    position: sticky; top: 0;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    background: var(--bg-void);
+  }
+  .hero-video-wrap {
+    position: absolute; inset: 0;
+    z-index: 1;
+  }
+  .hero-video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    /* Subtle warm/cool grade so the video sits closer to the page */
+    filter: saturate(1.05) contrast(1.04) brightness(0.92);
+  }
+  /* A vignette + a top/bottom shade that always sits over the video */
+  .hero-video-wrap::after {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(120% 80% at 50% 50%, transparent 40%, rgba(4,6,13,0.55) 100%),
+      linear-gradient(180deg, rgba(4,6,13,0.55) 0%, transparent 22%, transparent 70%, rgba(4,6,13,0.85) 100%);
+  }
+  /* A film of grain to keep gradients honest */
+  .hero-video-wrap::before {
+    content: "";
+    position: absolute; inset: 0; z-index: 2;
+    pointer-events: none;
+    opacity: 0.10;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.84' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='0.36'/%3E%3C/svg%3E");
+  }
+
+  /* Hero overlays — each stage is absolutely positioned and faded in/out */
+  .hero-overlay {
+    position: absolute; inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .hero-overlay .container {
+    width: 100%;
+  }
+
+  .stage {
+    opacity: 0;
+    will-change: opacity, transform;
+    pointer-events: none;
+  }
+  /* Default visible state for stage 1 before/without JS — prevents FOUC. */
+  .hero-stage.no-js-fallback .stage-1,
+  html.no-gsap .stage-1 {
+    opacity: 1;
+  }
+  .stage > .stage-inner {
+    pointer-events: auto;
+  }
+
+  /* Stage 1 — opening */
+  .stage-1 {
+    position: absolute; inset: 0;
+    display: flex; align-items: center;
+  }
+  .stage-1 .stage-inner {
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--pad-x-md);
+  }
+  @media (min-width: 1024px) { .stage-1 .stage-inner { padding: 0 var(--pad-x-lg); } }
+
+  .hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 28px;
+    display: inline-flex; align-items: center; gap: 14px;
+  }
+  .hero-eyebrow::before {
+    content: ""; width: 36px; height: 1px;
+    background: var(--cyan); box-shadow: var(--glow-cyan-soft);
+  }
+  .hero-headline {
+    font-family: var(--font-display);
+    font-weight: 350;
+    font-size: clamp(2.75rem, 6.4vw, 5.75rem);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    font-variation-settings: "opsz" 144, "SOFT" 40;
+    color: var(--fg-moonlight);
+    margin: 0 0 24px 0;
+    max-width: 18ch;
+    text-wrap: balance;
+  }
+  .hero-headline em {
+    font-style: italic;
+    background: linear-gradient(180deg, #b6ecff 0%, #50c8ff 70%, #2092d4 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 28px rgba(80, 200, 255, 0.35));
+  }
+  .hero-sub {
+    font-size: clamp(1rem, 1.1vw + 0.6rem, 1.25rem);
+    line-height: 1.55;
+    color: var(--fg-haze);
+    max-width: 44ch;
+    margin: 0 0 36px 0;
+  }
+  .hero-ctas {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    pointer-events: auto;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 22px;
+    border-radius: var(--r-sm);
+    font-size: 14px; font-weight: 500;
+    letter-spacing: 0.005em;
+    transition: all var(--dur-base) var(--ease-out-soft);
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+  .btn-primary {
+    background: linear-gradient(180deg, #50c8ff 0%, #2a9fda 100%);
+    color: #061325;
+    box-shadow: var(--shadow-cta);
+    font-weight: 600;
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 24px 60px -22px rgba(80,200,255,0.7), 0 0 0 1px rgba(150, 220, 255, 0.4);
+    background: linear-gradient(180deg, #7ddcff 0%, #3aabe0 100%);
+  }
+  .btn-ghost {
+    background: rgba(255,255,255,0.04);
+    color: var(--fg-moonlight);
+    border-color: var(--line-glow);
+  }
+  .btn-ghost:hover {
+    background: rgba(80,200,255,0.08);
+    border-color: rgba(80,200,255,0.4);
+    color: var(--cyan-bright);
+  }
+  .btn .arrow { transition: transform var(--dur-base) var(--ease-out-soft); }
+  .btn:hover .arrow { transform: translate(2px, -2px); }
+
+  /* Stages 2,3 — text floating over the screen approach */
+  .stage-text-center {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 0 var(--pad-x-md);
+  }
+  .stage-text-center .stage-line {
+    font-family: var(--font-display);
+    font-weight: 330;
+    font-size: clamp(1.75rem, 4.2vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-variation-settings: "opsz" 100, "SOFT" 50;
+    color: var(--fg-moonlight);
+    max-width: 22ch;
+    text-wrap: balance;
+    text-shadow: 0 4px 40px rgba(0,0,0,0.7);
+  }
+  .stage-text-center .stage-line em {
+    font-style: normal;
+    color: var(--cyan-bright);
+    filter: drop-shadow(0 0 24px rgba(80, 200, 255, 0.55));
+  }
+
+  /* Stage 4 — threshold microcopy */
+  .stage-thresh {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .thresh-tag {
+    font-family: var(--font-mono);
+    font-size: 12px; letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--cyan-bright);
+    padding: 10px 22px;
+    border: 1px solid rgba(80,200,255,0.4);
+    border-radius: 100px;
+    background: rgba(7, 11, 24, 0.4);
+    backdrop-filter: blur(8px);
+    box-shadow: var(--glow-cyan-soft);
+  }
+  .thresh-tag .dot {
+    display: inline-block;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--cyan); box-shadow: var(--glow-cyan);
+    margin-right: 12px; vertical-align: middle;
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+
+  /* Stage 5 — RetailReady proof card (inside the screen) */
+  .stage-proof {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 var(--pad-x-md);
+  }
+  .proof-card {
+    background: rgba(7, 11, 24, 0.66);
+    backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid rgba(80, 200, 255, 0.22);
+    border-radius: var(--r-md);
+    padding: 28px 32px;
+    max-width: 520px;
+    box-shadow: 0 30px 80px -30px rgba(0,0,0,0.7), 0 0 0 1px rgba(80,200,255,0.06);
+  }
+  .proof-card .label {
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--cyan); margin-bottom: 12px;
+  }
+  .proof-card .title {
+    font-family: var(--font-display); font-weight: 380;
+    font-size: clamp(1.25rem, 1.8vw + 0.5rem, 1.75rem);
+    line-height: 1.15; margin: 0 0 12px;
+    letter-spacing: -0.015em;
+  }
+  .proof-card .copy {
+    color: var(--fg-haze); font-size: 14.5px; line-height: 1.55;
+    margin: 0;
+  }
+  .proof-tags {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 18px;
+  }
+  .proof-tags span {
+    font-family: var(--font-mono); font-size: 10.5px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 5px 9px;
+    border: 1px solid var(--line-cyan);
+    border-radius: 4px;
+    color: var(--fg-haze);
+    background: rgba(80,200,255,0.04);
+  }
+
+  /* Stage 8 — final hero state */
+  .stage-final {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 0 var(--pad-x-md);
+  }
+  .final-block .name {
+    font-family: var(--font-mono); font-size: 12px;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--cyan); margin-bottom: 24px;
+  }
+  .final-block .head {
+    font-family: var(--font-display); font-weight: 330;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1; letter-spacing: -0.025em;
+    font-variation-settings: "opsz" 144, "SOFT" 40;
+    margin: 0 0 28px;
+    text-wrap: balance;
+    max-width: 22ch;
+    text-shadow: 0 4px 40px rgba(0,0,0,0.7);
+  }
+  .final-block .head em {
+    font-style: italic;
+    color: var(--cyan-bright);
+    filter: drop-shadow(0 0 24px rgba(80, 200, 255, 0.4));
+  }
+  .final-block .ctas {
+    display: flex; gap: 12px; justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* Scroll cue at hero start */
+  .scroll-cue {
+    position: absolute; bottom: 32px; left: 50%;
+    transform: translateX(-50%);
+    z-index: 6;
+    font-family: var(--font-mono); font-size: 10.5px;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--fg-haze);
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    opacity: 0.7;
+    animation: cue-pulse 2.6s ease-in-out infinite;
+  }
+  .scroll-cue .line {
+    width: 1px; height: 32px;
+    background: linear-gradient(180deg, transparent, var(--cyan));
+  }
+  @keyframes cue-pulse {
+    0%,100% { opacity: 0.4; transform: translate(-50%, 0); }
+    50% { opacity: 0.9; transform: translate(-50%, 4px); }
+  }
+
+  /* Progress bar of hero scrub — top of viewport */
+  .hero-progress {
+    position: fixed; top: 0; left: 0;
+    height: 2px;
+    width: 0%;
+    background: var(--portal-bar);
+    z-index: 70;
+    transition: opacity var(--dur-base) var(--ease-out-soft);
+  }
+
+  /* ============================================================
+     SECTION COMMON
+     ============================================================ */
+  .section-head {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: 64px;
+  }
+  @media (min-width: 900px) {
+    .section-head {
+      grid-template-columns: 280px 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+  }
+  .section-head .head-eyebrow .eyebrow { margin-bottom: 12px; }
+  .section-head h2 {
+    font-family: var(--font-display);
+    font-weight: 350;
+    font-size: var(--type-display-lg-size);
+    line-height: var(--type-display-lg-lh);
+    letter-spacing: -0.022em;
+    font-variation-settings: "opsz" 100, "SOFT" 30;
+    color: var(--fg-moonlight);
+    margin: 0;
+    text-wrap: balance;
+    max-width: 22ch;
+  }
+  .section-head h2 em {
+    font-style: italic;
+    color: var(--cyan-bright);
+  }
+
+  /* ============================================================
+     PRACTICE
+     ============================================================ */
+  .practice {
+    background: var(--bg-night);
+    position: relative;
+  }
+  .practice::before {
+    content: ""; position: absolute; inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(50% 30% at 12% 20%, rgba(106,92,255,0.12), transparent 70%),
+      radial-gradient(40% 30% at 88% 80%, rgba(80,200,255,0.10), transparent 70%);
+  }
+  .practice .container { position: relative; }
+
+  .practice-body {
+    color: var(--fg-haze);
+    font-size: clamp(1.05rem, 0.6vw + 0.85rem, 1.2rem);
+    line-height: 1.6;
+    max-width: 60ch;
+    margin: 0 0 64px;
+  }
+
+  .signal-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media (min-width: 720px) {
+    .signal-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .signal-card {
+    position: relative;
+    background: rgba(13, 21, 48, 0.45);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    padding: 28px 24px;
+    transition: all var(--dur-base) var(--ease-out-soft);
+  }
+  .signal-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(80,200,255,0.32);
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.7), 0 0 30px -10px rgba(80,200,255,0.3);
+  }
+  .signal-card .num {
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.22em; color: var(--cyan);
+    margin-bottom: 18px;
+  }
+  .signal-card h3 {
+    font-family: var(--font-display); font-weight: 400;
+    font-size: 1.4rem; line-height: 1.15;
+    letter-spacing: -0.015em;
+    margin: 0 0 10px;
+    color: var(--fg-moonlight);
+  }
+  .signal-card p {
+    margin: 0; font-size: 14.5px; line-height: 1.55;
+    color: var(--fg-haze);
+  }
+
+  /* ============================================================
+     RETAILREADY
+     ============================================================ */
+  .retailready {
+    background: linear-gradient(180deg, var(--bg-night) 0%, var(--bg-deep) 50%, var(--bg-night) 100%);
+    position: relative;
+  }
+  .retailready::before {
+    content: ""; position: absolute; inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(60% 50% at 80% 20%, rgba(80,200,255,0.14), transparent 70%),
+      radial-gradient(50% 40% at 10% 80%, rgba(106,92,255,0.12), transparent 70%);
+  }
+  .retailready .container { position: relative; }
+
+  .rr-intro {
+    color: var(--fg-haze);
+    font-size: clamp(1.05rem, 0.6vw + 0.85rem, 1.2rem);
+    line-height: 1.6;
+    max-width: 60ch;
+    margin: 0 0 28px;
+  }
+  .rr-wedge {
+    color: var(--fg-haze);
+    font-size: 0.98rem;
+    line-height: 1.65;
+    max-width: 64ch;
+    margin: 0 0 56px;
+    padding-left: 24px;
+    border-left: 1px solid var(--line-glow);
+  }
+
+  /* ---- STAT CARDS (cyan + violet variants) ---- */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin: 56px 0;
+  }
+  @media (min-width: 900px) {
+    .stat-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  }
+  .stat-card {
+    position: relative;
+    padding: 26px 22px 22px;
+    border-radius: var(--r-md);
+    background: rgba(13, 21, 48, 0.55);
+    backdrop-filter: blur(10px) saturate(140%);
+    border: 1px solid var(--line);
+    overflow: hidden;
+    transition: transform 320ms var(--ease-out-soft),
+                border-color 320ms var(--ease-out-soft),
+                box-shadow 320ms var(--ease-out-soft);
+  }
+  .stat-card::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(120% 80% at 0% 0%, rgba(80,200,255,0.08), transparent 60%);
+    pointer-events: none;
+  }
+  .stat-card::after {
+    content: ""; position: absolute;
+    left: 22px; right: 22px; bottom: 14px; height: 1px;
+    background: linear-gradient(90deg, var(--cyan), transparent);
+    opacity: 0.4;
+    transition: opacity 320ms var(--ease-out-soft);
+  }
+  .stat-card.violet::after {
+    background: linear-gradient(90deg, var(--violet), transparent);
+  }
+  .stat-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(80,200,255,0.4);
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.8),
+                0 0 30px -8px rgba(80,200,255,0.32);
+  }
+  .stat-card.violet:hover {
+    border-color: rgba(106,92,255,0.42);
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.8),
+                0 0 30px -8px rgba(106,92,255,0.34);
+  }
+  .stat-card:hover::after { opacity: 0.9; }
+  .stat-card .v {
+    font-family: var(--font-mono); font-weight: 500;
+    font-size: clamp(2.25rem, 3vw + 0.5rem, 3.25rem);
+    line-height: 1; letter-spacing: -0.02em;
+    color: var(--fg-moonlight);
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .stat-card.cyan .v {
+    color: var(--cyan-bright);
+    filter: drop-shadow(0 0 14px rgba(80,200,255,0.4));
+  }
+  .stat-card.violet .v {
+    color: #c5beff;
+    filter: drop-shadow(0 0 14px rgba(106,92,255,0.45));
+  }
+  .stat-card .v small {
+    font-size: 0.5em; color: var(--cyan); letter-spacing: 0.04em;
+    margin-right: 2px;
+  }
+  .stat-card .l {
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--fg-dim);
+    position: relative;
+  }
+
+  .rr-highlights {
+    display: grid; gap: 16px;
+    grid-template-columns: 1fr;
+    margin-top: 32px;
+  }
+  @media (min-width: 900px) {
+    .rr-highlights { grid-template-columns: repeat(3, 1fr); }
+  }
+  .rr-hl {
+    position: relative;
+    background: rgba(13, 21, 48, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    padding: 28px;
+    transition: all var(--dur-base) var(--ease-out-soft);
+  }
+  .rr-hl:hover {
+    border-color: rgba(80,200,255,0.32);
+    transform: translateY(-2px);
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.7), 0 0 0 1px rgba(80,200,255,0.18);
+  }
+  .rr-hl .icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    border: 1px solid var(--line-cyan);
+    background: rgba(80,200,255,0.06);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--cyan); margin-bottom: 18px;
+    box-shadow: 0 0 0 1px rgba(80,200,255,0.04), 0 0 18px -4px rgba(80,200,255,0.2);
+  }
+  .rr-hl h3 {
+    font-family: var(--font-display); font-weight: 400;
+    font-size: 1.25rem; line-height: 1.2;
+    letter-spacing: -0.012em;
+    margin: 0 0 10px;
+  }
+  .rr-hl p {
+    margin: 0; font-size: 14.5px; line-height: 1.55;
+    color: var(--fg-haze);
+  }
+
+  .section-cta {
+    margin-top: 56px;
+    display: flex; gap: 14px; flex-wrap: wrap;
+  }
+  .link-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 14.5px;
+    color: var(--fg-moonlight);
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--line-glow);
+    transition: all var(--dur-base) var(--ease-out-soft);
+  }
+  .link-cta .arrow {
+    color: var(--cyan);
+    transition: transform var(--dur-base) var(--ease-out-soft);
+  }
+  .link-cta:hover {
+    color: var(--cyan-bright);
+    border-bottom-color: var(--cyan);
+  }
+  .link-cta:hover .arrow { transform: translateX(4px); }
+
+  /* ============================================================
+     AI ENGINEERING
+     ============================================================ */
+  .ai-eng {
+    background: var(--bg-night);
+    position: relative;
+  }
+  .ai-eng::before {
+    content: ""; position: absolute; inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(60% 40% at 20% 30%, rgba(106,92,255,0.16), transparent 70%),
+      radial-gradient(50% 40% at 90% 70%, rgba(80,200,255,0.12), transparent 70%);
+  }
+  .ai-eng .container { position: relative; }
+
+  .ai-intro {
+    color: var(--fg-haze);
+    font-size: clamp(1.05rem, 0.6vw + 0.85rem, 1.2rem);
+    line-height: 1.6;
+    max-width: 64ch;
+    margin: 0 0 56px;
+  }
+
+  /* AI section uses .stat-grid; legacy classes removed */
+
+  .ai-pull {
+    position: relative;
+    margin: 56px 0;
+    padding: 36px 32px 36px 36px;
+    border-left: 2px solid var(--cyan);
+    background: linear-gradient(90deg, rgba(80,200,255,0.06), transparent 60%);
+    border-radius: 0 var(--r-md) var(--r-md) 0;
+  }
+  .ai-pull blockquote {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 380;
+    font-size: clamp(1.15rem, 1vw + 0.75rem, 1.625rem);
+    line-height: 1.35;
+    letter-spacing: -0.012em;
+    font-variation-settings: "opsz" 60, "SOFT" 20;
+    color: var(--fg-moonlight);
+    text-wrap: pretty;
+  }
+  .ai-pull blockquote em {
+    font-style: italic;
+    color: var(--cyan-bright);
+  }
+
+  .ai-close {
+    color: var(--fg-haze);
+    font-size: 0.98rem;
+    line-height: 1.65;
+    max-width: 60ch;
+    margin: 0 0 32px;
+  }
+
+  /* ============================================================
+     EXPERIENCE
+     ============================================================ */
+  .experience {
+    background: linear-gradient(180deg, var(--bg-night) 0%, var(--bg-deep) 100%);
+    position: relative;
+  }
+  .experience::before {
+    content: ""; position: absolute; inset: 0;
+    pointer-events: none;
+    background: radial-gradient(80% 50% at 50% 0%, rgba(80,200,255,0.10), transparent 60%);
+  }
+  .experience .container { position: relative; }
+
+  .exp-body {
+    color: var(--fg-haze);
+    font-size: clamp(1.05rem, 0.6vw + 0.85rem, 1.2rem);
+    line-height: 1.6;
+    max-width: 70ch;
+    margin: 0 0 64px;
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 0;
+  }
+  .timeline-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 28px 0;
+    border-top: 1px solid var(--line);
+    transition: background var(--dur-base) var(--ease-out-soft);
+  }
+  .timeline-row:last-child { border-bottom: 1px solid var(--line); }
+  @media (min-width: 720px) {
+    .timeline-row {
+      grid-template-columns: 200px 1fr 1fr;
+      gap: 32px;
+      align-items: baseline;
+      padding: 36px 0;
+    }
+  }
+  .timeline-row:hover {
+    background: linear-gradient(90deg, rgba(80,200,255,0.04), transparent 80%);
+  }
+  .tl-when {
+    font-family: var(--font-mono);
+    font-size: 13px; letter-spacing: 0.04em;
+    color: var(--cyan);
+  }
+  .tl-where {
+    font-family: var(--font-display);
+    font-weight: 400; font-size: 1.4rem;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    color: var(--fg-moonlight);
+  }
+  .tl-role {
+    font-size: 14.5px;
+    color: var(--fg-haze);
+    line-height: 1.5;
+  }
+
+  .exp-emphasis {
+    margin-top: 56px;
+    padding: 32px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: rgba(13, 21, 48, 0.4);
+    position: relative;
+  }
+  .exp-emphasis::before {
+    content: ""; position: absolute; left: 0; top: 24px; bottom: 24px;
+    width: 2px; background: var(--portal-bar); border-radius: 1px;
+  }
+  .exp-emphasis p {
+    margin: 0;
+    font-family: var(--font-display); font-weight: 380;
+    font-size: 1.2rem; line-height: 1.45;
+    letter-spacing: -0.01em;
+    color: var(--fg-moonlight);
+    padding-left: 24px;
+    text-wrap: pretty;
+  }
+
+  /* ============================================================
+     HOW I BUILD
+     ============================================================ */
+  .build {
+    background: var(--bg-night);
+    position: relative;
+  }
+  .build::before {
+    content: ""; position: absolute; inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(50% 40% at 88% 30%, rgba(106,92,255,0.14), transparent 70%),
+      radial-gradient(40% 30% at 12% 80%, rgba(80,200,255,0.10), transparent 70%);
+  }
+  .build .container { position: relative; }
+
+  .build-intro {
+    color: var(--fg-haze);
+    font-size: clamp(1.05rem, 0.6vw + 0.85rem, 1.2rem);
+    line-height: 1.6;
+    max-width: 64ch;
+    margin: 0 0 56px;
+  }
+
+  .cap-grid {
+    display: grid; gap: 16px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 720px) {
+    .cap-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1100px) {
+    .cap-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  .cap-card {
+    padding: 28px 24px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: rgba(13, 21, 48, 0.4);
+    transition: all var(--dur-base) var(--ease-out-soft);
+  }
+  .cap-card:hover {
+    border-color: rgba(80,200,255,0.32);
+    background: rgba(13, 21, 48, 0.6);
+    transform: translateY(-2px);
+  }
+  .cap-card .icon {
+    width: 32px; height: 32px;
+    color: var(--cyan); margin-bottom: 18px;
+  }
+  .cap-card h3 {
+    font-family: var(--font-display); font-weight: 400;
+    font-size: 1.15rem; line-height: 1.2;
+    margin: 0 0 8px;
+    letter-spacing: -0.012em;
+  }
+  .cap-card p {
+    margin: 0; font-size: 14px; line-height: 1.55;
+    color: var(--fg-haze);
+  }
+
+  .principles {
+    margin-top: 64px;
+    padding: 36px 32px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    display: grid; gap: 28px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 900px) {
+    .principles { grid-template-columns: repeat(4, 1fr); }
+  }
+  .principles .pr {
+    font-family: var(--font-display); font-weight: 380;
+    font-size: 1.25rem; line-height: 1.25;
+    letter-spacing: -0.012em;
+    color: var(--fg-moonlight);
+    text-wrap: balance;
+  }
+  .principles .pr span {
+    display: block;
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 10px;
+  }
+
+  /* ============================================================
+     RÉSUMÉ
+     ============================================================ */
+  .resume {
+    background: linear-gradient(180deg, var(--bg-night) 0%, var(--bg-deep) 100%);
+    position: relative;
+  }
+  .resume .container { position: relative; }
+  .resume .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  @media (min-width: 900px) {
+    .resume .grid { grid-template-columns: 1fr 2fr; gap: 64px; }
+  }
+  .resume-meta dt {
+    font-family: var(--font-mono); font-size: 10.5px;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--fg-dim);
+    margin-top: 18px;
+  }
+  .resume-meta dt:first-child { margin-top: 0; }
+  .resume-meta dd {
+    margin: 6px 0 0;
+    font-size: 15px;
+    color: var(--fg-moonlight);
+  }
+  .resume-meta dd a:hover { color: var(--cyan-bright); }
+
+  .resume-summary {
+    color: var(--fg-haze);
+    font-size: 1rem; line-height: 1.65;
+    margin: 0 0 36px;
+    max-width: 64ch;
+  }
+  .resume-section {
+    margin-top: 36px;
+  }
+  .resume-section h4 {
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--cyan); margin: 0 0 18px;
+  }
+  .resume-section ul {
+    list-style: none; margin: 0; padding: 0;
+  }
+  .resume-section li {
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+    display: grid; grid-template-columns: 1fr; gap: 4px;
+  }
+  @media (min-width: 720px) {
+    .resume-section li { grid-template-columns: 160px 1fr; gap: 24px; align-items: baseline; }
+  }
+  .resume-section li:last-child { border-bottom: 1px solid var(--line); }
+  .resume-section li .when {
+    font-family: var(--font-mono); font-size: 13px;
+    color: var(--fg-haze);
+  }
+  .resume-section li .what { font-size: 14.5px; }
+  .resume-section li .what strong {
+    display: block;
+    color: var(--fg-moonlight); font-weight: 500;
+    margin-bottom: 2px;
+  }
+  .resume-section li .what span {
+    color: var(--fg-haze);
+  }
+  .tech-tags {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 12px;
+  }
+  .tech-tags span {
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.06em;
+    padding: 4px 9px;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+    color: var(--fg-haze);
+    background: rgba(13,21,48,0.4);
+  }
+
+  /* ============================================================
+     CONTACT
+     ============================================================ */
+  .contact {
+    background: var(--bg-night);
+    position: relative;
+    overflow: hidden;
+  }
+  .contact::before {
+    content: ""; position: absolute; inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(60% 60% at 70% 50%, rgba(106,92,255,0.18), transparent 70%),
+      radial-gradient(50% 50% at 20% 100%, rgba(80,200,255,0.16), transparent 70%);
+  }
+  .contact .container {
+    position: relative;
+    min-height: 60dvh;
+    display: flex; align-items: center;
+  }
+  .contact-grid {
+    display: grid; gap: 48px;
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+  @media (min-width: 900px) {
+    .contact-grid {
+      grid-template-columns: 1.4fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+  }
+  .contact h2 {
+    font-family: var(--font-display); font-weight: 350;
+    font-size: clamp(2.5rem, 5vw + 0.5rem, 4.5rem);
+    line-height: 1; letter-spacing: -0.025em;
+    font-variation-settings: "opsz" 144, "SOFT" 40;
+    margin: 0 0 28px;
+    text-wrap: balance;
+  }
+  .contact h2 em {
+    font-style: italic; color: var(--cyan-bright);
+  }
+  .contact-body {
+    color: var(--fg-haze);
+    font-size: 1.1rem; line-height: 1.6;
+    max-width: 50ch;
+    margin: 0 0 40px;
+  }
+  .contact-cta {
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  @media (min-width: 720px) {
+    .contact-cta { flex-direction: row; flex-wrap: wrap; align-items: center; }
+  }
+  .contact-secondary {
+    font-family: var(--font-mono); font-size: 12px;
+    color: var(--fg-haze);
+    letter-spacing: 0.04em;
+  }
+  .contact-secondary a {
+    color: var(--cyan); border-bottom: 1px solid rgba(80,200,255,0.3);
+    padding-bottom: 1px;
+  }
+  .contact-secondary a:hover { color: var(--cyan-bright); }
+
+  /* Footer */
+  .site-footer {
+    background: var(--bg-void);
+    padding: 32px 0;
+    border-top: 1px solid var(--line);
+  }
+  .site-footer .container {
+    display: flex; flex-wrap: wrap; gap: 16px;
+    justify-content: space-between;
+    font-family: var(--font-mono); font-size: 12px;
+    color: var(--fg-dim);
+    letter-spacing: 0.04em;
+  }
+  .site-footer a { color: var(--fg-haze); }
+  .site-footer a:hover { color: var(--cyan-bright); }
+
+  /* ============================================================
+     FADE-IN ON SCROLL — for non-hero sections (CSS-only via IO)
+     ============================================================ */
+  .fade-up {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 720ms var(--ease-out-soft), transform 720ms var(--ease-out-soft);
+    transition-duration: 720ms !important;
+  }
+  .fade-up.in {
+    opacity: 1; transform: translateY(0);
+  }
+  .fade-up.delay-1 { transition-delay: 80ms !important; }
+  .fade-up.delay-2 { transition-delay: 160ms !important; }
+  .fade-up.delay-3 { transition-delay: 240ms !important; }
+  .fade-up.delay-4 { transition-delay: 320ms !important; }
+
+  /* ---- VARIED CARD-ENTRY ANIMATIONS ----
+     transition-duration pinned with !important so the host iframe's
+     reduce-motion stylesheet (which forces transitions to ~1µs) cannot
+     collapse them when force-motion is on. */
+  .anim {
+    opacity: 0;
+    will-change: transform, opacity, filter;
+    transition-property: opacity, transform, filter;
+    transition-duration: 900ms !important;
+    transition-timing-function: var(--ease-out-soft) !important;
+  }
+  .anim.in { opacity: 1 !important; transform: none !important; filter: none !important; }
+
+  /* 1 — drift up + slight scale */
+  .anim-rise { transform: translateY(40px) scale(0.96); }
+  /* 2 — fall from above with a slight tilt */
+  .anim-fall { transform: translateY(-32px) rotate(-1.5deg); }
+  /* 3 — slide in from left */
+  .anim-slide-l { transform: translateX(-60px); }
+  /* 4 — slide in from right */
+  .anim-slide-r { transform: translateX(60px); }
+  /* 5 — materialize with blur+scale (cinematic) */
+  .anim-materialize { transform: scale(0.82); filter: blur(8px); }
+  /* 6 — flip up from a slight 3D rotateX */
+  .anim-flip {
+    transform: perspective(900px) rotateX(28deg) translateY(20px);
+    transform-origin: 50% 80%;
+  }
+  /* 7 — zoom in with brightness flash */
+  .anim-zoom { transform: scale(0.7); filter: brightness(1.6); }
+  /* 8 — cross-fade with subtle drift down */
+  .anim-drift { transform: translateY(-12px); }
+
+  .anim.delay-0 { transition-delay: 0ms !important; }
+  .anim.delay-1 { transition-delay: 90ms !important; }
+  .anim.delay-2 { transition-delay: 180ms !important; }
+  .anim.delay-3 { transition-delay: 270ms !important; }
+  .anim.delay-4 { transition-delay: 360ms !important; }
+  .anim.delay-5 { transition-delay: 450ms !important; }
+
+  /* Glow flash on stat-card entry */
+  @keyframes stat-flash {
+    0% { box-shadow: 0 0 0 0 rgba(80,200,255,0); }
+    40% { box-shadow: 0 0 0 1px rgba(80,200,255,0.6), 0 0 40px -6px rgba(80,200,255,0.55); }
+    100% { box-shadow: 0 0 0 0 rgba(80,200,255,0); }
+  }
+  @keyframes stat-flash-violet {
+    0% { box-shadow: 0 0 0 0 rgba(106,92,255,0); }
+    40% { box-shadow: 0 0 0 1px rgba(106,92,255,0.55), 0 0 40px -6px rgba(106,92,255,0.55); }
+    100% { box-shadow: 0 0 0 0 rgba(106,92,255,0); }
+  }
+  .stat-card.cyan.anim.in {
+    animation-name: stat-flash !important;
+    animation-duration: 1100ms !important;
+    animation-timing-function: var(--ease-out-soft) !important;
+    animation-delay: 200ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  .stat-card.violet.anim.in {
+    animation-name: stat-flash-violet !important;
+    animation-duration: 1100ms !important;
+    animation-timing-function: var(--ease-out-soft) !important;
+    animation-delay: 200ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  /* Force-motion dev toggle (top-right) */
+  .motion-toggle {
+    position: fixed; top: 76px; right: 16px;
+    z-index: 80;
+    background: rgba(7,11,24,0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    padding: 6px 12px 6px 8px;
+    font-family: var(--font-mono); font-size: 10.5px;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--fg-haze);
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 240ms var(--ease-out-soft);
+  }
+  .motion-toggle:hover { color: var(--cyan-bright); border-color: rgba(80,200,255,0.4); }
+  .motion-toggle .pip {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--ember);
+  }
+  .motion-toggle.on .pip { background: var(--cyan); box-shadow: var(--glow-cyan); }
+
+  @media (prefers-reduced-motion: reduce) {
+    html:not(.force-motion) .fade-up { opacity: 1; transform: none; transition: none; }
+    html:not(.force-motion) .anim { opacity: 1; transform: none; filter: none; transition: none; animation: none !important; }
+    /* Hero collapses to a single static stage 1. */
+    html:not(.force-motion) .hero { height: auto !important; }
+    html:not(.force-motion) .hero-stage {
+      position: relative !important;
+      height: auto !important;
+      min-height: 100vh;
+      display: flex; align-items: center;
+    }
+    /* Hide stages 2-8 entirely; show stage 1 in normal flow. */
+    html:not(.force-motion) .hero-stage .stage:not(.stage-1) { display: none !important; }
+    html:not(.force-motion) .hero-stage .stage-1 {
+      opacity: 1 !important;
+      position: relative !important;
+      transform: none !important;
+      width: 100%;
+      padding: 120px 0 80px;
+    }
+    html:not(.force-motion) .scroll-cue { display: none; }
+    html:not(.force-motion) .hero-progress { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero-progress" id="heroProgress" aria-hidden="true"></div>
+
+<button class="motion-toggle" id="motionToggle" type="button" aria-pressed="false" title="Force motion (preview cinematic hero)">
+  <span class="pip" aria-hidden="true"></span>
+  <span class="lbl">Motion: Off</span>
+</button>
+
+<header class="site-header">
+  <div class="nav">
+    <a class="brand" href="#top">
+      <span class="dot" aria-hidden="true"></span>
+      <span>JESSE COBLE</span>
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#retailready">RetailReady</a>
+      <a href="#ai">Working with AI</a>
+      <a href="#experience">Experience</a>
+      <a href="#resume">Résumé</a>
+    </nav>
+    <a class="nav-cta" href="#contact">Start a conversation →</a>
+  </div>
+</header>
+
+<!-- ================================================================
+     HERO — pinned scroll-scrubbed video
+     ================================================================ -->
+<section id="top" class="hero" data-screen-label="01 Hero">
+  <div class="hero-stage" aria-label="Cinematic opening sequence">
+    <div class="hero-video-wrap">
+      <video
+        id="heroVideo"
+        class="hero-video"
+        playsinline
+        muted
+        preload="auto"
+        poster="media/hero-poster.jpg"
+        aria-hidden="true">
+        <source src="media/hero-portal.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <!-- STAGE 1 · OPENING (0–15%) -->
+    <div class="stage stage-1" data-stage="1">
+      <div class="stage-inner">
+        <div class="hero-eyebrow">SOFTWARE ENGINEER · FOUNDER · SYSTEMS BUILDER</div>
+        <h1 class="hero-headline">
+          Turning real-world problems into <em>digital solutions.</em>
+        </h1>
+        <p class="hero-sub">
+          I build practical software systems for operations-heavy businesses — from retail EDI workflows to the tooling that keeps large codebases understandable.
+        </p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#retailready">
+            View selected work
+            <svg class="arrow" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13L13 3M6 3h7v7"/></svg>
+          </a>
+          <a class="btn btn-ghost" href="#contact">
+            Start a conversation
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- STAGE 2 · APPROACH (15–30%) -->
+    <div class="stage stage-text-center" data-stage="2">
+      <div class="stage-inner">
+        <p class="stage-line">
+          Built with <em>code.</em> Designed for people.
+        </p>
+      </div>
+    </div>
+
+    <!-- STAGE 3 · SCREEN FILLS FRAME (30–45%) -->
+    <div class="stage stage-text-center" data-stage="3">
+      <div class="stage-inner">
+        <p class="stage-line">
+          Integrations, background workflows, data boundaries, and <em>production visibility.</em>
+        </p>
+      </div>
+    </div>
+
+    <!-- STAGE 4 · THRESHOLD (45–60%) -->
+    <div class="stage stage-thresh" data-stage="4">
+      <div class="stage-inner">
+        <span class="thresh-tag"><span class="dot"></span>ENTERING THE SYSTEM</span>
+      </div>
+    </div>
+
+    <!-- STAGE 5 · RETAILREADY PROOF CARD (60–75%) -->
+    <div class="stage stage-proof" data-stage="5">
+      <div class="stage-inner">
+        <div class="proof-card">
+          <div class="label">RETAILREADY EDI</div>
+          <h3 class="title">A platform for retailer document flow.</h3>
+          <p class="copy">Validation, acknowledgments, sandbox testing, and production visibility — across Walmart, Best Buy, Dollar Tree, Meijer, and Dollar General.</p>
+          <div class="proof-tags">
+            <span>X12</span><span>EDIFACT</span><span>POSTGRES RLS</span><span>RABBITMQ</span><span>.NET 10</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STAGE 6 · TECHNICAL SYSTEMS CUE (75–88%) -->
+    <div class="stage stage-text-center" data-stage="6">
+      <div class="stage-inner">
+        <p class="stage-line">
+          Systems built to <em>explain themselves.</em><br>
+          Visible state. Reliable boundaries. Failure-aware workflows.
+        </p>
+      </div>
+    </div>
+
+    <!-- STAGE 7 · EXPERIENCE CUE (88–96%) -->
+    <div class="stage stage-text-center" data-stage="7">
+      <div class="stage-inner">
+        <p class="stage-line">
+          A <em>decade</em> of EDI, integrations, and operational software.
+        </p>
+      </div>
+    </div>
+
+    <!-- STAGE 8 · FINAL HERO STATE (96–100%) -->
+    <div class="stage stage-final" data-stage="8">
+      <div class="stage-inner final-block">
+        <div class="name">JESSE COBLE · SOFTWARE ENGINEER</div>
+        <h2 class="head">Turning real-world problems into <em>digital solutions.</em></h2>
+        <div class="ctas">
+          <a class="btn btn-primary" href="#retailready">
+            View selected work
+            <svg class="arrow" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13L13 3M6 3h7v7"/></svg>
+          </a>
+          <a class="btn btn-ghost" href="#contact">Start a conversation</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-cue" aria-hidden="true">
+      <span>Scroll</span>
+      <span class="line"></span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     PRACTICE
+     ================================================================ -->
+<section class="section practice" data-screen-label="02 Practice">
+  <div class="container">
+    <div class="section-head">
+      <div class="head-eyebrow fade-up"><div class="eyebrow">PRACTICE</div></div>
+      <h2 class="fade-up delay-1">Software for the parts of the business where things <em>have to move correctly.</em></h2>
+    </div>
+    <p class="practice-body fade-up delay-2">
+      I work where software meets operational reality: integrations, background jobs, customer data, long-running workflows, retries, audits, and the need to know exactly what happened when something fails.
+    </p>
+    <div class="signal-grid">
+      <article class="signal-card fade-up delay-1">
+        <div class="num">01</div>
+        <h3>Operational systems</h3>
+        <p>Software that supports real workflows, not just clean demos.</p>
+      </article>
+      <article class="signal-card fade-up delay-2">
+        <div class="num">02</div>
+        <h3>Integration-heavy platforms</h3>
+        <p>EDI, APIs, accounting systems, retailer requirements, and external system boundaries.</p>
+      </article>
+      <article class="signal-card fade-up delay-3">
+        <div class="num">03</div>
+        <h3>Ship-focused engineering</h3>
+        <p>Practical architecture, fast iteration, and production-aware decisions.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     RETAILREADY
+     ================================================================ -->
+<section id="retailready" class="section retailready" data-screen-label="03 RetailReady">
+  <div class="container">
+    <div class="section-head">
+      <div class="head-eyebrow fade-up"><div class="eyebrow">RETAILREADY EDI</div></div>
+      <h2 class="fade-up delay-1">A retail EDI platform built around <em>visibility, isolation,</em> and reliable document flow.</h2>
+    </div>
+
+    <p class="rr-intro fade-up delay-2">
+      RetailReady is the EDI platform I built for vendors selling into major retailers. It handles document exchange, validation, acknowledgments, sandbox testing, retransmission state, and production visibility across retailers like Walmart, Best Buy, Dollar Tree, Meijer, and Dollar General.
+    </p>
+
+    <p class="rr-wedge fade-up delay-2">
+      EDI can become opaque quickly: documents move through multiple systems, failures hide in logs, and customers often wait on support to understand what happened. RetailReady is built to surface the document state, validator output, retransmission state, and SLA clock in one place. Sandbox lets vendors test against retailer-specific expectations before go-live. Tenant boundaries are enforced at the database layer, and the engine is designed around explicit ownership, timeouts, retries, and takeover behavior instead of invisible background jobs.
+    </p>
+
+    <div class="stat-grid">
+      <div class="stat-card cyan anim anim-rise"><div class="v">5</div><div class="l">Active retailers</div></div>
+      <div class="stat-card cyan anim anim-fall delay-1"><div class="v">52</div><div class="l">Data entities</div></div>
+      <div class="stat-card cyan anim anim-materialize delay-2"><div class="v">40</div><div class="l">RLS-enforced tables</div></div>
+      <div class="stat-card violet anim anim-flip delay-3"><div class="v"><small>~</small>900</div><div class="l">Automated tests</div></div>
+    </div>
+
+    <div class="rr-highlights">
+      <article class="rr-hl fade-up delay-1">
+        <div class="icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <ellipse cx="12" cy="6" rx="8" ry="3"/>
+            <path d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/>
+            <path d="M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/>
+          </svg>
+        </div>
+        <h3>Database-enforced tenant isolation</h3>
+        <p>Customer boundaries are enforced below application code with Postgres row-level security, reducing the chance that a controller bug becomes a cross-customer data leak.</p>
+      </article>
+      <article class="rr-hl fade-up delay-2">
+        <div class="icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </div>
+        <h3>Failure-aware background engine</h3>
+        <p>Long-running EDI work is split into isolated workers with per-step deadlines, retry behavior, and monitoring that catches both domain failures and host-level outages.</p>
+      </article>
+      <article class="rr-hl fade-up delay-3">
+        <div class="icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </div>
+        <h3>Visible document state</h3>
+        <p>Documents are not treated as invisible background traffic. RetailReady tracks validation, acknowledgments, retransmission state, and SLA timing so users can see where work stands.</p>
+      </article>
+    </div>
+
+    <div class="section-cta fade-up">
+      <a class="link-cta" href="/retailready">
+        View the full system overview
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     AI ENGINEERING
+     ================================================================ -->
+<section id="ai" class="section ai-eng" data-screen-label="04 Working with AI">
+  <div class="container">
+    <div class="section-head">
+      <div class="head-eyebrow fade-up"><div class="eyebrow">WORKING WITH AI</div></div>
+      <h2 class="fade-up delay-1">Making AI useful in codebases <em>too large for chat.</em></h2>
+    </div>
+
+    <p class="ai-intro fade-up delay-2">
+      Working with a coding model on a large codebase is not just a chat problem. It is a context, memory, routing, and review problem. I built a workflow that orients the model through scoped project files, architecture notes, typed memory, hooks, and specialist sub-agents so context is pulled intentionally instead of dumped into every session.
+    </p>
+
+    <div class="stat-grid">
+      <div class="stat-card cyan anim anim-slide-l"><div class="v">16</div><div class="l">Scoped project files</div></div>
+      <div class="stat-card violet anim anim-zoom delay-1"><div class="v">13</div><div class="l">Orientation workflows</div></div>
+      <div class="stat-card cyan anim anim-drift delay-2"><div class="v">7</div><div class="l">Specialist agents</div></div>
+      <div class="stat-card cyan anim anim-slide-r delay-3"><div class="v">64</div><div class="l">Typed memory files</div></div>
+    </div>
+
+    <div class="ai-pull fade-up">
+      <blockquote>
+        <em>Loaded ≠ attended.</em> Context dumped into a session can still be ignored, evicted, or stale. The system works by pulling focused context on demand instead of pretending every file in the window is equally understood.
+      </blockquote>
+    </div>
+
+    <p class="ai-close fade-up">
+      This is not autopilot. It is an engineered workflow built from real failure modes: stale context, attention drift, unsafe edits, and unreviewed assumptions.
+    </p>
+
+    <div class="section-cta fade-up">
+      <a class="link-cta" href="/working-with-ai">
+        Read how I work with AI
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     EXPERIENCE
+     ================================================================ -->
+<section id="experience" class="section experience" data-screen-label="05 Experience">
+  <div class="container">
+    <div class="section-head">
+      <div class="head-eyebrow fade-up"><div class="eyebrow">EXPERIENCE</div></div>
+      <h2 class="fade-up delay-1">A <em>decade</em> of EDI, integrations, and operational software.</h2>
+    </div>
+
+    <p class="exp-body fade-up delay-2">
+      I have been building EDI and operations software since 2014 — from reader/writer engines for steamship-line workflows at DepotSystems, to ISO management systems for medical device and aerospace companies at IMSXpress, to RetailReady, a modern retail EDI platform for vendors selling into major retailers.
+    </p>
+
+    <ol class="timeline">
+      <li class="timeline-row fade-up">
+        <div class="tl-when">2022 — PRESENT</div>
+        <div class="tl-where">Coble Solutions / RetailReady EDI</div>
+        <div class="tl-role">Founder, Lead Engineer. Designed and operate the platform end-to-end: architecture, document workflows, validation, tenant isolation, background engine, and customer-facing visibility.</div>
+      </li>
+      <li class="timeline-row fade-up delay-1">
+        <div class="tl-when">2018 — 2022</div>
+        <div class="tl-where">AQA Company / IMSXpress</div>
+        <div class="tl-role">Senior / Sole Developer. ISO management software for medical device and aerospace companies — controlled documents, audits, training, and corrective-action workflows.</div>
+      </li>
+      <li class="timeline-row fade-up delay-2">
+        <div class="tl-when">2014 — 2018</div>
+        <div class="tl-where">Edge Networks / DepotSystems</div>
+        <div class="tl-role">Developer → Senior Developer. EDI reader/writer engines for steamship-line workflows; the start of a long arc of building software around document flow and operational correctness.</div>
+      </li>
+    </ol>
+
+    <div class="exp-emphasis fade-up">
+      <p>RetailReady is not a pivot into EDI. It is the result of more than a decade spent building software around document flow, integrations, and operational correctness.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     HOW I BUILD
+     ================================================================ -->
+<section class="section build" data-screen-label="06 How I Build">
+  <div class="container">
+    <div class="section-head">
+      <div class="head-eyebrow fade-up"><div class="eyebrow">HOW I BUILD</div></div>
+      <h2 class="fade-up delay-1">Practical architecture for systems that <em>have to keep working.</em></h2>
+    </div>
+
+    <p class="build-intro fade-up delay-2">
+      My work tends to sit where product, data, infrastructure, and operations overlap. I care about systems that make state visible, enforce boundaries, and remain maintainable after the first version ships.
+    </p>
+
+    <div class="cap-grid">
+      <article class="cap-card fade-up delay-1">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+          <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+          <path d="M10 6.5h4M6.5 10v4M14 17.5h-4M17.5 14v-4"/>
+        </svg>
+        <h3>Integration architecture</h3>
+        <p>EDI, APIs, accounting systems, retailer-specific workflows, and external system boundaries.</p>
+      </article>
+      <article class="cap-card fade-up delay-2">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <ellipse cx="12" cy="5" rx="8" ry="3"/>
+          <path d="M4 5v14c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/>
+          <path d="M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3"/>
+        </svg>
+        <h3>Backend systems</h3>
+        <p>Data models, background workers, queues, retries, validation, authorization, and operational visibility.</p>
+      </article>
+      <article class="cap-card fade-up delay-3">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="14" rx="2"/>
+          <path d="M3 9h18M7 14h6"/>
+        </svg>
+        <h3>Product-minded engineering</h3>
+        <p>Interfaces that explain system state clearly instead of hiding complexity from users.</p>
+      </article>
+      <article class="cap-card fade-up delay-4">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/>
+          <path d="M9 12l2 2 4-4"/>
+        </svg>
+        <h3>Production discipline</h3>
+        <p>Testing, monitoring, failure handling, data isolation, and maintainable architecture.</p>
+      </article>
+    </div>
+
+    <div class="principles">
+      <div class="pr fade-up delay-1"><span>01</span>Make state visible.</div>
+      <div class="pr fade-up delay-2"><span>02</span>Enforce boundaries below the app.</div>
+      <div class="pr fade-up delay-3"><span>03</span>Design for failure.</div>
+      <div class="pr fade-up delay-4"><span>04</span>Keep systems understandable.</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     RÉSUMÉ
+     ================================================================ -->
+<section id="resume" class="section resume" data-screen-label="07 Résumé">
+  <div class="container">
+    <div class="section-head">
+      <div class="head-eyebrow fade-up"><div class="eyebrow">RÉSUMÉ</div></div>
+      <h2 class="fade-up delay-1">Professional record.</h2>
+    </div>
+
+    <div class="grid">
+      <aside class="resume-meta fade-up">
+        <dl>
+          <dt>Name</dt><dd>Jesse Coble</dd>
+          <dt>Role</dt><dd>Software Engineer · Founder · Systems Builder</dd>
+          <dt>Email</dt><dd><a href="mailto:coble.jesse@gmail.com">coble.jesse@gmail.com</a></dd>
+          <dt>Location</dt><dd>Akron, OH</dd>
+          <dt>Working with</dt><dd>.NET, SvelteKit, Postgres, RabbitMQ</dd>
+        </dl>
+      </aside>
+
+      <div>
+        <p class="resume-summary fade-up delay-1">
+          Software engineer and founder with 10+ years building EDI, integrations, and operational software. Currently running RetailReady, a multi-tenant retail EDI platform for vendors selling into major retailers. Comfortable across the stack — backend systems, data modeling, document workflows, customer-facing UI — with a bias toward production visibility, reliable boundaries, and explicit failure handling.
+        </p>
+
+        <div class="resume-section fade-up delay-1">
+          <h4>Professional experience</h4>
+          <ul>
+            <li>
+              <span class="when">2022 — Present</span>
+              <span class="what">
+                <strong>Coble Solutions / RetailReady EDI · Founder, Lead Engineer</strong>
+                <span>Built and operate RetailReady, a retail EDI platform for vendors selling into major retailers. Designed the platform architecture, document workflows, validation and acknowledgment handling, tenant isolation model, background engine, customer-facing interface, and operational visibility features.</span>
+              </span>
+            </li>
+            <li>
+              <span class="when">2018 — 2022</span>
+              <span class="what">
+                <strong>AQA Company / IMSXpress · Senior / Sole Developer</strong>
+                <span>ISO management systems for medical device and aerospace companies. Controlled-document workflows, audits, corrective actions, and training records.</span>
+              </span>
+            </li>
+            <li>
+              <span class="when">2014 — 2018</span>
+              <span class="what">
+                <strong>Edge Networks / DepotSystems · Developer → Senior Developer</strong>
+                <span>Reader/writer engines for steamship-line EDI; first sustained exposure to operational software, document flow, and integration boundaries.</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="resume-section fade-up delay-2">
+          <h4>Selected projects</h4>
+          <ul>
+            <li>
+              <span class="when">RetailReady</span>
+              <span class="what">
+                <strong>Multi-tenant retail EDI platform</strong>
+                <span>X12 + EDIFACT, AS2/SFTP transport, Postgres RLS for tenant isolation, RabbitMQ-backed engine with deadlines, retries, and host-failure visibility, customer-facing document timelines and SLA tracking.</span>
+              </span>
+            </li>
+            <li>
+              <span class="when">Working with AI</span>
+              <span class="what">
+                <strong>Engineered AI-assisted workflow</strong>
+                <span>Scoped project files, typed memory, orientation workflows, specialist sub-agents, and review checkpoints — designed around the failure modes of large-codebase AI assistance.</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="resume-section fade-up delay-2">
+          <h4>Technical summary</h4>
+          <div class="tech-tags">
+            <span>.NET 10</span><span>C#</span><span>SvelteKit 2</span><span>Svelte 5</span>
+            <span>TypeScript</span><span>Tailwind v4</span><span>PostgreSQL</span><span>Postgres RLS</span>
+            <span>RabbitMQ</span><span>SignalR</span><span>X12 / EDIFACT</span><span>AS2 / SFTP</span>
+            <span>Cloudflare Pages</span><span>Linux / VPS ops</span>
+          </div>
+        </div>
+
+        <div class="resume-section fade-up delay-2">
+          <h4>Education</h4>
+          <ul>
+            <li>
+              <span class="when">B.S. Computer Science</span>
+              <span class="what"><span>University of Akron</span></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     CONTACT
+     ================================================================ -->
+<section id="contact" class="section contact" data-screen-label="08 Contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        <div class="eyebrow fade-up" style="margin-bottom:24px;">CONTACT</div>
+        <h2 class="fade-up delay-1">Let's build something <em>practical.</em></h2>
+        <p class="contact-body fade-up delay-2">
+          I'm interested in practical software work: operational systems, integrations, EDI workflows, internal tools, and product engineering where reliability and clarity matter.
+        </p>
+      </div>
+      <div class="fade-up delay-2">
+        <div class="contact-cta">
+          <a class="btn btn-primary" href="mailto:coble.jesse@gmail.com">
+            Email Jesse
+            <svg class="arrow" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13L13 3M6 3h7v7"/></svg>
+          </a>
+        </div>
+        <p class="contact-secondary" style="margin-top:24px;">
+          RetailReady inquiries: <a href="mailto:jessecoble@retailreadyedi.com">jessecoble@retailreadyedi.com</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <span>Jesse Coble · Software Engineer · Founder · Systems Builder</span>
+    <span>© 2026 · <a href="mailto:coble.jesse@gmail.com">coble.jesse@gmail.com</a></span>
+  </div>
+</footer>
+
+
+<script>
+(function () {
+  const mql = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const html = document.documentElement;
+
+  // Force-motion toggle: lets you preview the cinematic hero in iframes
+  // that report prefers-reduced-motion: reduce (e.g. preview sandboxes).
+  const toggle = document.getElementById('motionToggle');
+  let forced = localStorage.getItem('forceMotion') === '1';
+  function applyForced() {
+    html.classList.toggle('force-motion', forced);
+    if (toggle) {
+      toggle.classList.toggle('on', forced);
+      toggle.setAttribute('aria-pressed', forced ? 'true' : 'false');
+      const lbl = toggle.querySelector('.lbl');
+      if (lbl) lbl.textContent = 'Motion: ' + (forced ? 'On' : 'Off');
+    }
+  }
+  applyForced();
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      forced = !forced;
+      localStorage.setItem('forceMotion', forced ? '1' : '0');
+      applyForced();
+      // Scroll to top before reload so user sees hero + can scroll cards into view
+      window.scrollTo(0, 0);
+      setTimeout(() => location.reload(), 50);
+    });
+  }
+  // Also force scroll to top on force-motion init (defeat scroll restoration)
+  if (forced && 'scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (forced) window.scrollTo(0, 0);
+
+  const reduceMotion = mql.matches && !forced;
+
+  if (!window.gsap || !window.ScrollTrigger) {
+    html.classList.add('no-gsap');
+  }
+
+  /* ============================================================
+     IO — fade-up + per-card .anim entries (varied)
+     ============================================================ */
+  // Honor force-motion override: run the cinematic IO entries even if the
+  // host iframe reports prefers-reduced-motion: reduce.
+  // Some sandboxed iframes silently drop IntersectionObserver callbacks, so
+  // we ALSO run a scroll/resize-driven fallback that uses getBoundingClientRect.
+  if (!reduceMotion || forced) {
+    const animEls = Array.from(document.querySelectorAll('.fade-up, .anim'));
+    const reveal = (el) => { el.classList.add('in'); };
+    const checkAll = () => {
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      for (let i = animEls.length - 1; i >= 0; i--) {
+        const el = animEls[i];
+        const r = el.getBoundingClientRect();
+        // Reveal once any part of the element is within the viewport
+        // (with a small bottom margin so it triggers a hair before fully visible).
+        if (r.top < vh * 0.94 && r.bottom > 0) {
+          reveal(el);
+          animEls.splice(i, 1);
+        }
+      }
+    };
+    // IO path — when it works, gives us nice threshold/rootMargin behavior.
+    try {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            reveal(e.target);
+            io.unobserve(e.target);
+            const idx = animEls.indexOf(e.target);
+            if (idx >= 0) animEls.splice(idx, 1);
+          }
+        });
+      }, { threshold: 0.18, rootMargin: '0px 0px -6% 0px' });
+      animEls.forEach((el) => io.observe(el));
+    } catch (e) { /* fall through to scroll fallback */ }
+    // Scroll fallback — runs on load + every scroll/resize until the queue is empty.
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        checkAll();
+        if (animEls.length === 0) {
+          window.removeEventListener('scroll', onScroll, true);
+          window.removeEventListener('resize', onScroll, true);
+        }
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true, capture: true });
+    window.addEventListener('resize', onScroll, { passive: true, capture: true });
+    // Initial check after layout settles.
+    requestAnimationFrame(() => requestAnimationFrame(checkAll));
+  } else {
+    document.querySelectorAll('.fade-up, .anim').forEach((el) => el.classList.add('in'));
+  }
+
+  /* ============================================================
+     HERO SCROLL-SCRUB — GSAP/ScrollTrigger orchestration
+     ScrollTrigger maps scroll progress 0..1 to:
+       1) video.currentTime
+       2) which overlay stage is visible
+     Stages cross-fade in this map (matches the spec):
+       1: 0–15%   opening
+       2: 15–30%  approach
+       3: 30–45%  screen fills frame
+       4: 45–60%  threshold
+       5: 60–75%  RetailReady proof
+       6: 75–88%  technical-systems cue
+       7: 88–96%  experience cue
+       8: 96–100% final hero
+     ============================================================ */
+  if (!reduceMotion && window.gsap && window.ScrollTrigger) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const hero = document.querySelector('.hero');
+    const video = document.getElementById('heroVideo');
+    const stages = Array.from(document.querySelectorAll('.hero-stage .stage'));
+    const progressBar = document.getElementById('heroProgress');
+    const scrollCue = document.querySelector('.scroll-cue');
+
+    // Stage ranges, in [start, end] of overall hero progress.
+    const ranges = [
+      [0.00, 0.15],   // 1
+      [0.15, 0.30],   // 2
+      [0.30, 0.45],   // 3
+      [0.45, 0.60],   // 4
+      [0.60, 0.75],   // 5
+      [0.75, 0.88],   // 6
+      [0.88, 0.96],   // 7
+      [0.96, 1.00],   // 8
+    ];
+    const FADE = 0.04;  // overlap on each side of every range
+
+    // Initialize stages — only stage 1 visible at the start.
+    stages.forEach((s, i) => {
+      gsap.set(s, { opacity: i === 0 ? 1 : 0, y: i === 0 ? 0 : 20, scale: 1 });
+    });
+
+    // Wait for video metadata so we can scrub by currentTime.
+    let vidReady = false;
+    const onReady = () => {
+      if (vidReady) return;
+      vidReady = true;
+      // Some browsers won't show frames unless we paint at least once.
+      try { video.play().then(() => video.pause()).catch(() => {}); } catch (e) {}
+    };
+    if (video.readyState >= 1) onReady();
+    else {
+      video.addEventListener('loadedmetadata', onReady);
+      video.addEventListener('canplay', onReady);
+    }
+
+    // The pinned scrub trigger.
+    ScrollTrigger.create({
+      trigger: hero,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 0.4,
+      onUpdate: (self) => {
+        const p = self.progress;
+
+        // 1) Video scrub
+        if (vidReady && isFinite(video.duration) && video.duration > 0) {
+          const t = p * video.duration;
+          // Avoid setting currentTime on every micro-frame — a small dead zone.
+          if (Math.abs(video.currentTime - t) > 0.03) {
+            video.currentTime = t;
+          }
+        }
+
+        // 2) Stage opacity per range
+        stages.forEach((s, i) => {
+          const [a, b] = ranges[i];
+          let o = 0;
+          if (p < a - FADE || p > b + FADE) {
+            o = 0;
+          } else if (p < a) {
+            o = (p - (a - FADE)) / FADE;
+          } else if (p > b) {
+            o = 1 - (p - b) / FADE;
+          } else {
+            o = 1;
+          }
+          o = Math.max(0, Math.min(1, o));
+          // Tiny y-drift for life (keeps motion subtle)
+          const drift = (1 - o) * 16;
+          gsap.set(s, { opacity: o, y: drift, force3D: true });
+        });
+
+        // 3) Progress bar
+        progressBar.style.width = (p * 100).toFixed(2) + '%';
+
+        // 4) Scroll cue fades fast
+        if (scrollCue) {
+          scrollCue.style.opacity = Math.max(0, 1 - p * 12);
+        }
+      },
+    });
+
+    // Refresh on resize & after fonts load (height clamps may shift)
+    window.addEventListener('load', () => ScrollTrigger.refresh());
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => ScrollTrigger.refresh());
+    }
+  } else {
+    // Reduced motion: hide hero progress bar and scroll cue
+    const pb = document.getElementById('heroProgress');
+    if (pb) pb.style.display = 'none';
+  }
+})();
+</script>
+
+</body>
+</html>

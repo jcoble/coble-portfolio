@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Shadows</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter+Tight:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  body { margin:0; padding:24px; background:#efece4; color:#0e0f11; font-family:"Inter Tight",sans-serif; }
+  .row { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .box { background:#fff; border:1px solid #d2cec1; border-radius:12px; padding:14px; height:90px; display:flex; flex-direction:column; justify-content:space-between; }
+  .a { box-shadow: inset 0 1px 0 rgba(255,255,255,0.58); }
+  .b { box-shadow: 0 -28px 70px -38px rgba(0,0,0,0.55); }
+  .c { background:#15171a; color:#efece4; box-shadow: 0 34px 90px -66px rgba(14,14,11,0.8); border-color:#23262b; }
+  .label { font-family:"JetBrains Mono",monospace; font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:#6a6e76; }
+  .c .label { color:rgba(244,242,235,0.62); }
+  .name { font-family:"JetBrains Mono",monospace; font-size:11px; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="box a">
+      <div class="label">letterpress</div>
+      <div class="name">inset 0 1px 0<br/>rgba(255,255,255,.58)</div>
+    </div>
+    <div class="box b">
+      <div class="label">panel-lift</div>
+      <div class="name">0 -28px 70px -38px<br/>rgba(0,0,0,.55)</div>
+    </div>
+    <div class="box c">
+      <div class="label">method-card</div>
+      <div class="name">0 34px 90px -66px<br/>rgba(14,14,11,.8)</div>
+    </div>
+  </div>
+</body>
+</html>

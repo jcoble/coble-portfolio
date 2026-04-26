@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Buttons</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+body { margin:0; padding:24px; background:#0c0a18; font-family:"Inter Tight",sans-serif; color:#f3eef8; }
+.lab { font-family:"JetBrains Mono",monospace; font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:#6e6580; margin-bottom:12px; }
+.row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+.btn { display:inline-flex; align-items:center; gap:10px; min-height:46px; padding:0 22px; border-radius:14px; font-weight:600; font-size:13px; cursor:pointer; border:none; }
+.primary { background:linear-gradient(92deg,#ff3da6,#c84bff); color:#fff; box-shadow:0 0 0 1px rgba(255,61,166,.6) inset, 0 18px 50px -22px rgba(255,61,166,.6); }
+.ghost { background:rgba(28,21,48,.5); color:#f3eef8; border:1px solid #3a2a5a; backdrop-filter:blur(12px); }
+.ghost:hover, .primary:hover { box-shadow:0 0 24px rgba(255,61,166,.55), 0 0 60px rgba(255,61,166,.28); }
+svg { width:16px; height:16px; stroke:currentColor; stroke-width:2.2; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+</style></head><body>
+<div class="lab">primary · ghost</div>
+<div class="row">
+  <button class="btn primary">Selected work <svg viewBox="0 0 24 24"><path d="M17 7L7 17M17 7H7m10 0v10"/></svg></button>
+  <button class="btn ghost">Start a conversation <svg viewBox="0 0 24 24"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></button>
+</div>
+</body></html>

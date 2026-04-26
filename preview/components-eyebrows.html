@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Eyebrow & Live Pill</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Fraunces:opsz,wght@9..144,300..500&display=swap" rel="stylesheet">
+<style>
+body { margin:0; padding:24px; background:#0c0a18; color:#f3eef8; font-family:"Inter Tight",sans-serif; }
+.row { display:grid; grid-template-columns:1fr 1fr; gap:14px; align-items:center; }
+.eye { font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:#ff3da6; }
+.bar { width:48px; height:2px; background:linear-gradient(92deg,#ff3da6,#c84bff,#3de1ff); margin-top:8px; border-radius:1px; }
+.stage { font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#c84bff; margin-top:14px; }
+.stage-name { font-family:"Fraunces",serif; font-size:24px; font-style:italic; line-height:1; margin-top:6px; color:#f3eef8; }
+.live { display:inline-flex; align-items:center; gap:10px; padding:8px 14px; border:1px solid rgba(249,217,118,.3); background:rgba(28,21,48,.5); border-radius:10px; font-family:"JetBrains Mono",monospace; font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:#f3eef8; backdrop-filter:blur(10px); }
+.dot { position:relative; width:8px; height:8px; }
+.dot::before { content:""; position:absolute; inset:0; border-radius:50%; background:#f9d976; opacity:.5; animation:p 1.6s ease-out infinite; }
+.dot::after { content:""; position:absolute; inset:0; border-radius:50%; background:#f9d976; box-shadow:0 0 14px rgba(249,217,118,.85); }
+@keyframes p { 0% { transform:scale(1); opacity:.5 } 100% { transform:scale(2.6); opacity:0 } }
+</style></head><body>
+<div class="row">
+  <div>
+    <div class="eye">RetailReady EDI</div>
+    <div class="bar"></div>
+    <div class="stage">Stage 02</div>
+    <div class="stage-name">Preflight</div>
+  </div>
+  <div>
+    <div class="live"><span class="dot"></span>Coble Solutions / RetailReady EDI</div>
+  </div>
+</div>
+</body></html>

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Fireflies</title>
+<style>
+body { margin:0; background:#0c0a18; height:100vh; overflow:hidden; position:relative; }
+.f { position:absolute; width:6px; height:6px; border-radius:50%; background:#f9d976; box-shadow:0 0 14px rgba(249,217,118,.85), 0 0 38px rgba(249,217,118,.45); }
+@keyframes drift1 { 0%,100% { transform:translate(0,0) } 50% { transform:translate(28px,-22px) } }
+@keyframes drift2 { 0%,100% { transform:translate(0,0) } 50% { transform:translate(-30px,18px) } }
+@keyframes pulse { 0%,100% { opacity:.4 } 50% { opacity:1 } }
+.f1 { left:14%; top:32%; animation:drift1 18s ease-in-out infinite, pulse 3s ease-in-out infinite; }
+.f2 { left:34%; top:62%; animation:drift2 22s ease-in-out infinite, pulse 4s ease-in-out infinite; }
+.f3 { left:54%; top:18%; animation:drift1 26s ease-in-out infinite, pulse 5s ease-in-out infinite; }
+.f4 { left:74%; top:48%; animation:drift2 20s ease-in-out infinite, pulse 3.5s ease-in-out infinite; }
+.f5 { left:86%; top:78%; animation:drift1 24s ease-in-out infinite, pulse 4.5s ease-in-out infinite; }
+.f6 { left:24%; top:84%; animation:drift2 19s ease-in-out infinite, pulse 3s ease-in-out infinite; }
+.f7 { left:62%; top:72%; animation:drift1 21s ease-in-out infinite, pulse 4s ease-in-out infinite; }
+.f8 { left:8%; top:14%; animation:drift2 28s ease-in-out infinite, pulse 5s ease-in-out infinite; }
+.lab { position:absolute; left:24px; top:24px; font-family:"JetBrains Mono",monospace; font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:#ff3da6; }
+</style></head><body>
+<div class="lab">.firefly · drift loop</div>
+<div class="f f1"></div><div class="f f2"></div><div class="f f3"></div><div class="f f4"></div>
+<div class="f f5"></div><div class="f f6"></div><div class="f f7"></div><div class="f f8"></div>
+</body></html>

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Iconography</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+body { margin:0; padding:18px; background:#0c0a18; color:#f3eef8; font-family:"Inter Tight",sans-serif; }
+.grid { display:grid; grid-template-columns:repeat(8,1fr); gap:10px; }
+.cell { display:flex; flex-direction:column; align-items:center; gap:6px; padding:10px 4px; border:1px solid #261e3a; border-radius:10px; background:rgba(28,21,48,.42); transition:.2s; }
+.cell:hover { border-color:#3a2a5a; box-shadow:0 0 18px rgba(255,61,166,.3); }
+.cell svg { width:22px; height:22px; stroke:#f3eef8; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; filter:drop-shadow(0 0 8px rgba(255,61,166,.45)); }
+.l { font-family:"JetBrains Mono",monospace; font-size:9px; color:#6e6580; }
+</style></head><body>
+<div class="grid">
+  <div class="cell"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M7 17h10V7"/></svg><span class="l">arr-up-rt</span></div>
+  <div class="cell"><svg viewBox="0 0 24 24"><path d="M17 7L7 17M17 7H7m10 0v10"/></svg><span class="l">arr-dn-rt</span></div>
+  <div class="cell"><svg viewBox="0 0 24 24"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg><span class="l">arr-rt</span></div>
+  <div class="cell"><svg viewBox="0 0 24 24"><path d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg><span class="l">download</span></div>
+  <div class="cell"><svg viewBox="0 0 24 24"><path d="M2 6h20v12H2zm0 0l10 7 10-7"/></svg><span class="l">mail</span></div>
+  <div class="cell"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg><span class="l">zap</span></div>
+  <div class="cell"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M16.24 7.76l-2.12 6.36-6.36 2.12 2.12-6.36z"/></svg><span class="l">compass</span></div>
+  <div class="cell"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg><span class="l">spark</span></div>
+</div>
+</body></html>

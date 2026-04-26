@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Spacing & Radius</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter+Tight:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  body { margin:0; padding:20px; background:#efece4; color:#0e0f11; font-family:"Inter Tight",sans-serif; }
+  .label { font-family:"JetBrains Mono",monospace; font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:#6a6e76; margin-bottom:8px; }
+  .row { display:flex; gap:14px; align-items:flex-end; margin-bottom:14px; }
+  .box { background:rgba(255,255,255,0.5); border:1px solid #d2cec1; display:flex; align-items:center; justify-content:center; font-family:"JetBrains Mono",monospace; font-size:11px; color:#6a6e76; }
+  .pad-row { display:flex; gap:10px; }
+  .pad { background:#c8674a14; border:1px dashed #c8674a; font-family:"JetBrains Mono",monospace; font-size:10px; color:#c8674a; padding:4px 8px; }
+</style>
+</head>
+<body>
+  <div class="label">radius — sm 8 · md 12 · lg 24</div>
+  <div class="row">
+    <div class="box" style="width:70px;height:70px;border-radius:8px">8</div>
+    <div class="box" style="width:80px;height:80px;border-radius:12px">12</div>
+    <div class="box" style="width:90px;height:90px;border-radius:24px">24</div>
+  </div>
+  <div class="label">space scale</div>
+  <div class="pad-row">
+    <span class="pad">4</span><span class="pad">8</span><span class="pad">16</span><span class="pad">24</span><span class="pad">32</span><span class="pad">48</span><span class="pad">64</span>
+  </div>
+</body>
+</html>
