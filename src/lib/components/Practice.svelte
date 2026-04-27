@@ -1,56 +1,32 @@
-<script lang="ts">
-  import CirclesThreePlus from "phosphor-svelte/lib/CirclesThreePlus";
-  import SealCheck from "phosphor-svelte/lib/SealCheck";
-  import Lightning from "phosphor-svelte/lib/Lightning";
-  import Compass from "phosphor-svelte/lib/Compass";
-  import { practice } from "$lib/content/profile";
-  import Reveal from "$lib/components/shared/Reveal.svelte";
-
-  const signals = [
-    { label: "Founder-led", icon: CirclesThreePlus },
-    { label: "Operational", icon: SealCheck },
-    { label: "Fast", icon: Lightning }
-  ];
-</script>
-
-<section class="bg-paper">
-  <div
-    class="mx-auto grid max-w-[1500px] grid-cols-1 gap-10 px-4 py-24 md:grid-cols-[0.72fr_1.28fr] md:px-8 md:py-32 lg:px-12"
-  >
-    <Reveal>
-      <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">
-        {practice.eyebrow}
-      </p>
-      <h2
-        class="mt-4 max-w-[12ch] font-[family-name:var(--font-display)] text-4xl leading-none tracking-tight md:text-6xl"
-      >
-        {practice.headline}
+<section class="section practice">
+  <div class="container">
+    <div class="section-head">
+      <div class="head-eyebrow fade-up"><div class="eyebrow">PRACTICE</div></div>
+      <h2 class="fade-up delay-1">
+        Software for the parts of the business where things <em>have to move correctly.</em>
       </h2>
-    </Reveal>
-
-    <div class="grid gap-6 md:grid-cols-[1.1fr_0.9fr]">
-      <Reveal
-        class="lift border-line rounded-lg border bg-[rgba(255,255,255,0.32)] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.58)] md:p-8"
-        delay={120}
-      >
-        <Compass class="text-moss" size={28} weight="duotone" />
-        <p class="text-ink mt-8 max-w-[48ch] text-xl leading-8">
-          {practice.body}
-        </p>
-      </Reveal>
-
-      <Reveal class="border-line grid content-end gap-3 border-y py-6" delay={240}>
-        {#each signals as signal (signal.label)}
-          <div class="flex items-center justify-between gap-4 py-4">
-            <span class="text-ink text-lg font-medium">{signal.label}</span>
-            <span
-              class="text-moss grid size-10 place-items-center rounded-lg bg-[rgba(14,14,11,0.06)]"
-            >
-              <signal.icon aria-hidden="true" size={20} weight="bold" />
-            </span>
-          </div>
-        {/each}
-      </Reveal>
+    </div>
+    <p class="practice-body fade-up delay-2">
+      I work where software meets operational reality: integrations, background jobs, customer
+      data, long-running workflows, retries, audits, and the need to know exactly what happened
+      when something fails.
+    </p>
+    <div class="signal-grid">
+      <article class="signal-card fade-up delay-1">
+        <div class="num">01</div>
+        <h3>Operational systems</h3>
+        <p>Software that supports real workflows, not just clean demos.</p>
+      </article>
+      <article class="signal-card fade-up delay-2">
+        <div class="num">02</div>
+        <h3>Integration-heavy platforms</h3>
+        <p>EDI, APIs, accounting systems, retailer requirements, and external system boundaries.</p>
+      </article>
+      <article class="signal-card fade-up delay-3">
+        <div class="num">03</div>
+        <h3>Ship-focused engineering</h3>
+        <p>Practical architecture, fast iteration, and production-aware decisions.</p>
+      </article>
     </div>
   </div>
 </section>

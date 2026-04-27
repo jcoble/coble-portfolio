@@ -1,112 +1,125 @@
-<script lang="ts">
-  import ArrowUpRight from "phosphor-svelte/lib/ArrowUpRight";
-  import { retailready } from "$lib/content/profile";
-  import Reveal from "$lib/components/shared/Reveal.svelte";
-  import StatsGrid from "$lib/components/shared/StatsGrid.svelte";
-  import TechStackGrid from "$lib/components/shared/TechStackGrid.svelte";
-  import DocTypesTable from "$lib/components/shared/DocTypesTable.svelte";
-  import JourneyRail from "$lib/components/shared/JourneyRail.svelte";
-  import ArchitectureDiagram from "$lib/components/shared/ArchitectureDiagram.svelte";
-</script>
-
-<section id="retailready" class="bg-charcoal text-paper">
-  <div class="mx-auto max-w-[1500px] px-4 py-24 md:px-8 md:py-32 lg:px-12">
-    <Reveal>
-      <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">{retailready.eyebrow}</p>
-      <h2
-        class="mt-5 max-w-[14ch] font-[family-name:var(--font-display)] text-5xl leading-[0.95] tracking-tight md:text-8xl"
-      >
-        {retailready.headline}
+<section id="retailready" class="section retailready">
+  <div class="container">
+    <div class="section-head">
+      <div class="head-eyebrow fade-up"><div class="eyebrow">RETAILREADY EDI</div></div>
+      <h2 class="fade-up delay-1">
+        A retail EDI platform built around <em>visibility, isolation,</em> and reliable document flow.
       </h2>
-      <div class="mt-8 grid gap-5 md:grid-cols-2 md:gap-8">
-        {#each retailready.intro as paragraph, i (i)}
-          <p class="max-w-[58ch] text-lg leading-8 text-[rgba(244,242,235,0.76)]">
-            {paragraph}
-          </p>
-        {/each}
+    </div>
+
+    <p class="rr-intro fade-up delay-2">
+      RetailReady is the EDI platform I built for vendors selling into major retailers. It handles
+      document exchange, validation, acknowledgments, sandbox testing, retransmission state, and
+      production visibility across retailers like Walmart, Best Buy, Dollar Tree, Meijer, and
+      Dollar General.
+    </p>
+
+    <p class="rr-wedge fade-up delay-2">
+      EDI can become opaque quickly: documents move through multiple systems, failures hide in
+      logs, and customers often wait on support to understand what happened. RetailReady is built
+      to surface the document state, validator output, retransmission state, and SLA clock in one
+      place. Sandbox lets vendors test against retailer-specific expectations before go-live.
+      Tenant boundaries are enforced at the database layer, and the engine is designed around
+      explicit ownership, timeouts, retries, and takeover behavior instead of invisible background
+      jobs.
+    </p>
+
+    <div class="stat-grid">
+      <div class="stat-card cyan fade-up">
+        <div class="v">5</div>
+        <div class="l">Active retailers</div>
       </div>
-    </Reveal>
-
-    <Reveal class="mt-20" delay={120}>
-      <div class="border-line-dark rounded-lg border bg-[rgba(244,242,235,0.04)] p-6 md:p-10">
-        <ArchitectureDiagram variant="full" />
+      <div class="stat-card cyan fade-up delay-1">
+        <div class="v">52</div>
+        <div class="l">Data entities</div>
       </div>
-    </Reveal>
-
-    <Reveal class="mt-20" delay={120}>
-      <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">By the numbers</p>
-      <div class="mt-6">
-        <StatsGrid stats={retailready.stats} tone="dark" />
+      <div class="stat-card cyan fade-up delay-2">
+        <div class="v">40</div>
+        <div class="l">RLS-enforced tables</div>
       </div>
-    </Reveal>
-
-    <Reveal class="mt-20" delay={120}>
-      <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">
-        Document types supported
-      </p>
-      <div class="mt-6">
-        <DocTypesTable columns={retailready.docTypes.columns} />
+      <div class="stat-card violet fade-up delay-3">
+        <div class="v"><small>~</small>900</div>
+        <div class="l">Automated tests</div>
       </div>
-    </Reveal>
+    </div>
 
-    <Reveal class="mt-20" delay={120}>
-      <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">Customer journey</p>
-      <div class="mt-6">
-        <JourneyRail stages={retailready.journey} />
-      </div>
-    </Reveal>
+    <div class="rr-highlights">
+      <article class="rr-hl fade-up delay-1">
+        <div class="icon">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <ellipse cx="12" cy="6" rx="8" ry="3" />
+            <path d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6" />
+            <path d="M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6" />
+          </svg>
+        </div>
+        <h3>Database-enforced tenant isolation</h3>
+        <p>
+          Customer boundaries are enforced below application code with Postgres row-level security,
+          reducing the chance that a controller bug becomes a cross-customer data leak.
+        </p>
+      </article>
+      <article class="rr-hl fade-up delay-2">
+        <div class="icon">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"
+            />
+            <circle cx="12" cy="12" r="3" />
+          </svg>
+        </div>
+        <h3>Failure-aware background engine</h3>
+        <p>
+          Long-running EDI work is split into isolated workers with per-step deadlines, retry
+          behavior, and monitoring that catches both domain failures and host-level outages.
+        </p>
+      </article>
+      <article class="rr-hl fade-up delay-3">
+        <div class="icon">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z" />
+            <circle cx="12" cy="12" r="3" />
+          </svg>
+        </div>
+        <h3>Visible document state</h3>
+        <p>
+          Documents are not treated as invisible background traffic. RetailReady tracks validation,
+          acknowledgments, retransmission state, and SLA timing so users can see where work stands.
+        </p>
+      </article>
+    </div>
 
-    <Reveal class="mt-20" delay={120}>
-      <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">Stack</p>
-      <div class="mt-6">
-        <TechStackGrid rows={retailready.techStack} tone="dark" />
-      </div>
-    </Reveal>
-
-    <Reveal class="mt-20" delay={120}>
-      <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">Design highlights</p>
-      <ol class="border-line-dark mt-8 grid gap-px border md:grid-cols-2">
-        {#each retailready.flexPoints as point, index (point.title)}
-          <li class="lift bg-charcoal p-6 md:p-8">
-            <span
-              class="font-mono text-xs tracking-[0.18em] text-[rgba(244,242,235,0.5)] uppercase"
-            >
-              {String(index + 1).padStart(2, "0")}
-            </span>
-            <h3
-              class="text-paper mt-3 text-xl leading-tight font-semibold tracking-tight md:text-2xl"
-            >
-              {point.title}
-            </h3>
-            <p class="mt-3 text-sm leading-7 text-[rgba(244,242,235,0.74)]">
-              {point.body}
-            </p>
-          </li>
-        {/each}
-      </ol>
-    </Reveal>
-
-    <Reveal class="mt-20" delay={120}>
-      <blockquote
-        class="border-copper text-paper max-w-[58ch] border-l-2 pl-6 font-[family-name:var(--font-display)] text-2xl leading-snug italic md:text-4xl"
-      >
-        {retailready.wedge}
-      </blockquote>
-    </Reveal>
-
-    <Reveal class="mt-12" delay={120}>
-      <a
-        href="/retailready"
-        class="group text-copper inline-flex items-center gap-3 font-mono text-sm tracking-[0.18em] uppercase transition-colors hover:text-[color-mix(in_oklab,var(--color-copper)_85%,white)]"
-      >
+    <div class="section-cta fade-up">
+      <a class="link-cta" href="/retailready">
         View the full system overview
-        <ArrowUpRight
-          aria-hidden="true"
-          size={20}
-          weight="bold"
-          class="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-        />
+        <span class="arrow">→</span>
       </a>
-    </Reveal>
+    </div>
   </div>
 </section>

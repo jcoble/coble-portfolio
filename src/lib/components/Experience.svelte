@@ -1,44 +1,53 @@
-<script lang="ts">
-  import { experience } from "$lib/content/profile";
-  import Reveal from "$lib/components/shared/Reveal.svelte";
-</script>
+<section id="experience" class="section experience">
+  <div class="container">
+    <div class="section-head">
+      <div class="head-eyebrow fade-up"><div class="eyebrow">EXPERIENCE</div></div>
+      <h2 class="fade-up delay-1">
+        A <em>decade</em> of EDI, integrations, and operational software.
+      </h2>
+    </div>
 
-<section id="experience" class="bg-paper">
-  <div
-    class="mx-auto grid max-w-[1500px] grid-cols-1 gap-10 px-4 py-24 md:grid-cols-[0.95fr_1.05fr] md:px-8 md:py-32 lg:px-12"
-  >
-    <Reveal>
-      <div>
-        <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">{experience.eyebrow}</p>
-        <h2
-          class="mt-5 max-w-[12ch] font-[family-name:var(--font-display)] text-5xl leading-[0.95] tracking-tight md:text-7xl"
-        >
-          {experience.headline}
-        </h2>
-        <p class="text-muted mt-7 max-w-[58ch] text-lg leading-8">
-          {experience.body}
-        </p>
-      </div>
-    </Reveal>
+    <p class="exp-body fade-up delay-2">
+      I have been building EDI and operations software since 2014 — from reader/writer engines for
+      steamship-line workflows at DepotSystems, to ISO management systems for medical device and
+      aerospace companies at IMSXpress, to RetailReady, a modern retail EDI platform for vendors
+      selling into major retailers.
+    </p>
 
-    <Reveal delay={140}>
-      <ol class="border-line grid gap-px border">
-        {#each experience.timeline as entry (entry.years)}
-          <li
-            class="lift grid gap-2 bg-[rgba(255,255,255,0.32)] p-6 md:grid-cols-[10rem_1fr] md:gap-8 md:p-8"
-          >
-            <span class="text-copper font-mono text-xs tracking-[0.18em] uppercase">
-              {entry.years}
-            </span>
-            <div>
-              <h3 class="text-ink text-xl font-semibold tracking-tight md:text-2xl">
-                {entry.role}
-              </h3>
-              <p class="text-muted mt-1 text-sm md:text-base">{entry.company}</p>
-            </div>
-          </li>
-        {/each}
-      </ol>
-    </Reveal>
+    <ol class="timeline">
+      <li class="timeline-row fade-up">
+        <div class="tl-when">2022 — PRESENT</div>
+        <div class="tl-where">Coble Solutions / RetailReady EDI</div>
+        <div class="tl-role">
+          Founder, Lead Engineer. Designed and operate the platform end-to-end: architecture,
+          document workflows, validation, tenant isolation, background engine, and customer-facing
+          visibility.
+        </div>
+      </li>
+      <li class="timeline-row fade-up delay-1">
+        <div class="tl-when">2018 — 2022</div>
+        <div class="tl-where">AQA Company / IMSXpress</div>
+        <div class="tl-role">
+          Senior / Sole Developer. ISO management software for medical device and aerospace
+          companies — controlled documents, audits, training, and corrective-action workflows.
+        </div>
+      </li>
+      <li class="timeline-row fade-up delay-2">
+        <div class="tl-when">2014 — 2018</div>
+        <div class="tl-where">Edge Networks / DepotSystems</div>
+        <div class="tl-role">
+          Developer → Senior Developer. EDI reader/writer engines for steamship-line workflows;
+          the start of a long arc of building software around document flow and operational
+          correctness.
+        </div>
+      </li>
+    </ol>
+
+    <div class="exp-emphasis fade-up">
+      <p>
+        RetailReady is not a pivot into EDI. It is the result of more than a decade spent building
+        software around document flow, integrations, and operational correctness.
+      </p>
+    </div>
   </div>
 </section>

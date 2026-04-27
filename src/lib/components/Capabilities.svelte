@@ -1,39 +1,85 @@
-<script lang="ts">
-  import { capabilities } from "$lib/content/profile";
-  import Reveal from "$lib/components/shared/Reveal.svelte";
-</script>
+<section id="capabilities" class="section build">
+  <div class="container">
+    <div class="section-head">
+      <div class="head-eyebrow fade-up"><div class="eyebrow">CAPABILITIES</div></div>
+      <h2 class="fade-up delay-1">
+        Practical architecture for systems that <em>have to keep working.</em>
+      </h2>
+    </div>
 
-<section id="capabilities" class="bg-paper">
-  <div
-    class="mx-auto grid max-w-[1500px] grid-cols-1 gap-10 px-4 py-24 md:grid-cols-[0.72fr_1.28fr] md:px-8 md:py-32 lg:px-12"
-  >
-    <Reveal>
-      <div>
-        <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">Capabilities</p>
-        <h2
-          class="mt-5 max-w-[10ch] font-[family-name:var(--font-display)] text-5xl leading-[0.95] tracking-tight md:text-7xl"
+    <p class="build-intro fade-up delay-2">
+      My work tends to sit where product, data, infrastructure, and operations overlap. I care
+      about systems that make state visible, enforce boundaries, and remain maintainable after
+      the first version ships.
+    </p>
+
+    <div class="cap-grid">
+      <article class="cap-card fade-up delay-1">
+        <svg
+          class="icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         >
-          Useful systems, not theater.
-        </h2>
-      </div>
-    </Reveal>
-
-    <Reveal delay={140}>
-      <div class="border-line grid gap-0 border-y">
-        {#each capabilities as capability, i (capability.name)}
-          <article
-            class="border-line grid gap-5 border-b py-7 last:border-b-0 md:grid-cols-[auto_1fr] md:gap-8"
-          >
-            <span class="text-muted font-mono text-xs tracking-[0.18em] uppercase">
-              0{i + 1}
-            </span>
-            <div>
-              <h3 class="text-ink text-2xl font-semibold tracking-tight">{capability.name}</h3>
-              <p class="text-muted mt-3 max-w-[65ch] leading-7">{capability.description}</p>
-            </div>
-          </article>
-        {/each}
-      </div>
-    </Reveal>
+          <rect x="3" y="3" width="7" height="7" rx="1.5" />
+          <rect x="14" y="14" width="7" height="7" rx="1.5" />
+          <path d="M10 6.5h4M6.5 10v4M14 17.5h-4M17.5 14v-4" />
+        </svg>
+        <h3>Integration architecture</h3>
+        <p>EDI, APIs, accounting systems, retailer-specific workflows, and external system boundaries.</p>
+      </article>
+      <article class="cap-card fade-up delay-2">
+        <svg
+          class="icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <ellipse cx="12" cy="5" rx="8" ry="3" />
+          <path d="M4 5v14c0 1.66 3.58 3 8 3s8-1.34 8-3V5" />
+          <path d="M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3" />
+        </svg>
+        <h3>Backend systems</h3>
+        <p>Data models, background workers, queues, retries, validation, authorization, and operational visibility.</p>
+      </article>
+      <article class="cap-card fade-up delay-3">
+        <svg
+          class="icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <rect x="3" y="4" width="18" height="14" rx="2" />
+          <path d="M3 9h18M7 14h6" />
+        </svg>
+        <h3>Product-minded engineering</h3>
+        <p>Interfaces that explain system state clearly instead of hiding complexity from users.</p>
+      </article>
+      <article class="cap-card fade-up delay-4">
+        <svg
+          class="icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z" />
+          <path d="M9 12l2 2 4-4" />
+        </svg>
+        <h3>Production discipline</h3>
+        <p>Testing, monitoring, failure handling, data isolation, and maintainable architecture.</p>
+      </article>
+    </div>
   </div>
 </section>

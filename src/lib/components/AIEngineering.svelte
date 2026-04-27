@@ -1,66 +1,56 @@
-<script lang="ts">
-  import ArrowUpRight from "phosphor-svelte/lib/ArrowUpRight";
-  import { aiEngineering } from "$lib/content/profile";
-  import Reveal from "$lib/components/shared/Reveal.svelte";
-  import StatsGrid from "$lib/components/shared/StatsGrid.svelte";
-  import PullQuote from "$lib/components/shared/PullQuote.svelte";
-  import AISystemDiagram from "$lib/components/shared/AISystemDiagram.svelte";
-</script>
-
-<section id="ai-engineering" class="bg-ink text-paper">
-  <div class="mx-auto max-w-[1500px] px-4 py-24 md:px-8 md:py-32 lg:px-12">
-    <Reveal>
-      <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">
-        {aiEngineering.eyebrow}
-      </p>
-      <h2
-        class="mt-5 max-w-[14ch] font-[family-name:var(--font-display)] text-5xl leading-[0.95] tracking-tight md:text-8xl"
-      >
-        {aiEngineering.headline}
+<section id="ai" class="section ai-eng">
+  <div class="container">
+    <div class="section-head">
+      <div class="head-eyebrow fade-up"><div class="eyebrow">WORKING WITH AI</div></div>
+      <h2 class="fade-up delay-1">
+        Making AI useful in codebases <em>too large for chat.</em>
       </h2>
-      <p class="mt-8 max-w-[68ch] text-lg leading-8 text-[rgba(244,242,235,0.76)]">
-        {aiEngineering.problem}
-      </p>
-    </Reveal>
+    </div>
 
-    <Reveal class="mt-16" delay={120}>
-      <div class="border-line-dark rounded-lg border bg-[rgba(244,242,235,0.03)] p-6 md:p-10">
-        <AISystemDiagram variant="full" />
+    <p class="ai-intro fade-up delay-2">
+      Working with a coding model on a large codebase is not just a chat problem. It is a context,
+      memory, routing, and review problem. I built a workflow that orients the model through
+      scoped project files, architecture notes, typed memory, hooks, and specialist sub-agents so
+      context is pulled intentionally instead of dumped into every session.
+    </p>
+
+    <div class="stat-grid">
+      <div class="stat-card cyan fade-up">
+        <div class="v">16</div>
+        <div class="l">Scoped project files</div>
       </div>
-    </Reveal>
-
-    <Reveal class="mt-20" delay={120}>
-      <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">By the numbers</p>
-      <div class="mt-6">
-        <StatsGrid stats={aiEngineering.stats} tone="dark" />
+      <div class="stat-card violet fade-up delay-1">
+        <div class="v">13</div>
+        <div class="l">Orientation workflows</div>
       </div>
-    </Reveal>
+      <div class="stat-card cyan fade-up delay-2">
+        <div class="v">7</div>
+        <div class="l">Specialist agents</div>
+      </div>
+      <div class="stat-card cyan fade-up delay-3">
+        <div class="v">64</div>
+        <div class="l">Typed memory files</div>
+      </div>
+    </div>
 
-    <Reveal class="mt-20" delay={120}>
-      <PullQuote tone="dark">
-        "{aiEngineering.pullQuote}"
-      </PullQuote>
-    </Reveal>
+    <div class="ai-pull fade-up">
+      <blockquote>
+        <em>Loaded ≠ attended.</em> Context dumped into a session can still be ignored, evicted, or
+        stale. The system works by pulling focused context on demand instead of pretending every
+        file in the window is equally understood.
+      </blockquote>
+    </div>
 
-    <Reveal class="mt-12" delay={120}>
-      <p class="text-paper max-w-[44ch] text-2xl leading-snug font-medium md:text-3xl">
-        {aiEngineering.closing}
-      </p>
-    </Reveal>
+    <p class="ai-close fade-up">
+      This is not autopilot. It is an engineered workflow built from real failure modes: stale
+      context, attention drift, unsafe edits, and unreviewed assumptions.
+    </p>
 
-    <Reveal class="mt-12" delay={120}>
-      <a
-        href="/working-with-ai"
-        class="group text-copper inline-flex items-center gap-3 font-mono text-sm tracking-[0.18em] uppercase transition-colors hover:text-[color-mix(in_oklab,var(--color-copper)_85%,white)]"
-      >
-        Read how I work with Claude
-        <ArrowUpRight
-          aria-hidden="true"
-          size={20}
-          weight="bold"
-          class="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-        />
+    <div class="section-cta fade-up">
+      <a class="link-cta" href="/working-with-ai">
+        Read how I work with AI
+        <span class="arrow">→</span>
       </a>
-    </Reveal>
+    </div>
   </div>
 </section>

@@ -1,28 +1,22 @@
-<script lang="ts">
-  import { cobleSolutions } from "$lib/content/profile";
-  import Reveal from "$lib/components/shared/Reveal.svelte";
-</script>
+<section id="coble-solutions" class="section coble-solutions">
+  <div class="container">
+    <div class="section-head">
+      <div class="head-eyebrow fade-up"><div class="eyebrow">COBLE SOLUTIONS</div></div>
+      <h2 class="fade-up delay-1">Founder-led <em>product engineering</em> services.</h2>
+    </div>
 
-<section class="bg-paper">
-  <div class="mx-auto max-w-[1500px] px-4 py-24 md:px-8 md:py-32 lg:px-12">
-    <Reveal>
-      <article
-        class="lift border-line rounded-lg border bg-[rgba(255,255,255,0.32)] p-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.58)] md:grid md:grid-cols-[0.7fr_1.3fr] md:gap-12 md:p-12"
-      >
-        <div>
-          <p class="text-copper font-mono text-xs tracking-[0.2em] uppercase">
-            {cobleSolutions.eyebrow}
-          </p>
-          <h2
-            class="mt-4 font-[family-name:var(--font-display)] text-4xl leading-none tracking-tight md:text-5xl"
-          >
-            {cobleSolutions.headline}
-          </h2>
-        </div>
-        <p class="text-muted mt-6 max-w-[58ch] text-lg leading-8 md:mt-2">
-          {cobleSolutions.body}
-        </p>
-      </article>
-    </Reveal>
+    <p class="cs-body fade-up delay-2">
+      Coble Solutions is the practice behind RetailReady — focused on operational software,
+      integrations, and the kind of background systems that have to keep working when nobody is
+      watching. Selective engagements with teams that need a senior engineer who treats production
+      visibility, data boundaries, and reliable document flow as features, not afterthoughts.
+    </p>
+
+    <div class="section-cta fade-up">
+      <a class="link-cta" href="#contact">
+        Discuss an engagement
+        <span class="arrow">→</span>
+      </a>
+    </div>
   </div>
 </section>
