@@ -1,12 +1,12 @@
-type ScrubOptions = {
-  exitLeadSeconds?: number; // hold these many seconds before end as the "release" zone
-};
+// Scroll-driven scrub: maps caller's `progress` (0..1) → video.currentTime
+// linearly so the entire video plays from first frame to last as the user
+// scrolls. A tiny 0.02s safety margin at the end prevents Chromium from
+// snapping back to 0 when currentTime is set to exactly duration.
 
 export function scrubVideo(
   video: HTMLVideoElement,
-  initial: { progress: number; options?: ScrubOptions }
+  initial: { progress: number }
 ) {
-  const opts = { exitLeadSeconds: 2, ...initial.options };
   let current = initial.progress;
 
   function sync() {
@@ -15,18 +15,8 @@ export function scrubVideo(
     video.muted = true;
 
     const clamped = Math.min(1, Math.max(0, current));
-    const exitStart = Math.max(
-      0.01,
-      Math.min(0.98, (video.duration - opts.exitLeadSeconds) / video.duration)
-    );
     const target =
-      clamped <= 0.002
-        ? 0.01
-        : Math.min(
-            video.duration - 0.02,
-            video.duration * clamped * exitStart +
-              (clamped > exitStart ? (clamped - exitStart) * (1 - exitStart) : 0)
-          );
+      clamped <= 0.001 ? 0.01 : Math.min(video.duration - 0.02, video.duration * clamped);
 
     if (Math.abs(video.currentTime - target) > 0.015) {
       video.currentTime = target;
@@ -45,13 +35,13 @@ export function scrubVideo(
   video.addEventListener("canplay", markReady);
 
   return {
-    update({ progress }: { progress: number; options?: ScrubOptions }) {
+    update({ progress }: { progress: number }) {
       current = progress;
       sync();
     },
     destroy() {
       video.removeEventListener("loadedmetadata", markReady);
       video.removeEventListener("canplay", markReady);
-    }
+    },
   };
 }

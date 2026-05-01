@@ -25,10 +25,11 @@
 
       <div>
         <p class="resume-summary fade-up delay-1">
-          Software engineer and founder with 10+ years building EDI, integrations, and operational
-          software. Currently running RetailReady, a multi-tenant retail EDI platform for vendors
-          selling into major retailers. Comfortable across the stack — backend systems, data
-          modeling, document workflows, customer-facing UI — with a bias toward production
+          Software engineer and founder with 10+ years owning the full SDLC for operations-heavy
+          software — shipping depot platforms, ISO management systems for medical device and
+          aerospace, EDI reader/writer engines, and now RetailReady, a multi-tenant retail EDI
+          platform. Comfortable across the stack — backend systems, data modeling, document
+          workflows, customer-facing UI, reporting, and production support — with a bias toward
           visibility, reliable boundaries, and explicit failure handling.
         </p>
 
@@ -40,10 +41,12 @@
               <span class="what">
                 <strong>Coble Solutions / RetailReady EDI · Founder, Lead Engineer</strong>
                 <span
-                  >Built and operate RetailReady, a retail EDI platform for vendors selling into
-                  major retailers. Designed the platform architecture, document workflows,
-                  validation and acknowledgment handling, tenant isolation model, background
-                  engine, customer-facing interface, and operational visibility features.</span
+                  >Built and operate RetailReady, a multi-tenant retail EDI platform for vendors
+                  selling into Walmart, Best Buy, Dollar Tree, Meijer, and Dollar General. Designed
+                  the platform architecture, X12 / EDIFACT document flows, validation and
+                  acknowledgment handling, Postgres RLS tenant isolation, RabbitMQ background
+                  engine with deadlines and retries, customer-facing document timelines, and
+                  operational visibility.</span
                 >
               </span>
             </li>
@@ -52,8 +55,12 @@
               <span class="what">
                 <strong>AQA Company / IMSXpress · Senior / Sole Developer</strong>
                 <span
-                  >ISO management systems for medical device and aerospace companies.
-                  Controlled-document workflows, audits, corrective actions, and training records.</span
+                  >Sole developer architecting and maintaining IMSXpress, a full ISO management
+                  system for medical device and aerospace clients — controlled documents, audits,
+                  training records, and corrective-action workflows. Built and supported an
+                  ancillary system for managing software-development specifications under FDA and
+                  aerospace compliance. Full-stack C#.NET on SQL Server, working directly with the
+                  company owner from concept through production support.</span
                 >
               </span>
             </li>
@@ -62,8 +69,14 @@
               <span class="what">
                 <strong>Edge Networks / DepotSystems · Developer → Senior Developer</strong>
                 <span
-                  >Reader/writer engines for steamship-line EDI; first sustained exposure to
-                  operational software, document flow, and integration boundaries.</span
+                  >Built core modules of the Depotsystems shipping-depot platform — C#.NET /
+                  DevExpress WinForms front-end, SQL Server back-end, ASP.NET customer portal, and
+                  a large Crystal Reports + DevExpress reporting library backed by stored
+                  procedures. Wrote a FoxPro → SQL migration tool that handled corrupted source
+                  data, and the EDI reader/writer engines for steamship-line workflows (X12 322 /
+                  301, EDIFACT CEDEX, Westim, Destim, Codeco, WORDER). Mentored juniors, authored
+                  technical documentation, owned 24/7 production on-call, and supported the
+                  underlying Windows / Hyper-V infrastructure.</span
                 >
               </span>
             </li>
@@ -85,6 +98,28 @@
               </span>
             </li>
             <li>
+              <span class="when">FoxPro → SQL Migration Tool</span>
+              <span class="what">
+                <strong>High-throughput data conversion</strong>
+                <span
+                  >Custom migration utility for Depotsystems that significantly increased
+                  conversion speed over the prior tooling and worked around corrupted source
+                  records that broke the off-the-shelf path.</span
+                >
+              </span>
+            </li>
+            <li>
+              <span class="when">Reporting Library</span>
+              <span class="what">
+                <strong>Customer reports at scale</strong>
+                <span
+                  >Authored and customized a large library of customer reports for Depotsystems
+                  using SQL stored procedures, Crystal Reports, and the DevExpress report
+                  designer.</span
+                >
+              </span>
+            </li>
+            <li>
               <span class="when">Working with AI</span>
               <span class="what">
                 <strong>Engineered AI-assisted workflow</strong>
@@ -101,14 +136,21 @@
         <div class="resume-section fade-up delay-2">
           <h4>Technical summary</h4>
           <div class="tech-tags">
-            <span>.NET 10</span><span>C#</span><span>SvelteKit 2</span><span>Svelte 5</span>
-            <span>TypeScript</span><span>Tailwind v4</span><span>PostgreSQL</span><span
-              >Postgres RLS</span
+            <span>C# / .NET 10</span><span>VB.NET</span><span>TypeScript</span><span
+              >SvelteKit 2</span
             >
-            <span>RabbitMQ</span><span>SignalR</span><span>X12 / EDIFACT</span><span
-              >AS2 / SFTP</span
+            <span>Svelte 5</span><span>Tailwind v4</span><span>ASP.NET</span><span
+              >WinForms / DevExpress</span
             >
-            <span>Cloudflare Pages</span><span>Linux / VPS ops</span>
+            <span>PostgreSQL</span><span>Postgres RLS</span><span>SQL Server / T-SQL</span><span
+              >Stored Procedures</span
+            >
+            <span>FoxPro</span><span>SQLite</span><span>RabbitMQ</span><span>SignalR</span>
+            <span>X12 / EDIFACT</span><span>AS2 / SFTP</span>
+            <span>Crystal Reports</span><span>DevExpress Reports</span>
+            <span>Windows Server / Hyper-V</span><span>Cloudflare Pages</span><span
+              >Linux / VPS ops</span
+            >
           </div>
         </div>
 
@@ -116,8 +158,8 @@
           <h4>Education</h4>
           <ul>
             <li>
-              <span class="when">B.S. Computer Science</span>
-              <span class="what"><span>University of Akron</span></span>
+              <span class="when">B.S. Computer Information Systems · 2008</span>
+              <span class="what"><span>Kent State University · Kent, OH</span></span>
             </li>
           </ul>
         </div>

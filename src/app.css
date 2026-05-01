@@ -143,7 +143,6 @@
 
 html {
   background: var(--bg-night);
-  scroll-behavior: smooth;
 }
 
 body {
