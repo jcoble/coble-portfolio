@@ -374,7 +374,7 @@
         <div class="final-block">
           <div class="final-name">JESSE COBLE · SOFTWARE ENGINEER</div>
           <h2 class="final-head">
-            Turning real-world problems into <em>digital solutions.</em>
+            Creating digital solutions for the <em>real world.</em>
           </h2>
           <div class="final-ctas">
             <a class="btn btn-primary" href="#retailready">

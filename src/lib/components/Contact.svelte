@@ -13,7 +13,7 @@
       </div>
       <div class="fade-up delay-2">
         <div class="contact-cta">
-          <a class="btn btn-primary" href="mailto:coble.jesse@gmail.com">
+          <a class="btn btn-primary" href="mailto:jesse@coblesolutions.com">
             Email Jesse
             <svg
               class="arrow"

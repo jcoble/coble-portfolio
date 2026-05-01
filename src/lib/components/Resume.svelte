@@ -139,20 +139,50 @@
 
         <div class="resume-section fade-up delay-2">
           <h4>Technical summary</h4>
-          <div class="tech-tags">
-            <span>C# / .NET 10</span><span>TypeScript</span><span>VB.NET</span><span>T-SQL</span>
-            <span>ASP.NET Core</span><span>SvelteKit 2 / Svelte 5</span><span>Tailwind v4</span>
-            <span>shadcn-svelte</span>
-            <span>PostgreSQL</span><span>Row-Level Security</span><span>SQL Server</span>
-            <span>Stored Procedures</span><span>SQLite</span><span>FoxPro</span>
-            <span>RabbitMQ</span><span>SignalR</span>
-            <span>X12 / EDIFACT</span><span>AS2 (own implementation)</span><span>SFTP</span>
-            <span>WinForms / DevExpress</span><span>Crystal Reports</span><span
-              >DevExpress Reports</span
-            >
-            <span>Windows Server / Hyper-V</span><span>Linux / VPS</span><span>Docker</span>
-            <span>Cloudflare</span>
-            <span>Claude Code / Codex</span><span>Anthropic Superpowers</span>
+          <div class="tech-groups">
+            <div class="tech-group">
+              <div class="tech-group-label">Languages</div>
+              <div class="tech-tags">
+                <span>C# / .NET 10</span><span>TypeScript</span><span>VB.NET</span><span
+                  >T-SQL</span
+                >
+              </div>
+            </div>
+            <div class="tech-group">
+              <div class="tech-group-label">Backend &amp; Data</div>
+              <div class="tech-tags">
+                <span>ASP.NET Core</span><span>RabbitMQ</span><span>SignalR</span>
+                <span>PostgreSQL</span><span>Row-Level Security</span><span>SQL Server</span>
+                <span>Stored Procedures</span><span>SQLite</span><span>FoxPro</span>
+              </div>
+            </div>
+            <div class="tech-group">
+              <div class="tech-group-label">Frontend</div>
+              <div class="tech-tags">
+                <span>SvelteKit 2 / Svelte 5</span><span>Tailwind v4</span>
+                <span>shadcn-svelte</span><span>WinForms / DevExpress</span>
+              </div>
+            </div>
+            <div class="tech-group">
+              <div class="tech-group-label">Integrations &amp; EDI</div>
+              <div class="tech-tags">
+                <span>X12 / EDIFACT</span><span>AS2 (own implementation)</span><span>SFTP</span>
+                <span>Crystal Reports</span><span>DevExpress Reports</span>
+              </div>
+            </div>
+            <div class="tech-group">
+              <div class="tech-group-label">Infrastructure &amp; Ops</div>
+              <div class="tech-tags">
+                <span>Cloudflare</span><span>Linux / VPS</span><span>Docker</span>
+                <span>Windows Server / Hyper-V</span>
+              </div>
+            </div>
+            <div class="tech-group">
+              <div class="tech-group-label">AI Tooling</div>
+              <div class="tech-tags">
+                <span>Claude Code / Codex</span><span>Anthropic Superpowers</span>
+              </div>
+            </div>
           </div>
         </div>
 
