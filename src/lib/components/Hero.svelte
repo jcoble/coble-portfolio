@@ -211,7 +211,7 @@
   // (proof card) cut from 27% to 16%; final stays anchored to the last ~13%.
   const s1 = $derived(stageOpacity(0.0, 0.1, progress)); // opening
   const s2 = $derived(stageOpacity(0.15, 0.22, progress)); // "integrations…" line
-  const s3 = $derived(stageOpacity(0.27, 0.37, progress)); // ENTERING THE SYSTEM (longer dwell)
+  const s3 = $derived(stageOpacity(0.22, 0.37, progress)); // ENTERING THE SYSTEM (longer dwell)
   const s4 = $derived(stageOpacity(0.42, 0.56, progress)); // RetailReady proof card
   const s5 = $derived(stageOpacity(0.63, 0.7, progress)); // "systems explain themselves"
   const s6 = $derived(stageOpacity(0.76, 0.83, progress)); // "decade of EDI"
@@ -357,7 +357,7 @@
 
     <!-- Stages 2–7 only render in cinematic mode -->
     {#if !staticMode}
-      <div
+      <!-- <div
         class="stage stage-text"
         style="opacity: {s2}; transform: translate3d(0, {stageDrift(s2)}px, 0)"
       >
@@ -371,14 +371,14 @@
             The kind of software people only notice when it <em>breaks.</em>
           </p>
         </div>
-      </div>
+      </div> -->
       <div
         class="stage stage-thresh"
         style="opacity: {s3}; transform: translate3d(0, {stageDrift(s3)}px, 0)"
       >
         <span class="thresh-tag">
           <span class="dot"></span>
-          ENTERING THE SYSTEM
+          ENTERING THE DIGITAL
         </span>
       </div>
       <div
