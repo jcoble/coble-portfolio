@@ -3,7 +3,7 @@
     <div class="section-head">
       <div class="head-eyebrow fade-up"><div class="eyebrow">EXPERIENCE</div></div>
       <h2 class="fade-up delay-1">
-        A <em>decade</em> of full-stack engineering for operations-heavy businesses.
+        A decade of full-stack engineering, mostly in the <em>boring middle</em> of production.
       </h2>
     </div>
 

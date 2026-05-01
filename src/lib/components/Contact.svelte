@@ -3,10 +3,12 @@
     <div class="contact-grid">
       <div>
         <div class="eyebrow fade-up" style="margin-bottom:24px;">CONTACT</div>
-        <h2 class="fade-up delay-1">Let's build something <em>practical.</em></h2>
+        <h2 class="fade-up delay-1">Open to <em>good projects.</em></h2>
         <p class="contact-body fade-up delay-2">
-          I'm interested in practical software work: operational systems, integrations, EDI
-          workflows, internal tools, and product engineering where reliability and clarity matter.
+          If you're working on EDI, integrations, internal tools, or anything that needs
+          to keep running in the background without surprising you — I'd like to hear
+          about it. RetailReady inquiries get the secondary email below; everything
+          else, the direct line is the button.
         </p>
       </div>
       <div class="fade-up delay-2">

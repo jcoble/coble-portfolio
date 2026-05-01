@@ -265,8 +265,9 @@
           Turning real-world problems into <em>digital solutions.</em>
         </h1>
         <p class="hero-sub">
-          I build practical software systems for operations-heavy businesses — from retail EDI
-          workflows to the tooling that keeps large codebases understandable.
+          A decade of building software for the parts of a business that have to keep working.
+          Right now: RetailReady, a multi-tenant retail EDI platform — built on a dev workflow
+          engineered for working with AI agents in a real codebase.
         </p>
         <div class="hero-ctas">
           <a class="btn btn-primary" href="#retailready">
@@ -310,7 +311,7 @@
         <div class="stage-card">
           <div class="eyebrow">WHAT I BUILD</div>
           <p class="stage-line">
-            Integrations, background workflows, data boundaries, and <em>production visibility.</em>
+            The kind of software people only notice when it <em>breaks.</em>
           </p>
         </div>
       </div>
@@ -337,9 +338,9 @@
             Walmart, Best Buy, Dollar Tree, Meijer, and Dollar General.
           </p>
           <div class="proof-tags">
-            <span>X12</span><span>EDIFACT</span><span>POSTGRES RLS</span><span>RABBITMQ</span><span
-              >.NET 10</span
-            >
+            <span>AS2 ENDPOINT</span><span>X12</span><span>EDIFACT</span><span
+              >POSTGRES RLS</span
+            ><span>RABBITMQ</span>
           </div>
         </div>
       </div>
@@ -362,7 +363,8 @@
         <div class="stage-card">
           <div class="eyebrow">BACKGROUND</div>
           <p class="stage-line">
-            A <em>decade</em> of EDI, integrations, and operational software.
+            A <em>decade</em> of integrations, EDI, and software for the stuff in
+            the background.
           </p>
         </div>
       </div>
