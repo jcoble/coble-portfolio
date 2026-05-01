@@ -512,9 +512,10 @@ video {
 .hero-sub {
   font-size: clamp(1rem, 1.1vw + 0.6rem, 1.25rem);
   line-height: 1.55;
-  color: var(--fg-haze);
+  color: var(--fg-moonlight);
   max-width: 44ch;
   margin: 0 0 36px 0;
+  text-shadow: 0 1px 18px rgba(4, 6, 13, 0.55);
 }
 .hero-ctas {
   display: flex;
