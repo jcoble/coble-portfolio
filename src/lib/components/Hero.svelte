@@ -7,21 +7,23 @@
 
   let stageEl: HTMLElement | undefined = $state();
   let videoEl: HTMLVideoElement | undefined = $state();
+  let mobileVideoEl: HTMLVideoElement | undefined = $state();
   let progress = $state(0);
   let videoReady = $state(false);
   let bufferedFraction = $state(0);
   let skipped = $state(false);
   let showSkipButton = $state(false);
+  let isMobile = $state(false);
 
-  // Static mode is only entered if the user explicitly skips OR the video
-  // genuinely fails to load within the auto-skip timeout. We intentionally
-  // do NOT branch on prefers-reduced-motion or navigator.connection — the
-  // cinematic is the universal default; the manual skip and timeout are
-  // the only escape hatches.
-  let staticMode = $derived(skipped);
+  // Static mode is entered when the user skips, the video fails to load,
+  // OR we detected a coarse pointer (touch device). The cinematic scrub
+  // doesn't work reliably on iOS Safari and the 18vh pin is exhausting on
+  // a phone — mobile gets a short autoplaying loop instead.
+  let staticMode = $derived(skipped || isMobile);
   let showSplash = $derived(!staticMode && !videoReady);
 
   const VIDEO_URL = "/media/hero-portal-scrub.mp4";
+  const VIDEO_URL_MOBILE = "/media/hero-portal-mobile.mp4";
   const SKIP_BUTTON_DELAY_MS = 4000;
   const AUTO_SKIP_TIMEOUT_MS = 20000;
 
@@ -102,6 +104,15 @@
 
   onMount(() => {
     if (typeof window === "undefined") return;
+
+    // Touch devices skip the splash + scrub cinematic entirely. The video
+    // element on mobile is a separate <video autoplay loop muted playsinline>
+    // attached below; we just flag isMobile so $derived staticMode flips on.
+    if (window.matchMedia("(pointer: coarse)").matches) {
+      isMobile = true;
+      return;
+    }
+
     lockScroll();
 
     if (videoEl) {
@@ -181,18 +192,6 @@
     if (videoReady || skipped) unlockScroll();
   });
 
-  // Mobile scrub handler — translates slider value (0..1) into a scroll
-  // position within the pinned cinematic. The pin starts at stageEl.offsetTop
-  // and runs for ~18 viewport heights (matches end: '+=1800%' on the
-  // ScrollTrigger). Setting scrollTop fires ScrollTrigger naturally.
-  function onScrub(e: Event) {
-    if (!stageEl) return;
-    const v = Number((e.currentTarget as HTMLInputElement).value);
-    const top = stageEl.offsetTop;
-    const runway = window.innerHeight * 18;
-    window.scrollTo({ top: top + runway * v, behavior: "auto" });
-  }
-
   function stageOpacity(start: number, end: number, p: number) {
     const fade = 0.02;
     if (p < start - fade || p > end + fade) return 0;
@@ -258,15 +257,31 @@
 <section id="top" class="hero-scroll-stage" bind:this={stageEl}>
   <div class="hero-pin">
     <div class="hero-video-wrap" aria-hidden="true">
-      <video
-        bind:this={videoEl}
-        class="hero-video"
-        playsinline
-        muted
-        preload="none"
-        poster="/media/hero-poster.jpg"
-        use:scrubVideo={{ progress }}
-      ></video>
+      {#if isMobile}
+        <video
+          bind:this={mobileVideoEl}
+          class="hero-video"
+          src={VIDEO_URL_MOBILE}
+          playsinline
+          muted
+          loop
+          autoplay
+          preload="metadata"
+          poster="/media/hero-poster.jpg"
+        ></video>
+        <div class="hero-tint-mobile"></div>
+        <div class="hero-blend-mobile"></div>
+      {:else}
+        <video
+          bind:this={videoEl}
+          class="hero-video"
+          playsinline
+          muted
+          preload="none"
+          poster="/media/hero-poster.jpg"
+          use:scrubVideo={{ progress }}
+        ></video>
+      {/if}
       <div class="hero-vignette"></div>
     </div>
 
@@ -288,21 +303,6 @@
         <div class="stage-dot" class:active={progress >= 0.9}></div>
       </div>
 
-      <!-- Touch-only scrub slider. Lets a thumb-scrolling visitor skim
-           through the cinematic without having to drag through ~18
-           viewport-heights of pinned scroll. Drives window.scrollTo(),
-           ScrollTrigger handles the rest. -->
-      <input
-        class="cinema-scrub"
-        class:visible={progress > 0.005 && progress < 0.99}
-        type="range"
-        min="0"
-        max="1"
-        step="0.001"
-        value={progress}
-        aria-label="Scrub through the hero cinematic"
-        oninput={onScrub}
-      />
     {/if}
 
     <!-- Stage 1 — Opening (0–15%) -->
@@ -1012,74 +1012,34 @@
   }
 
   /* =====================================================================
-     Mobile scrub slider — vertical range input pinned to the right edge.
-     Touch only. Lets thumb-scrolling visitors skim the cinematic without
-     dragging through ~18 viewport-heights of pinned scroll.
+     Mobile-only overlays: a soft cyan/violet tint to lean into the brand
+     palette, plus a tall bottom gradient that fades the video into the
+     next section's bg-void instead of cutting at a hard edge.
      ===================================================================== */
-  .cinema-scrub {
-    display: none;
+  .hero-tint-mobile {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(60% 50% at 20% 20%, rgba(80, 200, 255, 0.18), transparent 70%),
+      radial-gradient(55% 45% at 85% 80%, rgba(106, 92, 255, 0.16), transparent 70%);
+    mix-blend-mode: screen;
+    z-index: 2;
   }
-  @media (pointer: coarse) {
-    .cinema-scrub {
-      display: block;
-      position: fixed;
-      right: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      writing-mode: vertical-lr;
-      direction: rtl;
-      width: 28px;
-      height: 56dvh;
-      appearance: none;
-      -webkit-appearance: none;
-      background: transparent;
-      z-index: 32;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 320ms var(--ease-out-soft);
-      cursor: grab;
-    }
-    .cinema-scrub.visible {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .cinema-scrub::-webkit-slider-runnable-track {
-      width: 4px;
-      background: rgba(80, 200, 255, 0.18);
-      border-radius: 2px;
-      border: 1px solid rgba(80, 200, 255, 0.12);
-    }
-    .cinema-scrub::-moz-range-track {
-      width: 4px;
-      background: rgba(80, 200, 255, 0.18);
-      border-radius: 2px;
-      border: 1px solid rgba(80, 200, 255, 0.12);
-    }
-    .cinema-scrub::-webkit-slider-thumb {
-      appearance: none;
-      -webkit-appearance: none;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #50c8ff 0%, #6a5cff 100%);
-      box-shadow:
-        0 0 16px rgba(80, 200, 255, 0.55),
-        0 2px 6px rgba(0, 0, 0, 0.45);
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      margin-left: -7px;
-      cursor: grab;
-    }
-    .cinema-scrub::-moz-range-thumb {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #50c8ff 0%, #6a5cff 100%);
-      box-shadow:
-        0 0 16px rgba(80, 200, 255, 0.55),
-        0 2px 6px rgba(0, 0, 0, 0.45);
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      cursor: grab;
-    }
+  .hero-blend-mobile {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 42%;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(7, 11, 24, 0.55) 55%,
+      var(--bg-night) 100%
+    );
+    z-index: 3;
   }
 
   @media (prefers-reduced-motion: reduce) {
