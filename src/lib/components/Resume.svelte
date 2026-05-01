@@ -25,12 +25,14 @@
 
       <div>
         <p class="resume-summary fade-up delay-1">
-          Software engineer and founder with 10+ years owning the full SDLC for operations-heavy
-          software — shipping depot platforms, ISO management systems for medical device and
-          aerospace, EDI reader/writer engines, and now RetailReady, a multi-tenant retail EDI
-          platform. Comfortable across the stack — backend systems, data modeling, document
-          workflows, customer-facing UI, reporting, and production support — with a bias toward
-          visibility, reliable boundaries, and explicit failure handling.
+          Software engineer and founder with 10+ years owning the parts of a business
+          that have to keep working — shipping depot platforms, ISO management for
+          medical device and aerospace, EDI reader/writer engines, and now RetailReady,
+          a multi-tenant retail EDI platform with the AS2 transport built into the
+          application itself. I work across the stack: backend, data, document
+          workflows, UI, and production support. The bias is the same across all of
+          it — visible state, boundaries enforced below the application, and failure
+          modes that show up in the UI before they show up in a support ticket.
         </p>
 
         <div class="resume-section fade-up delay-1">
@@ -122,11 +124,13 @@
             <li>
               <span class="when">Working with AI</span>
               <span class="what">
-                <strong>Engineered AI-assisted workflow</strong>
+                <strong>Engineered AI-assisted dev workflow</strong>
                 <span
-                  >Scoped project files, typed memory, orientation workflows, specialist
-                  sub-agents, and review checkpoints — designed around the failure modes of
-                  large-codebase AI assistance.</span
+                  >A 13-topic orientation system, commit/push/test hooks that prevent
+                  silent test-suite erosion, paired sub-agent reviews on every spec
+                  and plan, and the same project running identically under Claude Code
+                  or Codex. Built around the failure modes of large-codebase AI
+                  assistance.</span
                 >
               </span>
             </li>
@@ -136,21 +140,19 @@
         <div class="resume-section fade-up delay-2">
           <h4>Technical summary</h4>
           <div class="tech-tags">
-            <span>C# / .NET 10</span><span>VB.NET</span><span>TypeScript</span><span
-              >SvelteKit 2</span
+            <span>C# / .NET 10</span><span>TypeScript</span><span>VB.NET</span><span>T-SQL</span>
+            <span>ASP.NET Core</span><span>SvelteKit 2 / Svelte 5</span><span>Tailwind v4</span>
+            <span>shadcn-svelte</span>
+            <span>PostgreSQL</span><span>Row-Level Security</span><span>SQL Server</span>
+            <span>Stored Procedures</span><span>SQLite</span><span>FoxPro</span>
+            <span>RabbitMQ</span><span>SignalR</span>
+            <span>X12 / EDIFACT</span><span>AS2 (own implementation)</span><span>SFTP</span>
+            <span>WinForms / DevExpress</span><span>Crystal Reports</span><span
+              >DevExpress Reports</span
             >
-            <span>Svelte 5</span><span>Tailwind v4</span><span>ASP.NET</span><span
-              >WinForms / DevExpress</span
-            >
-            <span>PostgreSQL</span><span>Postgres RLS</span><span>SQL Server / T-SQL</span><span
-              >Stored Procedures</span
-            >
-            <span>FoxPro</span><span>SQLite</span><span>RabbitMQ</span><span>SignalR</span>
-            <span>X12 / EDIFACT</span><span>AS2 / SFTP</span>
-            <span>Crystal Reports</span><span>DevExpress Reports</span>
-            <span>Windows Server / Hyper-V</span><span>Cloudflare Pages</span><span
-              >Linux / VPS ops</span
-            >
+            <span>Windows Server / Hyper-V</span><span>Linux / VPS</span><span>Docker</span>
+            <span>Cloudflare</span>
+            <span>Claude Code / Codex</span><span>Anthropic Superpowers</span>
           </div>
         </div>
 

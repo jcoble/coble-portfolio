@@ -210,7 +210,8 @@
       </div>
       <h2 class="splash-headline">Loading the experience</h2>
       <p class="splash-sub">
-        First paint pulls a short hero video so the cinematic stays smooth as you scroll.
+        A short video plays as you scroll. Pulling it in full so the page moves smoothly the whole
+        way through.
       </p>
       <div class="splash-progress" aria-hidden="true">
         <div class="splash-progress-fill" style="width: {bufferedFraction * 100}%"></div>
@@ -265,8 +266,9 @@
           Turning real-world problems into <em>digital solutions.</em>
         </h1>
         <p class="hero-sub">
-          I build practical software systems for operations-heavy businesses — from retail EDI
-          workflows to the tooling that keeps large codebases understandable.
+          A decade of building software for the parts of a business that have to keep working. Right
+          now: RetailReady, a multi-tenant retail EDI platform — built on a dev workflow engineered
+          for working with AI agents in a real codebase.
         </p>
         <div class="hero-ctas">
           <a class="btn btn-primary" href="#retailready">
@@ -310,7 +312,7 @@
         <div class="stage-card">
           <div class="eyebrow">WHAT I BUILD</div>
           <p class="stage-line">
-            Integrations, background workflows, data boundaries, and <em>production visibility.</em>
+            The kind of software people only notice when it <em>breaks.</em>
           </p>
         </div>
       </div>
@@ -337,9 +339,8 @@
             Walmart, Best Buy, Dollar Tree, Meijer, and Dollar General.
           </p>
           <div class="proof-tags">
-            <span>X12</span><span>EDIFACT</span><span>POSTGRES RLS</span><span>RABBITMQ</span><span
-              >.NET 10</span
-            >
+            <span>AS2 ENDPOINT</span><span>X12</span><span>EDIFACT</span><span>POSTGRES RLS</span
+            ><span>RABBITMQ</span>
           </div>
         </div>
       </div>
@@ -350,8 +351,8 @@
         <div class="stage-card">
           <div class="eyebrow">HOW I BUILD</div>
           <p class="stage-line">
-            Systems built to <em>explain themselves.</em><br />
-            Visible state. Reliable boundaries. Failure-aware workflows.
+            Software that <em>shows its work.</em><br />
+            What's running, what failed, and why — all in the UI.
           </p>
         </div>
       </div>
@@ -362,7 +363,7 @@
         <div class="stage-card">
           <div class="eyebrow">BACKGROUND</div>
           <p class="stage-line">
-            A <em>decade</em> of EDI, integrations, and operational software.
+            A <em>decade</em> of integrations, EDI, and complex software systems.
           </p>
         </div>
       </div>
@@ -581,11 +582,19 @@
     object-fit: cover;
     filter: saturate(1.05) contrast(1.04) brightness(0.85);
   }
+  /* Vignette layers (top to bottom):
+     1. Left-side darken so the opening hero text reads cleanly against the
+        bright center of the laptop/screen plate. Falls off by ~60% viewport
+        width so the right side stays atmospheric and the centered glass
+        cards (stages 2-7) aren't affected.
+     2. Center radial vignette for cinematic edge falloff.
+     3. Top + bottom gradient for header readability and floor-fade. */
   .hero-vignette {
     position: absolute;
     inset: 0;
     pointer-events: none;
     background:
+      linear-gradient(90deg, rgba(4, 6, 13, 0.78) 0%, rgba(4, 6, 13, 0.5) 28%, transparent 60%),
       radial-gradient(120% 80% at 50% 50%, transparent 40%, rgba(4, 6, 13, 0.55) 100%),
       linear-gradient(
         180deg,
