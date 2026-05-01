@@ -1,3 +1,7 @@
+<script lang="ts">
+  import { spotlight } from "$lib/actions/spotlight";
+</script>
+
 <section id="how-i-build" class="section build">
   <div class="container">
     <div class="section-head">
@@ -16,7 +20,7 @@
     </p>
 
     <div class="cap-grid">
-      <article class="cap-card fade-up delay-1">
+      <article class="cap-card fade-up delay-1" use:spotlight>
         <svg
           class="icon"
           viewBox="0 0 24 24"
@@ -36,7 +40,7 @@
           systems that don't agree on anything by default.
         </p>
       </article>
-      <article class="cap-card fade-up delay-2">
+      <article class="cap-card fade-up delay-2" use:spotlight>
         <svg
           class="icon"
           viewBox="0 0 24 24"
@@ -56,7 +60,7 @@
           and audit trails that let them survive contact with production.
         </p>
       </article>
-      <article class="cap-card fade-up delay-3">
+      <article class="cap-card fade-up delay-3" use:spotlight>
         <svg
           class="icon"
           viewBox="0 0 24 24"
@@ -75,7 +79,7 @@
           instead of hiding the complexity behind a spinner.
         </p>
       </article>
-      <article class="cap-card fade-up delay-4">
+      <article class="cap-card fade-up delay-4" use:spotlight>
         <svg
           class="icon"
           viewBox="0 0 24 24"

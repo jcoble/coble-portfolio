@@ -1,3 +1,8 @@
+<script lang="ts">
+  import { spotlight } from "$lib/actions/spotlight";
+  import { countup } from "$lib/actions/countup";
+</script>
+
 <section id="retailready" class="section retailready">
   <div class="container">
     <div class="section-head">
@@ -28,25 +33,25 @@
 
     <div class="stat-grid">
       <div class="stat-card cyan fade-up">
-        <div class="v">5</div>
+        <div class="v" use:countup={{ target: 5 }}>5</div>
         <div class="l">Active retailers</div>
       </div>
       <div class="stat-card cyan fade-up delay-1">
-        <div class="v">14</div>
+        <div class="v" use:countup={{ target: 14 }}>14</div>
         <div class="l">EDI document types</div>
       </div>
       <div class="stat-card cyan fade-up delay-2">
-        <div class="v">44</div>
+        <div class="v" use:countup={{ target: 44 }}>44</div>
         <div class="l">Tenant-scoped tables</div>
       </div>
       <div class="stat-card violet fade-up delay-3">
-        <div class="v"><small>~</small>900</div>
+        <div class="v"><small>~</small><span use:countup={{ target: 900 }}>900</span></div>
         <div class="l">Tests · 50s gate</div>
       </div>
     </div>
 
     <div class="rr-highlights">
-      <article class="rr-hl fade-up delay-1">
+      <article class="rr-hl fade-up delay-1" use:spotlight>
         <div class="icon">
           <svg
             width="20"
@@ -70,7 +75,7 @@
           between machines, no certificate config living outside the app.
         </p>
       </article>
-      <article class="rr-hl fade-up delay-2">
+      <article class="rr-hl fade-up delay-2" use:spotlight>
         <div class="icon">
           <svg
             width="20"
@@ -95,7 +100,7 @@
           got there.
         </p>
       </article>
-      <article class="rr-hl fade-up delay-3">
+      <article class="rr-hl fade-up delay-3" use:spotlight>
         <div class="icon">
           <svg
             width="20"
@@ -121,7 +126,7 @@
           (one inside the app, one outside) catch the failure modes the other can't see.
         </p>
       </article>
-      <article class="rr-hl fade-up delay-4">
+      <article class="rr-hl fade-up delay-4" use:spotlight>
         <div class="icon">
           <svg
             width="20"

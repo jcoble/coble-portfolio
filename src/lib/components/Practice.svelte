@@ -1,3 +1,7 @@
+<script lang="ts">
+  import { spotlight } from "$lib/actions/spotlight";
+</script>
+
 <section class="section practice">
   <div class="container">
     <div class="section-head">
@@ -13,7 +17,7 @@
       people actually notice live.
     </p>
     <div class="signal-grid">
-      <article class="signal-card fade-up delay-1">
+      <article class="signal-card fade-up delay-1" use:spotlight>
         <div class="num">01</div>
         <h3>Workflow software</h3>
         <p>
@@ -21,7 +25,7 @@
           break — schedulers, integrations, processes that have to finish.
         </p>
       </article>
-      <article class="signal-card fade-up delay-2">
+      <article class="signal-card fade-up delay-2" use:spotlight>
         <div class="num">02</div>
         <h3>Integration-heavy platforms</h3>
         <p>
@@ -29,7 +33,7 @@
           between systems that don't agree on anything by default.
         </p>
       </article>
-      <article class="signal-card fade-up delay-3">
+      <article class="signal-card fade-up delay-3" use:spotlight>
         <div class="num">03</div>
         <h3>Ship-focused engineering</h3>
         <p>

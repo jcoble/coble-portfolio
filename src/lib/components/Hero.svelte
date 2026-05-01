@@ -176,6 +176,18 @@
     if (videoReady || skipped) unlockScroll();
   });
 
+  // Mobile scrub handler — translates slider value (0..1) into a scroll
+  // position within the pinned cinematic. The pin starts at stageEl.offsetTop
+  // and runs for ~18 viewport heights (matches end: '+=1800%' on the
+  // ScrollTrigger). Setting scrollTop fires ScrollTrigger naturally.
+  function onScrub(e: Event) {
+    if (!stageEl) return;
+    const v = Number((e.currentTarget as HTMLInputElement).value);
+    const top = stageEl.offsetTop;
+    const runway = window.innerHeight * 18;
+    window.scrollTo({ top: top + runway * v, behavior: "auto" });
+  }
+
   function stageOpacity(start: number, end: number, p: number) {
     const fade = 0.02;
     if (p < start - fade || p > end + fade) return 0;
@@ -252,6 +264,41 @@
       ></video>
       <div class="hero-vignette"></div>
     </div>
+
+    <!-- Stage progress dots — visible only during the cinematic. Each dot
+         lights up as scroll progress crosses its stage threshold so the
+         viewer knows how far they are through the pinned sequence. -->
+    {#if !staticMode}
+      <div
+        class="stage-dots"
+        class:visible={progress > 0.005 && progress < 0.99}
+        aria-hidden="true"
+      >
+        <div class="stage-dot" class:active={progress >= 0}></div>
+        <div class="stage-dot" class:active={progress >= 0.15}></div>
+        <div class="stage-dot" class:active={progress >= 0.27}></div>
+        <div class="stage-dot" class:active={progress >= 0.42}></div>
+        <div class="stage-dot" class:active={progress >= 0.63}></div>
+        <div class="stage-dot" class:active={progress >= 0.76}></div>
+        <div class="stage-dot" class:active={progress >= 0.9}></div>
+      </div>
+
+      <!-- Touch-only scrub slider. Lets a thumb-scrolling visitor skim
+           through the cinematic without having to drag through ~18
+           viewport-heights of pinned scroll. Drives window.scrollTo(),
+           ScrollTrigger handles the rest. -->
+      <input
+        class="cinema-scrub"
+        class:visible={progress > 0.005 && progress < 0.99}
+        type="range"
+        min="0"
+        max="1"
+        step="0.001"
+        value={progress}
+        aria-label="Scrub through the hero cinematic"
+        oninput={onScrub}
+      />
+    {/if}
 
     <!-- Stage 1 — Opening (0–15%) -->
     <div
@@ -822,6 +869,120 @@
     gap: 12px;
     justify-content: center;
     flex-wrap: wrap;
+  }
+
+  /* =====================================================================
+     Stage progress dots — fixed to the right edge while the cinematic
+     plays. Filled dots indicate stages already passed; the active stage
+     gets a brighter cyan glow.
+     ===================================================================== */
+  .stage-dots {
+    position: fixed;
+    right: 22px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    opacity: 0;
+    transition: opacity 320ms var(--ease-out-soft);
+    pointer-events: none;
+  }
+  .stage-dots.visible {
+    opacity: 1;
+  }
+  .stage-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(80, 200, 255, 0.18);
+    border: 1px solid rgba(80, 200, 255, 0.22);
+    transition: all 280ms var(--ease-out-soft);
+  }
+  .stage-dot.active {
+    background: var(--cyan-bright);
+    border-color: var(--cyan-bright);
+    box-shadow: 0 0 12px rgba(80, 200, 255, 0.55);
+  }
+  /* On touch devices the scrub slider takes the right edge — push the
+     dots to the left edge so they don't collide. */
+  @media (pointer: coarse) {
+    .stage-dots {
+      right: auto;
+      left: 18px;
+    }
+  }
+
+  /* =====================================================================
+     Mobile scrub slider — vertical range input pinned to the right edge.
+     Touch only. Lets thumb-scrolling visitors skim the cinematic without
+     dragging through ~18 viewport-heights of pinned scroll.
+     ===================================================================== */
+  .cinema-scrub {
+    display: none;
+  }
+  @media (pointer: coarse) {
+    .cinema-scrub {
+      display: block;
+      position: fixed;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      writing-mode: vertical-lr;
+      direction: rtl;
+      width: 28px;
+      height: 56dvh;
+      appearance: none;
+      -webkit-appearance: none;
+      background: transparent;
+      z-index: 32;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 320ms var(--ease-out-soft);
+      cursor: grab;
+    }
+    .cinema-scrub.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .cinema-scrub::-webkit-slider-runnable-track {
+      width: 4px;
+      background: rgba(80, 200, 255, 0.18);
+      border-radius: 2px;
+      border: 1px solid rgba(80, 200, 255, 0.12);
+    }
+    .cinema-scrub::-moz-range-track {
+      width: 4px;
+      background: rgba(80, 200, 255, 0.18);
+      border-radius: 2px;
+      border: 1px solid rgba(80, 200, 255, 0.12);
+    }
+    .cinema-scrub::-webkit-slider-thumb {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #50c8ff 0%, #6a5cff 100%);
+      box-shadow:
+        0 0 16px rgba(80, 200, 255, 0.55),
+        0 2px 6px rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      margin-left: -7px;
+      cursor: grab;
+    }
+    .cinema-scrub::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #50c8ff 0%, #6a5cff 100%);
+      box-shadow:
+        0 0 16px rgba(80, 200, 255, 0.55),
+        0 2px 6px rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      cursor: grab;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

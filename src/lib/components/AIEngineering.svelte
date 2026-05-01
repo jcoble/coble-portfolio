@@ -1,3 +1,7 @@
+<script lang="ts">
+  import { spotlight } from "$lib/actions/spotlight";
+</script>
+
 <section id="ai" class="section ai-eng">
   <div class="container">
     <div class="section-head">
@@ -17,7 +21,7 @@
     </p>
 
     <div class="ai-mechs">
-      <article class="ai-mech fade-up delay-1">
+      <article class="ai-mech fade-up delay-1" use:spotlight>
         <div class="ai-mech-eyebrow">01 · ORIENTATION</div>
         <h3>A topic map the agent loads on demand.</h3>
         <p>
@@ -39,7 +43,7 @@
         </p>
       </article>
 
-      <article class="ai-mech fade-up delay-2">
+      <article class="ai-mech fade-up delay-2" use:spotlight>
         <div class="ai-mech-eyebrow">02 · GUARDRAILS</div>
         <h3>Hooks and tests that fail loud.</h3>
         <p>
@@ -61,7 +65,7 @@
         </p>
       </article>
 
-      <article class="ai-mech fade-up delay-3">
+      <article class="ai-mech fade-up delay-3" use:spotlight>
         <div class="ai-mech-eyebrow">03 · SPEC → PLAN → SHIP</div>
         <h3>Brainstorm, spec, plan, sub-agent review, ship.</h3>
         <p>
@@ -81,7 +85,7 @@
         </p>
       </article>
 
-      <article class="ai-mech fade-up delay-4">
+      <article class="ai-mech fade-up delay-4" use:spotlight>
         <div class="ai-mech-eyebrow">04 · TOOL-AGNOSTIC</div>
         <h3>Same project, runs identically under Claude or Codex.</h3>
         <p>

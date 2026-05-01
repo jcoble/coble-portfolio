@@ -1186,6 +1186,42 @@ video {
 .resume-section li .what span {
   color: var(--fg-haze);
 }
+/* =========================================================================
+   Cursor-following spotlight on cards (use:spotlight action)
+   --spot-x / --spot-y are set by the action on pointermove.
+   mix-blend-mode: screen lets the highlight glow over text without hiding it.
+   ========================================================================= */
+.signal-card,
+.rr-hl,
+.ai-mech,
+.cap-card {
+  overflow: hidden;
+}
+.signal-card::after,
+.rr-hl::after,
+.ai-mech::after,
+.cap-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    300px circle at var(--spot-x, -200px) var(--spot-y, -200px),
+    rgba(125, 220, 255, 0.18),
+    transparent 60%
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 220ms var(--ease-out-soft);
+  mix-blend-mode: screen;
+}
+.signal-card:hover::after,
+.rr-hl:hover::after,
+.ai-mech:hover::after,
+.cap-card:hover::after {
+  opacity: 1;
+}
+
 .tech-groups {
   display: flex;
   flex-direction: column;
