@@ -25,7 +25,10 @@
     });
     (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
 
-    lenis.on("scroll", ScrollTrigger.update);
+    // Wrap so Lenis's event payload doesn't get passed as ScrollTrigger.update's
+    // first argument (which it interprets as `force`).
+    const onLenisScroll = () => ScrollTrigger.update();
+    lenis.on("scroll", onLenisScroll);
     const tickerCb = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(tickerCb);
     gsap.ticker.lagSmoothing(0);

@@ -9,12 +9,12 @@
 // rAF-throttled so rapid pointermove events coalesce into one DOM write.
 
 type Options = {
-  /** Max tilt angle in degrees. Default 12. */
+  /** Max tilt angle in degrees. Default 11. */
   max?: number;
 };
 
 export function spotlight(node: HTMLElement, opts: Options = {}) {
-  const max = opts.max ?? 12;
+  const max = opts.max ?? 11;
   let raf = 0;
   let pendingX = 0;
   let pendingY = 0;

@@ -142,19 +142,58 @@
   }
   .ai-mech {
     position: relative;
+    overflow: hidden;
     background: rgba(13, 21, 48, 0.5);
     backdrop-filter: blur(10px);
     border: 1px solid var(--line);
     border-radius: var(--r-md);
     padding: 32px;
-    transition: all var(--dur-base) var(--ease-out-soft);
+    transform-style: preserve-3d;
+    transform: perspective(800px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+    transition:
+      transform 220ms var(--ease-out-soft),
+      border-color var(--dur-base) var(--ease-out-soft),
+      box-shadow var(--dur-base) var(--ease-out-soft);
+    will-change: transform;
   }
   .ai-mech:hover {
     border-color: rgba(80, 200, 255, 0.32);
-    transform: translateY(-2px);
+    transform: perspective(800px) translateY(-2px) rotateX(var(--tilt-x, 0deg))
+      rotateY(var(--tilt-y, 0deg));
     box-shadow:
       0 30px 60px -30px rgba(0, 0, 0, 0.7),
       0 0 0 1px rgba(80, 200, 255, 0.18);
+  }
+  .ai-mech::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      300px circle at var(--spot-x, -200px) var(--spot-y, -200px),
+      rgba(125, 220, 255, 0.18),
+      transparent 60%
+    );
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 220ms var(--ease-out-soft);
+    mix-blend-mode: screen;
+    z-index: 1;
+  }
+  .ai-mech:hover::after {
+    opacity: 1;
+  }
+  .ai-mech > * {
+    position: relative;
+    z-index: 2;
+  }
+  @media (pointer: coarse) {
+    .ai-mech {
+      transform: none;
+    }
+    .ai-mech:hover {
+      transform: translateY(-2px);
+    }
   }
   .ai-mech-eyebrow {
     font-family: var(--font-mono);
