@@ -1187,15 +1187,33 @@ video {
   color: var(--fg-haze);
 }
 /* =========================================================================
-   Cursor-following spotlight on cards (use:spotlight action)
-   --spot-x / --spot-y are set by the action on pointermove.
-   mix-blend-mode: screen lets the highlight glow over text without hiding it.
+   Cursor-following spotlight + 3D tilt on cards (use:spotlight action).
+   --spot-x / --spot-y position the radial-gradient highlight.
+   --tilt-x / --tilt-y rotate the card around its center, "pressing back"
+   at the cursor. The :hover :hover-supports check ensures pointers-only.
    ========================================================================= */
 .signal-card,
 .rr-hl,
 .ai-mech,
 .cap-card {
   overflow: hidden;
+  transform-style: preserve-3d;
+  transform: perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition:
+    transform 220ms var(--ease-out-soft),
+    border-color var(--dur-base) var(--ease-out-soft),
+    box-shadow var(--dur-base) var(--ease-out-soft);
+  will-change: transform;
+}
+/* Restore the card's lift-on-hover as part of the same compose. The original
+   hover rules each used translateY(-2px); we inline that into the perspective
+   chain so transform stays single-source and Y/X tilt isn't clobbered. */
+.signal-card:hover,
+.rr-hl:hover,
+.ai-mech:hover,
+.cap-card:hover {
+  transform: perspective(1100px) translateY(-2px) rotateX(var(--tilt-x, 0deg))
+    rotateY(var(--tilt-y, 0deg));
 }
 .signal-card::after,
 .rr-hl::after,
@@ -1220,6 +1238,22 @@ video {
 .ai-mech:hover::after,
 .cap-card:hover::after {
   opacity: 1;
+}
+@media (pointer: coarse) {
+  /* Disable tilt on touch — no real cursor, and the tilt would flicker on
+     every tap. Spotlight glow also pointless without hover. */
+  .signal-card,
+  .rr-hl,
+  .ai-mech,
+  .cap-card {
+    transform: none;
+  }
+  .signal-card:hover,
+  .rr-hl:hover,
+  .ai-mech:hover,
+  .cap-card:hover {
+    transform: translateY(-2px);
+  }
 }
 
 .tech-groups {

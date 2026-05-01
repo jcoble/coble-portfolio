@@ -1,5 +1,6 @@
 <script lang="ts">
   import { scrubVideo } from "$lib/actions/scrubVideo";
+  import { spotlight } from "$lib/actions/spotlight";
   import gsap from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   import { onDestroy, onMount } from "svelte";
@@ -356,7 +357,11 @@
         class="stage stage-text"
         style="opacity: {s2}; transform: translate3d(0, {stageDrift(s2)}px, 0)"
       >
-        <div class="stage-card">
+        <div
+          class="stage-card"
+          style="pointer-events: {s2 > 0.4 ? 'auto' : 'none'}"
+          use:spotlight={{ max: 4 }}
+        >
           <div class="eyebrow">WHAT I BUILD</div>
           <p class="stage-line">
             The kind of software people only notice when it <em>breaks.</em>
@@ -376,7 +381,11 @@
         class="stage stage-proof"
         style="opacity: {s4}; transform: translate3d(0, {stageDrift(s4)}px, 0)"
       >
-        <div class="stage-card proof-card">
+        <div
+          class="stage-card proof-card"
+          style="pointer-events: {s4 > 0.4 ? 'auto' : 'none'}"
+          use:spotlight={{ max: 4 }}
+        >
           <div class="eyebrow">RETAILREADY EDI</div>
           <h3 class="proof-title">
             A platform for <em>retailer document flow.</em>
@@ -395,7 +404,11 @@
         class="stage stage-text"
         style="opacity: {s5}; transform: translate3d(0, {stageDrift(s5)}px, 0)"
       >
-        <div class="stage-card">
+        <div
+          class="stage-card"
+          style="pointer-events: {s5 > 0.4 ? 'auto' : 'none'}"
+          use:spotlight={{ max: 4 }}
+        >
           <div class="eyebrow">HOW I BUILD</div>
           <p class="stage-line">
             Software that <em>shows its work.</em><br />
@@ -407,7 +420,11 @@
         class="stage stage-text"
         style="opacity: {s6}; transform: translate3d(0, {stageDrift(s6)}px, 0)"
       >
-        <div class="stage-card">
+        <div
+          class="stage-card"
+          style="pointer-events: {s6 > 0.4 ? 'auto' : 'none'}"
+          use:spotlight={{ max: 4 }}
+        >
           <div class="eyebrow">BACKGROUND</div>
           <p class="stage-line">
             A <em>decade</em> of integrations, EDI, and complex software systems.
@@ -418,7 +435,11 @@
         class="stage stage-final"
         style="opacity: {s7}; transform: translate3d(0, {stageDrift(s7)}px, 0)"
       >
-        <div class="final-block">
+        <div
+          class="final-block"
+          style="pointer-events: {s7 > 0.4 ? 'auto' : 'none'}"
+          use:spotlight={{ max: 4 }}
+        >
           <div class="final-name">JESSE COBLE · SOFTWARE ENGINEER</div>
           <h2 class="final-head">
             Creating digital solutions for the <em>real world.</em>
@@ -692,8 +713,11 @@
     padding: 0 var(--pad-x-md);
   }
   /* Shared glass surface for every overlay card — sized to match the final
-     block so all cards read as the same family at the same scale. */
+     block so all cards read as the same family at the same scale.
+     3D tilt + spotlight via use:spotlight (vars: --tilt-x/y, --spot-x/y). */
   .stage-card {
+    position: relative;
+    overflow: hidden;
     background: rgba(7, 11, 24, 0.72);
     backdrop-filter: blur(18px) saturate(150%);
     -webkit-backdrop-filter: blur(18px) saturate(150%);
@@ -706,6 +730,41 @@
     box-shadow:
       0 30px 80px -30px rgba(0, 0, 0, 0.7),
       0 0 0 1px rgba(80, 200, 255, 0.06);
+    transform-style: preserve-3d;
+    transform: perspective(1400px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+    transition: transform 220ms var(--ease-out-soft);
+    will-change: transform;
+  }
+  .stage-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      360px circle at var(--spot-x, -200px) var(--spot-y, -200px),
+      rgba(125, 220, 255, 0.16),
+      transparent 60%
+    );
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 220ms var(--ease-out-soft);
+    mix-blend-mode: screen;
+    z-index: 1;
+  }
+  .stage-card:hover::after {
+    opacity: 1;
+  }
+  /* Card content needs to sit above the spotlight pseudo. The card's direct
+     children (eyebrow, stage-line, proof-title, proof-copy, proof-tags) get
+     a higher stacking context. */
+  .stage-card > * {
+    position: relative;
+    z-index: 2;
+  }
+  @media (pointer: coarse) {
+    .stage-card {
+      transform: none;
+    }
   }
   .stage-card .eyebrow {
     font-family: var(--font-mono);
@@ -823,8 +882,10 @@
     padding: 0 var(--pad-x-md);
   }
   /* Final block matches .stage-card geometry so all cards land at the same
-     scale across the cinematic. */
+     scale across the cinematic. Inherits the same 3D tilt + spotlight. */
   .final-block {
+    position: relative;
+    overflow: hidden;
     width: 100%;
     max-width: 920px;
     background: rgba(7, 11, 24, 0.72);
@@ -837,6 +898,38 @@
       0 30px 80px -30px rgba(0, 0, 0, 0.7),
       0 0 0 1px rgba(80, 200, 255, 0.06);
     margin: 0 auto;
+    transform-style: preserve-3d;
+    transform: perspective(1400px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+    transition: transform 220ms var(--ease-out-soft);
+    will-change: transform;
+  }
+  .final-block::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      360px circle at var(--spot-x, -200px) var(--spot-y, -200px),
+      rgba(125, 220, 255, 0.16),
+      transparent 60%
+    );
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 220ms var(--ease-out-soft);
+    mix-blend-mode: screen;
+    z-index: 1;
+  }
+  .final-block:hover::after {
+    opacity: 1;
+  }
+  .final-block > * {
+    position: relative;
+    z-index: 2;
+  }
+  @media (pointer: coarse) {
+    .final-block {
+      transform: none;
+    }
   }
   .final-name {
     font-family: var(--font-mono);
