@@ -1198,7 +1198,7 @@ video {
 .cap-card {
   overflow: hidden;
   transform-style: preserve-3d;
-  transform: perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transform: perspective(800px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
   transition:
     transform 220ms var(--ease-out-soft),
     border-color var(--dur-base) var(--ease-out-soft),
@@ -1212,7 +1212,7 @@ video {
 .rr-hl:hover,
 .ai-mech:hover,
 .cap-card:hover {
-  transform: perspective(1100px) translateY(-2px) rotateX(var(--tilt-x, 0deg))
+  transform: perspective(800px) translateY(-2px) rotateX(var(--tilt-x, 0deg))
     rotateY(var(--tilt-y, 0deg));
 }
 .signal-card::after,

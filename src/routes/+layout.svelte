@@ -2,14 +2,19 @@
   import "../app.css";
   import { onMount } from "svelte";
   import Lenis from "lenis";
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
 
   let { children } = $props();
   let progress = $state(0);
 
   onMount(() => {
     // Smooth scrolling — momentum easing on wheel/keyboard, native on touch.
-    // Exposed on window so Hero's GSAP ScrollTrigger setup can subscribe to
-    // Lenis scroll events and stay in sync with the eased position.
+    // GSAP's ticker drives Lenis's RAF so all GSAP animations and Lenis
+    // smoothing tick on the same frame, and Lenis scroll events update
+    // every active ScrollTrigger so pin/scrub stays in sync with the
+    // eased visual position.
+    gsap.registerPlugin(ScrollTrigger);
     const lenis = new Lenis({
       duration: 1.15,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -20,12 +25,10 @@
     });
     (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
 
-    let rafId = 0;
-    function raf(time: number) {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
-    }
-    rafId = requestAnimationFrame(raf);
+    lenis.on("scroll", ScrollTrigger.update);
+    const tickerCb = (time: number) => lenis.raf(time * 1000);
+    gsap.ticker.add(tickerCb);
+    gsap.ticker.lagSmoothing(0);
 
     const onScroll = () => {
       const doc = document.documentElement;
@@ -53,7 +56,7 @@
     document.addEventListener("click", onAnchorClick);
 
     return () => {
-      cancelAnimationFrame(rafId);
+      gsap.ticker.remove(tickerCb);
       document.removeEventListener("click", onAnchorClick);
       window.removeEventListener("resize", onScroll);
       lenis.destroy();

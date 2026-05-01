@@ -1,8 +1,12 @@
+<script lang="ts">
+  import { headlineReveal } from "$lib/actions/headlineReveal";
+</script>
+
 <section id="experience" class="section experience">
   <div class="container">
     <div class="section-head">
       <div class="head-eyebrow fade-up"><div class="eyebrow">EXPERIENCE</div></div>
-      <h2 class="fade-up delay-1">
+      <h2 class="fade-up delay-1" use:headlineReveal>
         A decade of full-stack engineering, mostly in the <em>boring middle</em> of production.
       </h2>
     </div>

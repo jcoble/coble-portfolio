@@ -1,13 +1,14 @@
 <script lang="ts">
   import { spotlight } from "$lib/actions/spotlight";
   import { countup } from "$lib/actions/countup";
+  import { headlineReveal } from "$lib/actions/headlineReveal";
 </script>
 
 <section id="retailready" class="section retailready">
   <div class="container">
     <div class="section-head">
       <div class="head-eyebrow fade-up"><div class="eyebrow">RETAILREADY EDI</div></div>
-      <h2 class="fade-up delay-1">
+      <h2 class="fade-up delay-1" use:headlineReveal>
         A retail EDI platform that <em>owns its own transport.</em>
       </h2>
     </div>

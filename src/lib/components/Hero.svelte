@@ -154,16 +154,12 @@
     if (fonts?.ready) fonts.ready.then(() => ScrollTrigger.refresh());
     requestAnimationFrame(() => ScrollTrigger.refresh());
 
-    // Subscribe ScrollTrigger to Lenis's scroll events. Without this, the
-    // cinematic's pin/scrub would lag behind the eased scroll position
-    // because ScrollTrigger relies on its own scroll detection.
-    const lenis = (window as unknown as { __lenis?: { on: (e: string, fn: () => void) => void; off: (e: string, fn: () => void) => void } }).__lenis;
-    const onLenisScroll = () => ScrollTrigger.update();
-    lenis?.on("scroll", onLenisScroll);
+    // Note: Lenis is wired to ScrollTrigger.update globally in
+    // +layout.svelte, so this trigger picks up Lenis-eased scroll
+    // automatically — no per-component subscription needed.
 
     return () => {
       window.removeEventListener("load", onLoadRefresh);
-      lenis?.off("scroll", onLenisScroll);
       trigger.kill();
     };
   });
@@ -368,7 +364,7 @@
         <div
           class="stage-card"
           style="pointer-events: {s2 > 0.4 ? 'auto' : 'none'}"
-          use:spotlight={{ max: 4 }}
+          use:spotlight={{ max: 8 }}
         >
           <div class="eyebrow">WHAT I BUILD</div>
           <p class="stage-line">
@@ -392,7 +388,7 @@
         <div
           class="stage-card proof-card"
           style="pointer-events: {s4 > 0.4 ? 'auto' : 'none'}"
-          use:spotlight={{ max: 4 }}
+          use:spotlight={{ max: 8 }}
         >
           <div class="eyebrow">RETAILREADY EDI</div>
           <h3 class="proof-title">
@@ -415,7 +411,7 @@
         <div
           class="stage-card"
           style="pointer-events: {s5 > 0.4 ? 'auto' : 'none'}"
-          use:spotlight={{ max: 4 }}
+          use:spotlight={{ max: 8 }}
         >
           <div class="eyebrow">HOW I BUILD</div>
           <p class="stage-line">
@@ -431,7 +427,7 @@
         <div
           class="stage-card"
           style="pointer-events: {s6 > 0.4 ? 'auto' : 'none'}"
-          use:spotlight={{ max: 4 }}
+          use:spotlight={{ max: 8 }}
         >
           <div class="eyebrow">BACKGROUND</div>
           <p class="stage-line">
@@ -446,7 +442,7 @@
         <div
           class="final-block"
           style="pointer-events: {s7 > 0.4 ? 'auto' : 'none'}"
-          use:spotlight={{ max: 4 }}
+          use:spotlight={{ max: 8 }}
         >
           <div class="final-name">JESSE COBLE · SOFTWARE ENGINEER</div>
           <h2 class="final-head">

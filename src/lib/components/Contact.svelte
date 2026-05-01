@@ -1,9 +1,13 @@
+<script lang="ts">
+  import { headlineReveal } from "$lib/actions/headlineReveal";
+</script>
+
 <section id="contact" class="section contact">
   <div class="container">
     <div class="contact-grid">
       <div>
         <div class="eyebrow fade-up" style="margin-bottom:24px;">CONTACT</div>
-        <h2 class="fade-up delay-1">Open to <em>good projects.</em></h2>
+        <h2 class="fade-up delay-1" use:headlineReveal>Open to <em>good projects.</em></h2>
         <p class="contact-body fade-up delay-2">
           If you're working on EDI, integrations, internal tools, or anything that needs
           to keep running in the background without surprising you — I'd like to hear

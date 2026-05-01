@@ -1,12 +1,13 @@
 <script lang="ts">
   import { spotlight } from "$lib/actions/spotlight";
+  import { headlineReveal } from "$lib/actions/headlineReveal";
 </script>
 
 <section id="ai" class="section ai-eng">
   <div class="container">
     <div class="section-head">
       <div class="head-eyebrow fade-up"><div class="eyebrow">WORKING WITH AI</div></div>
-      <h2 class="fade-up delay-1">
+      <h2 class="fade-up delay-1" use:headlineReveal>
         Treating AI agents like <em>junior engineers.</em>
       </h2>
     </div>

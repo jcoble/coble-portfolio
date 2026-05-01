@@ -1,12 +1,13 @@
 <script lang="ts">
   import { spotlight } from "$lib/actions/spotlight";
+  import { headlineReveal } from "$lib/actions/headlineReveal";
 </script>
 
 <section id="how-i-build" class="section build">
   <div class="container">
     <div class="section-head">
       <div class="head-eyebrow fade-up"><div class="eyebrow">HOW I BUILD</div></div>
-      <h2 class="fade-up delay-1">
+      <h2 class="fade-up delay-1" use:headlineReveal>
         Engineered for the <em>next person on call</em> — including the version of me
         who comes back six months later.
       </h2>
