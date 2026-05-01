@@ -1,22 +1,63 @@
 <script lang="ts">
   import "../app.css";
   import { onMount } from "svelte";
+  import Lenis from "lenis";
 
   let { children } = $props();
   let progress = $state(0);
 
   onMount(() => {
+    // Smooth scrolling — momentum easing on wheel/keyboard, native on touch.
+    // Exposed on window so Hero's GSAP ScrollTrigger setup can subscribe to
+    // Lenis scroll events and stay in sync with the eased position.
+    const lenis = new Lenis({
+      duration: 1.15,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      // smoothTouch defaults to false in lenis@1.x — touch keeps native momentum
+      wheelMultiplier: 1,
+      touchMultiplier: 2,
+    });
+    (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
+
+    let rafId = 0;
+    function raf(time: number) {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    }
+    rafId = requestAnimationFrame(raf);
+
     const onScroll = () => {
       const doc = document.documentElement;
       const max = doc.scrollHeight - doc.clientHeight;
       progress = max > 0 ? Math.min(1, Math.max(0, doc.scrollTop / max)) : 0;
     };
     onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
+    lenis.on("scroll", onScroll);
     window.addEventListener("resize", onScroll);
+
+    // Anchor links (e.g. "#retailready") need to go through Lenis, otherwise
+    // native scroll-to-anchor jumps instantly and feels jarring next to the
+    // smoothed wheel scroll.
+    const onAnchorClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      const a = target?.closest?.("a") as HTMLAnchorElement | null;
+      if (!a) return;
+      const href = a.getAttribute("href");
+      if (!href || !href.startsWith("#") || href === "#") return;
+      const el = document.querySelector(href);
+      if (!el) return;
+      e.preventDefault();
+      lenis.scrollTo(el as HTMLElement, { offset: -16 });
+    };
+    document.addEventListener("click", onAnchorClick);
+
     return () => {
-      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(rafId);
+      document.removeEventListener("click", onAnchorClick);
       window.removeEventListener("resize", onScroll);
+      lenis.destroy();
+      delete (window as unknown as { __lenis?: Lenis }).__lenis;
     };
   });
 </script>

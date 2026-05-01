@@ -154,8 +154,16 @@
     if (fonts?.ready) fonts.ready.then(() => ScrollTrigger.refresh());
     requestAnimationFrame(() => ScrollTrigger.refresh());
 
+    // Subscribe ScrollTrigger to Lenis's scroll events. Without this, the
+    // cinematic's pin/scrub would lag behind the eased scroll position
+    // because ScrollTrigger relies on its own scroll detection.
+    const lenis = (window as unknown as { __lenis?: { on: (e: string, fn: () => void) => void; off: (e: string, fn: () => void) => void } }).__lenis;
+    const onLenisScroll = () => ScrollTrigger.update();
+    lenis?.on("scroll", onLenisScroll);
+
     return () => {
       window.removeEventListener("load", onLoadRefresh);
+      lenis?.off("scroll", onLenisScroll);
       trigger.kill();
     };
   });
