@@ -33,6 +33,12 @@ type Options = {
 export function headlineReveal(node: HTMLElement, opts: Options = {}) {
   if (typeof window === "undefined") return;
 
+  // Touch devices skip the per-char animation entirely. The free-running
+  // rAF + ~30 inline-style writes per heading per frame compete with the
+  // neighboring .fade-up transitions on mobile and produce visible judder.
+  // Let the default .fade-up class handle reveal instead.
+  if (window.matchMedia("(pointer: coarse)").matches) return;
+
   // Take ownership of the entrance animation. Without this, the global
   // .fade-up rule sets opacity:0 on the parent until an IntersectionObserver
   // adds .in — which nukes our per-character opacity (parent_opacity *
